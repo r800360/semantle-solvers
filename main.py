@@ -39,7 +39,7 @@ class LSTMPolicyNetwork(nn.Module):
 
 # Reinforcement learning training loop
 def train_lstm_rl_policy(target_word, vocab, model, episodes, max_steps):
-    optimizer = optim.Adam(model.parameters())
+    optimizer = optim.AdamW(model.parameters())
     loss_fn = nn.NLLLoss()  # Negative log likelihood loss
 
     for episode in range(episodes):
@@ -61,6 +61,8 @@ def train_lstm_rl_policy(target_word, vocab, model, episodes, max_steps):
             # Select an action (word) based on the probabilities
             action_index = torch.multinomial(action_probs, 1).item()
             action_word = vocab[action_index]
+
+            print(action_word)
             
             # Calculate the reward (similarity score)
             reward = similarity_function(target_word, action_word)
@@ -89,8 +91,9 @@ def train_lstm_rl_policy(target_word, vocab, model, episodes, max_steps):
         print(f"Episode {episode + 1}: Cumulative reward: {cumulative_reward}")
 
 # Example usage
-vocab = ['apple', 'orange', 'banana', 'grape', 'cherry']  # Vocabulary list
+vocab = list(word2vec.keys()) #['apple', 'orange', 'banana', 'grape', 'cherry']  # Vocabulary list
 vocab_size = len(vocab)
+print(vocab_size)
 embedding_dim = 50  # Size of the word embedding
 hidden_dim = 64  # LSTM hidden state dimension
 
@@ -98,12 +101,10 @@ hidden_dim = 64  # LSTM hidden state dimension
 model = LSTMPolicyNetwork(vocab_size, embedding_dim, hidden_dim)
 
 # Train the policy network with reinforcement learning
-target_word = 'apple'  # Example target word
-episodes = 100  # Number of episodes to train
-max_steps = 20  # Maximum steps per episode
+target_word = 'reluctant'  # Example target word
+episodes = 400  # Number of episodes to train
+max_steps = 400 # Maximum steps per episode
 
 train_lstm_rl_policy(target_word, vocab, model, episodes, max_steps)
 
-
-print(len(word2vec))
-print(similarity_function("apple","orange"))
+print(vocab_size)
