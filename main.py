@@ -6,6 +6,7 @@ import random
 import torch
 import torch.nn as nn
 import torch.optim as optim
+from torch.optim.lr_scheduler import StepLR  # Import the learning rate scheduler
 
 word2vec = {}
 for letter_range in ("a-c", "d-h", "i-o", "p-r", "s-z"):
@@ -25,7 +26,7 @@ class LSTMPolicyNetwork(nn.Module):
     def __init__(self, vocab_size, embedding_dim, hidden_dim):
         super(LSTMPolicyNetwork, self).__init__()
         self.embedding = nn.Embedding(vocab_size, embedding_dim)
-        self.lstm = nn.LSTM(embedding_dim, hidden_dim, batch_first=True)
+        self.lstm = nn.LSTM(embedding_dim, hidden_dim, num_layers=10, batch_first=True, dropout=0.5)
         self.fc = nn.Linear(hidden_dim, vocab_size)
         self.softmax = nn.Softmax(dim=-1)
     
@@ -39,10 +40,17 @@ class LSTMPolicyNetwork(nn.Module):
 
 # Reinforcement learning training loop
 def train_lstm_rl_policy(target_word, vocab, model, episodes, max_steps):
-    optimizer = optim.AdamW(model.parameters())
-    loss_fn = nn.NLLLoss()  # Negative log likelihood loss
-
+    optimizer = optim.Adam(model.parameters())
+    
+    # Define the learning rate scheduler
+    scheduler = StepLR(optimizer, step_size=100, gamma=0.1)  # Adjust step_size and gamma as needed
+    
+    # Track the total loss for each episode
+    episode_losses = []
+    
     for episode in range(episodes):
+        scheduler.step()  # Update the learning rate at the beginning of each episode
+        
         # Initialize the state (history of words and similarity scores)
         state = []  # List to keep track of history
         input_word = random.choice(vocab)
@@ -73,11 +81,16 @@ def train_lstm_rl_policy(target_word, vocab, model, episodes, max_steps):
             # Calculate cumulative reward
             cumulative_reward += reward
             
-            # Compute loss and update the model
-            loss = -torch.log(action_probs[0, action_index]) * reward
+            # Compute loss using REINFORCE algorithm
+            log_prob = torch.log(action_probs[0, action_index])
+            loss = -log_prob * reward
             
+            # Track the loss for this episode
+            episode_losses.append(loss.item())
+            
+            # Update the model parameters using the policy gradient
             optimizer.zero_grad()  # Clear the gradients
-            loss.backward()  # Calculate gradients
+            loss.backward()  # Backpropagate the gradients
             optimizer.step()  # Update model parameters
             
             # Update the input word for the next step
@@ -88,22 +101,29 @@ def train_lstm_rl_policy(target_word, vocab, model, episodes, max_steps):
                 print(f"Episode {episode + 1}: Target word guessed correctly - '{target_word}'")
                 break
         
+        # Print the cumulative reward and average loss for the episode
         print(f"Episode {episode + 1}: Cumulative reward: {cumulative_reward}")
+        if len(episode_losses) > 0:
+            avg_loss = sum(episode_losses) / len(episode_losses)
+            print(f"Episode {episode + 1}: Average loss: {avg_loss}")
+        
+        # Clear the list of episode losses for the next episode
+        episode_losses = []
 
 # Example usage
 vocab = list(word2vec.keys()) #['apple', 'orange', 'banana', 'grape', 'cherry']  # Vocabulary list
 vocab_size = len(vocab)
 print(vocab_size)
-embedding_dim = 50  # Size of the word embedding
-hidden_dim = 64  # LSTM hidden state dimension
+embedding_dim = 1000  # Size of the word embedding
+hidden_dim = 2  # LSTM hidden state dimension
 
 # Create the LSTM policy network
 model = LSTMPolicyNetwork(vocab_size, embedding_dim, hidden_dim)
 
 # Train the policy network with reinforcement learning
-target_word = 'reluctant'  # Example target word
+target_word = 'king'  # Example target word
 episodes = 400  # Number of episodes to train
-max_steps = 400 # Maximum steps per episode
+max_steps = 100 # Maximum steps per episode
 
 train_lstm_rl_policy(target_word, vocab, model, episodes, max_steps)
 
