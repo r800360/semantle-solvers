@@ -11,6 +11,7 @@ from torch.optim.lr_scheduler import StepLR  # Import the learning rate schedule
 from models.feedfoward import FeedForwardPolicyNetwork
 from models.lstm import LSTMPolicyNetwork
 
+cos_sim = nn.CosineSimilarity(dim=1)
 word2vec = {}
 for letter_range in ("a-c", "d-h", "i-o", "p-r", "s-z"):
     with sqlite3.connect(f"./data/word2vec_{letter_range}.db") as con:
@@ -20,24 +21,16 @@ for letter_range in ("a-c", "d-h", "i-o", "p-r", "s-z"):
             word2vec[word] = vec / norm(vec)
 
 
-def similarity_function(first_word, guess_list):
+def similarity_function(target_list, guess_list):
     # Extract vectors for the first word and the guess list
-    x = word2vec[first_word]
-    y = np.array([word2vec[g] for g in guess_list])
+    x = torch.tensor([word2vec[g] for g in target_list])
+    y = torch.tensor([word2vec[g] for g in guess_list])
     
-    # Calculate the cosine similarity using dot product and norms
-    # Using broadcasting for efficient computation
-    x_norm = np.linalg.norm(x)
-    y_norms = np.linalg.norm(y, axis=1)
-    similarities = np.dot(y, x) / (x_norm * y_norms)
+    similarities = cos_sim(x,y)
     
-    # Apply transformation to change range from [-1, 1] to [0, 1]
+    # Squaring curve mapping from [-1, 1] to [-1, 1]
     similarities = (similarities + 1) / 2
-    
-    # Apply a squaring curve to emphasize larger values
     similarities = similarities ** 2
-    
-    # Transform back to range [-1, 1]
     similarities = 2 * similarities - 1
     
     return similarities
@@ -46,7 +39,8 @@ def similarity_function(first_word, guess_list):
 
 def update_policy(rewards, log_probs, optimizer):
     log_probs = torch.stack(log_probs)
-    print(log_probs)
+    # print("Log Probs")
+    # print(log_probs)
     loss = -torch.mean(log_probs * sum(rewards))
     optimizer.zero_grad()
     loss.backward()
@@ -55,7 +49,7 @@ def update_policy(rewards, log_probs, optimizer):
     return loss
 
 # Reinforcement learning training loop
-def train_rl_policy(target_word, vocab, model, episodes, max_steps, batch_size):
+def train_rl_policy(vocab, model, episodes, max_steps, batch_size):
     optimizer = optim.AdamW(model.parameters(), maximize=False, lr=0.01)
     
     # Define the learning rate scheduler
@@ -71,36 +65,34 @@ def train_rl_policy(target_word, vocab, model, episodes, max_steps, batch_size):
         state = []  # List to keep track of history
         input_words = random.choices(vocab, k=batch_size)
         target_words = random.choices(vocab, k=batch_size)
-        print(f"Episode {episode + 1}: Target word: '{target_word}'")
-
+        
+        print(f"Episode {episode + 1}: Input words: '{input_words}'")
+        print(f"Episode {episode + 1}: Target words: '{target_words}'")
+        
         log_probs = []
         all_rewards = []
         
         for step in range(max_steps):
             # Convert the input word to its index in the vocabulary
-            # input_word_index = vocab.index(input_word)
-            input_word_indices = np.array([np.argmax(vocab == word) for word in input_words])#input_word_indices = [np.where(vocab == input_word) for input_word in input_words]
             
-            # Convert the index to a tensor
+            input_word_indices = np.array([np.argmax(vocab == word) for word in input_words])
             input_tensor = torch.tensor(input_word_indices, dtype=torch.long)
             
-            print(input_tensor)
+            # Unsqueeze to make batch of len 1 sequences
+            input_tensor = input_tensor.unsqueeze(1)
+            # print(input_word_indices)
+            # print(input_tensor)
             
             # Predict the probabilities for the next word
-            action_probs = model(input_tensor)
-            
+            action_probs = model(input_tensor).squeeze()
             # Select an action (word) based on the probabilities
             # action_index = torch.multinomial(action_probs, 1).item()
-            action_indices = torch.multinomial(action_probs, 1).squeeze()
-            print(action_indices)
-            
-            
-            action_words = vocab[action_indices]
 
-            print(action_words)
+            action_indices = torch.multinomial(action_probs, 1).squeeze()
+            action_words = vocab[action_indices]
             
             # Calculate the reward (similarity score)
-            rewards = similarity_function(target_word, action_words)
+            rewards = similarity_function(target_words, action_words)
             
             # Update the state with the chosen action and reward
             state.append((action_words, rewards))
@@ -123,15 +115,27 @@ def train_rl_policy(target_word, vocab, model, episodes, max_steps, batch_size):
             # Update the input word for the next step
             input_words = action_words
             
+            # print("Input Word Indices " + str(input_word_indices))
+            # print("Input Tensor " + str(input_tensor))
+            # print("Action Probs " + str(action_probs))
+            # print("Action indices " + str(action_indices))
+            # print("Action words " + str(action_words))
+            # print("Rewards " + str(rewards))
+            
             # End the episode if the reward is high enough (e.g., similarity close to 1)
-            for reward, target_word in zip(rewards, target_words):
-                if reward >= 0.9:
-                    print(f"Episode {episode + 1}: Target word guessed correctly - '{target_word}'")
-                    break
+            correct_guesses = rewards >= 0.9
+            if correct_guesses.any():
+                print(f"Episode {episode + 1}: Guess correctness - {correct_guesses}")
 
         # Update the policy
         loss = update_policy(all_rewards, log_probs, optimizer)
         episode_losses.append(loss.item())
+        
+        # Reset the model parameters for the next episode
+        if isinstance(model, LSTMPolicyNetwork):
+            model.reset_hidden()
+        else:
+            model.reset_parameters()
 
         # Print the cumulative reward and average loss for the episode
         print(f"Episode {episode + 1}: Cumulative reward: {sum(all_rewards)}")
@@ -139,40 +143,36 @@ def train_rl_policy(target_word, vocab, model, episodes, max_steps, batch_size):
             # avg_loss = sum(episode_losses) / len(episode_losses)
             print(f"Episode {episode + 1}: Average loss: {loss}")
         
-        # Clear the list of episode losses for the next episode
-        episode_losses = []
+    print("Training complete")
+    print("Episode losses: " + str(episode_losses))
+
+# def word_getter(vocab, desired_word):
+#     #return index of desired word in vocab
+#     for 
 
 def main():
     # Example usage
-    # vocab = ["apple", "banana", "orange", "grape", "mango", "pineapple", "strawberry", "blueberry", "raspberry", "watermelon", "kiwi", "pear", "peach", "plum", "cherry", "lemon", "lime", "papaya", "guava", "avocado", "cranberry", "grapefruit", "coconut", "lychee", "passionfruit", "fig", "date", "pomegranate", "cantaloupe", "nectarine", "apricot", "persimmon", "tangerine", "clementine", "dragonfruit", "starfruit", "blackberry", "elderberry", "jackfruit"]
+    vocab = ["apple", "banana", "orange", "grape", "mango", "pineapple", "strawberry", "blueberry", "raspberry", "watermelon", "kiwi", "pear", "peach", "plum", "cherry", "lemon", "lime", "papaya", "guava", "avocado", "cranberry", "grapefruit", "coconut", "lychee", "passionfruit", "fig", "date", "pomegranate", "cantaloupe", "nectarine", "apricot", "persimmon", "tangerine", "clementine", "dragonfruit", "starfruit", "blackberry", "elderberry", "jackfruit"]
     # vocab = ["apple", "banana", "orange", "grape", "mango"]
-    vocab = list(word2vec.keys())
-    vocab = vocab[:100]
+    # vocab = list(word2vec.keys())
+    # vocab = vocab[:100]
 
     vocab = np.asarray(vocab)
-    #vocab = torch.from_numpy(vocab)
-    #vocab = torch.tensor(vocab)
-
     vocab_size = len(vocab)
-    target_word = vocab[26]
-    # target_word = 'apple'  # Example target word
-    print("Vocab size: " + str(vocab_size))
-    print(f"Target word: '{target_word}'")
     
     embedding_dim = 30  # Size of the word embedding
     hidden_dim = 100  # LSTM hidden state dimension
-
-    # Create the LSTM policy network
-    # model = FeedForwardPolicyNetwork(vocab_size, embedding_dim, hidden_dim)
-    model = LSTMPolicyNetwork(vocab_size, embedding_dim, hidden_dim)
-    
-    episodes = 20  # Number of episodes to train
+    episodes = 100  # Number of episodes to train
     max_steps = 50 # Maximum steps per episode
     batch_size = 10
 
-    train_rl_policy(target_word, vocab, model, episodes, max_steps, batch_size)
+    # Create the LSTM policy network
+    # model = FeedForwardPolicyNetwork(vocab_size, embedding_dim, hidden_dim)
+    model = LSTMPolicyNetwork(vocab_size, embedding_dim, hidden_dim, batch_size)
+    
 
-    print(vocab_size)
+    train_rl_policy(vocab, model, episodes, max_steps, batch_size)
+
 
 if __name__ == "__main__":
     main()
