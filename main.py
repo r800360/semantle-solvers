@@ -31,7 +31,7 @@ def similarity_function(target_list, guess_list):
     
     # Squaring curve mapping from [-1, 1] to [-1, 1]
     similarities = (similarities + 1) / 2
-    similarities = similarities ** 2
+    similarities = similarities ** 0.5
     similarities = 2 * similarities - 1
     
     return similarities
@@ -54,13 +54,22 @@ def train_rl_policy(vocab, model, episodes, max_steps, batch_size):
     optimizer = optim.AdamW(model.parameters(), maximize=True, lr=0.005)
     
     # Define the learning rate scheduler
+    scheduler = StepLR(optimizer, step_size=100, gamma=0.1)  # Adjust step_size and gamma as needed
+
+    # Define the learning rate scheduler
     # scheduler = StepLR(optimizer, step_size=100, gamma=0.1)  # Adjust step_size and gamma as needed
     
     # Track the total loss for each episode
     episode_losses = []
+
+    # Reset the model parameters before starting the training loop
+    # if isinstance(model, LSTMPolicyNetwork):
+    #     model.reset_hidden()
+    # else:
+    #     model.reset_parameters()
     
     for episode in range(episodes):
-        #scheduler.step()  # Update the learning rate at the beginning of each episode
+        # scheduler.step()  # Update the learning rate at the beginning of each episode
         
         # Initialize the state (history of words and similarity scores)
         state = []  # List to keep track of history
@@ -111,7 +120,12 @@ def train_rl_policy(vocab, model, episodes, max_steps, batch_size):
             
             # Update the model parameters using the policy gradient
             optimizer.zero_grad()  # Clear the gradients
+            # loss = -torch.mean(log_probs * sum(all_rewards))
+            # loss.backward()
+
+            #Gradient Clipping
             #torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=0.5)
+            
             optimizer.step()  # Update model parameters
             
             # Update the input word for the next step
@@ -122,17 +136,19 @@ def train_rl_policy(vocab, model, episodes, max_steps, batch_size):
             # print("Action Probs " + str(action_probs))
             # print("Action indices " + str(action_indices))
             # print("Action words " + str(action_words))
-            # print("Rewards " + str(rewards))
+            print("Rewards " + str(rewards))
             
             # End the episode if the reward is high enough (e.g., similarity close to 1)
             correct_guesses = rewards >= 0.9
             if correct_guesses.any():
                 print(f"Episode {episode + 1}: Guess correctness - {correct_guesses}")
+                print(f"Guesses - {action_words}")
 
+        #scheduler.step()  # Update the learning rate at the end of each episode
         # Update the policy
         loss = update_policy(all_rewards, log_probs, optimizer)
-        episode_losses.append(loss.item())
-        
+        # episode_losses.append(loss.item())
+        scheduler.step()
         # Reset the model parameters for the next episode
         if isinstance(model, LSTMPolicyNetwork):
             model.reset_hidden()

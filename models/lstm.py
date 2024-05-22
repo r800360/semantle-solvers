@@ -11,7 +11,7 @@ class LSTMPolicyNetwork(nn.Module):
         self.batch_size = batch_size
         
         self.embedding = nn.Embedding(num_embeddings=self.vocab_size, embedding_dim=self.embedding_dim)
-        self.lstm = nn.LSTM(input_size=embedding_dim, hidden_size=hidden_dim, num_layers=self.num_layers, batch_first=True)
+        self.lstm = nn.LSTM(input_size=self.embedding_dim, hidden_size=hidden_dim, num_layers=self.num_layers, batch_first=True)
         
         # Initialize the hidden state
         self.reset_hidden()
