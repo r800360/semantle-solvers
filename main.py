@@ -1,5 +1,7 @@
 import argparse
+import csv
 import logging
+import os
 import sqlite3
 
 import numpy as np
@@ -7,11 +9,10 @@ import torch
 import torch.nn as nn
 
 import src.models as models
+from src.data import load_data
 from src.models.feedfoward import FeedForwardPolicyNetwork
 from src.models.lstm import LSTMPolicyNetwork
 from src.train import train_rl_policy
-
-from src.data import load_w2vec
 
 logger = logging.getLogger(__name__)
 
@@ -19,15 +20,24 @@ logger = logging.getLogger(__name__)
 def main(args):
     
     # Load w2vec
-    load_w2vec()
+    load_data(args.dataset)
     
     # Example usage
     #vocab = ["apple", "banana", "orange", "grape", "mango", "pineapple", "strawberry", "blueberry", "raspberry", "watermelon", "kiwi", "pear", "peach", "plum", "cherry", "lemon", "lime", "papaya", "guava", "avocado", "cranberry", "grapefruit", "coconut", "lychee", "passionfruit", "fig", "date", "pomegranate", "cantaloupe", "nectarine", "apricot", "persimmon", "tangerine", "clementine", "dragonfruit", "starfruit", "blackberry", "elderberry", "jackfruit"]
     # vocab = ["apple", "banana", "orange", "grape", "mango"]
-    vocab = ["apple", "car"]
+    # vocab = ["apple", "car"]
     # exit(0)
     # vocab = list(word2vec.keys())
     # vocab = vocab[:100]
+    
+    # Read vocab from vocab file
+    if os.path.exists(args.vocab):
+        with open(args.vocab, 'r') as f:
+            # Read lines
+            vocab = f.readlines()
+            vocab = [v.strip() for v in vocab]
+    else:
+        raise ValueError("Vocabulary file does not exist")
 
     vocab = np.asarray(vocab)
     vocab_size = len(vocab)
@@ -59,9 +69,12 @@ if __name__ == "__main__":
     parser.add_argument('-o', '--output', type=str, default='stdout', help='Output file')
     parser.add_argument('-m', '--model', type=models.ModelType, choices=list(models.ModelType), help='Model type (feedforward or lstm)', default=models.ModelType.LSTM)
     
-    parser.add_argument('-e', '--episodes', type=int, default=100, help='Number of epochs')
+    parser.add_argument('-e', '--episodes', type=int, default=100, help='Number of episodes')
     parser.add_argument('-b', '--batch_size', type=int, default=10, help='Batch size')
     parser.add_argument('-l', '--learning_rate', type=float, default=0.005, help='Learning rate')
+    
+    parser.add_argument('--dataset', type=str, default='data/word2vec.db', help='Path to the dataset to use for training')
+    parser.add_argument('--vocab', type=str, default='data/vocab.txt', help='Path to the vocabulary file')
     
     
     args = parser.parse_args()
