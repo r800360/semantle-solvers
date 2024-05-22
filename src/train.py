@@ -28,35 +28,14 @@ def similarity_function(target_list, guess_list):
     
     return similarities
 
-
-
-def update_policy(rewards, log_probs, optimizer):
-    log_probs = torch.stack(log_probs)
-    loss = -torch.mean(log_probs * sum(rewards))
-    optimizer.zero_grad()
-    loss.backward()
-    optimizer.step()
-    
-    logger.debug(f"Log Probs: {log_probs}")
-    return loss
-
 def train_rl_policy(vocab, model, episodes, max_steps, batch_size, device: torch.device):
     optimizer = optim.AdamW(model.parameters(), maximize=True, lr=0.005)
 
     # Define the learning rate scheduler
     scheduler = StepLR(optimizer, step_size=100, gamma=0.1)  # Adjust step_size and gamma as needed
 
-    # Define the learning rate scheduler
-    # scheduler = StepLR(optimizer, step_size=100, gamma=0.1)  # Adjust step_size and gamma as needed
-
     # Track the total loss for each episode
     episode_losses = []
-
-    # Reset the model parameters before starting the training loop
-    # if isinstance(model, LSTMPolicyNetwork):
-    #     model.reset_hidden()
-    # else:
-    #     model.reset_parameters()
 
     for episode in range(episodes):
         # scheduler.step()  # Update the learning rate at the beginning of each episode
@@ -80,10 +59,6 @@ def train_rl_policy(vocab, model, episodes, max_steps, batch_size, device: torch
 
             # Unsqueeze to make batch of len 1 sequences
             input_tensor = input_tensor.unsqueeze(1)
-            # print(input_word_indices)
-            # print(input_tensor)
-            # summary(model, input_data=input_tensor)
-            # exit()
 
             # Predict the probabilities for the next word
             # And back to cpu land
@@ -97,6 +72,7 @@ def train_rl_policy(vocab, model, episodes, max_steps, batch_size, device: torch
                 previous_rewards = rewards
             rewards = similarity_function(target_words, action_words)
             rewards_difference = rewards - previous_rewards
+            
             # Update the state with the chosen action and reward
             state.append((action_words, rewards))
 
@@ -134,25 +110,21 @@ def train_rl_policy(vocab, model, episodes, max_steps, batch_size, device: torch
             if correct_guesses.any():
                 logger.debug(f"Episode {episode + 1}: Guess correctness - {correct_guesses}")
 
-        #scheduler.step() 
         # Update the policy
-        # loss = update_policy(all_rewards, log_probs, optimizer)
         log_probs = torch.stack(log_probs)
         loss = -torch.mean(log_probs * sum(all_rewards))
         optimizer.zero_grad()
         loss.backward()
+        
         optimizer.step()
+        scheduler.step()  # Update the learning rate at the end of each episode
         
         logger.debug(f"Log Probs: {log_probs}")
         
 
-        # episode_losses.append(loss.item())
-        scheduler.step()  # Update the learning rate at the end of each episode
         # Reset the model parameters for the next episode
         if isinstance(model, LSTMPolicyNetwork):
             model.reset_hidden(device)
-        else:
-            model.reset_parameters()
 
         # Print the cumulative reward and average loss for the episode
         logger.info(f"Episode {episode + 1}: Cumulative reward: {sum(all_rewards)}")
