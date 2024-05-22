@@ -16,8 +16,8 @@ cos_sim = nn.CosineSimilarity(dim=1)
 
 def similarity_function(target_list, guess_list):
     # Extract vectors for the first word and the guess list
-    x = torch.tensor([word2vec[g] for g in target_list])
-    y = torch.tensor([word2vec[g] for g in guess_list])
+    x = torch.tensor(np.array([word2vec[g] for g in target_list]))
+    y = torch.tensor(np.array([word2vec[g] for g in guess_list]))
     
     similarities = cos_sim(x,y)
     
