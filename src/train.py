@@ -23,7 +23,7 @@ def similarity_function(target_list, guess_list):
     
     # Squaring curve mapping from [-1, 1] to [-1, 1]
     similarities = (similarities + 1) / 2
-    similarities = similarities ** 0.5
+    similarities = similarities ** 0.8
     similarities = 2 * similarities - 1
     
     return similarities
@@ -93,8 +93,10 @@ def train_rl_policy(vocab, model, episodes, max_steps, batch_size, device: torch
             action_words = vocab[action_indices]
 
             # Calculate the reward (similarity score)
+            if (step > 1): 
+                previous_rewards = rewards
             rewards = similarity_function(target_words, action_words)
-
+            rewards_difference = rewards - previous_rewards
             # Update the state with the chosen action and reward
             state.append((action_words, rewards))
 
@@ -108,14 +110,14 @@ def train_rl_policy(vocab, model, episodes, max_steps, batch_size, device: torch
             log_probs.append(log_prob)
 
             # Update the model parameters using the policy gradient
-            optimizer.zero_grad()  # Clear the gradients
+            # optimizer.zero_grad()  # Clear the gradients
             # loss = -torch.mean(log_probs * sum(all_rewards))
             # loss.backward()
 
             #Gradient Clipping
             #torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=0.5)
 
-            optimizer.step()  # Update model parameters
+            # optimizer.step()  # Update model parameters
 
             # Update the input word for the next step
             input_words = action_words
@@ -132,14 +134,25 @@ def train_rl_policy(vocab, model, episodes, max_steps, batch_size, device: torch
             if correct_guesses.any():
                 logger.debug(f"Episode {episode + 1}: Guess correctness - {correct_guesses}")
 
-        #scheduler.step()  # Update the learning rate at the end of each episode
+        #scheduler.step() 
         # Update the policy
-        loss = update_policy(all_rewards, log_probs, optimizer)
+        # loss = update_policy(all_rewards, log_probs, optimizer)
+        log_probs = torch.stack(log_probs)
+        loss = -torch.mean(log_probs * sum(all_rewards))
+        optimizer.zero_grad()
+        loss.backward()
+        optimizer.step()
+        
+        logger.debug(f"Log Probs: {log_probs}")
+        
+
         # episode_losses.append(loss.item())
-        scheduler.step()
+        scheduler.step()  # Update the learning rate at the end of each episode
         # Reset the model parameters for the next episode
         if isinstance(model, LSTMPolicyNetwork):
             model.reset_hidden(device)
+        else:
+            model.reset_parameters()
 
         # Print the cumulative reward and average loss for the episode
         logger.info(f"Episode {episode + 1}: Cumulative reward: {sum(all_rewards)}")
