@@ -29,6 +29,7 @@ def similarity_function(target_list, guess_list):
     return similarities
 
 def train_rl_policy(vocab, model, episodes, max_steps, batch_size, device: torch.device):
+    previous_rewards = 0
     optimizer = optim.AdamW(model.parameters(), maximize=True, lr=0.005)
 
     # Define the learning rate scheduler
@@ -115,7 +116,7 @@ def train_rl_policy(vocab, model, episodes, max_steps, batch_size, device: torch
         loss = -torch.mean(log_probs * sum(all_rewards))
         optimizer.zero_grad()
         loss.backward()
-        
+        #torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=0.5)
         optimizer.step()
         scheduler.step()  # Update the learning rate at the end of each episode
         
