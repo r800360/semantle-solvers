@@ -37,7 +37,7 @@ def similarity_function(target_list, guess_list):
     
     # Squaring curve mapping from [-1, 1] to [-1, 1]
     similarities = (similarities + 1) / 2
-    similarities = similarities ** 0.5
+    similarities = similarities ** 0.8
     similarities = 2 * similarities - 1
     
     return similarities
@@ -74,7 +74,7 @@ def train_rl_policy(vocab, model, episodes, max_steps, batch_size, device: torch
     #     model.reset_parameters()
     
     for episode in range(episodes):
-        # scheduler.step()  # Update the learning rate at the beginning of each episode
+        # 
         
         # Initialize the state (history of words and similarity scores)
         state = []  # List to keep track of history
@@ -128,7 +128,7 @@ def train_rl_policy(vocab, model, episodes, max_steps, batch_size, device: torch
             # loss.backward()
 
             #Gradient Clipping
-            #torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=0.5)
+            torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=0.5)
             
             optimizer.step()  # Update model parameters
             
@@ -151,7 +151,7 @@ def train_rl_policy(vocab, model, episodes, max_steps, batch_size, device: torch
         # Update the policy
         loss = update_policy(all_rewards, log_probs, optimizer)
         # episode_losses.append(loss.item())
-        scheduler.step()
+        scheduler.step() # Update the learning rate at the beginning of each episode
         # Reset the model parameters for the next episode
         if isinstance(model, LSTMPolicyNetwork):
             model.reset_hidden(device)
