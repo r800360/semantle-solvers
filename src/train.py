@@ -66,8 +66,8 @@ def train_rl_policy(vocab, model, episodes, max_steps, batch_size, device: torch
         input_words = random.choices(vocab, k=batch_size)
         target_words = random.choices(vocab, k=batch_size)
 
-        logger.info(f"Episode {episode + 1}: Input words: {input_words}")
-        logger.info(f"Episode {episode + 1}: Target words: {target_words}")
+        logger.debug(f"Episode {episode + 1}: Input words: {input_words}")
+        logger.debug(f"Episode {episode + 1}: Target words: {target_words}")
 
         log_probs = []
         all_rewards = []
