@@ -1,5 +1,6 @@
 import sqlite3
 from numpy.linalg import norm
+import src.models as models
 import numpy as np
 import random
 import argparse
@@ -19,14 +20,16 @@ import logging
 logger = logging.getLogger(__name__)
 
 cos_sim = nn.CosineSimilarity(dim=1)
-word2vec = {}
-for letter_range in ("a-c", "d-h", "i-o", "p-r", "s-z"):
-    with sqlite3.connect(f"./data/word2vec_{letter_range}.db") as con:
-        cur = con.execute("SELECT * FROM word2vec")
-        for word, vec in cur:
-            vec = np.frombuffer(vec, dtype=np.float32)
-            word2vec[word] = vec / norm(vec)
 
+word2vec = {}
+def load_w2vec():
+    for letter_range in ("a-c", "d-h", "i-o", "p-r", "s-z"):
+        with sqlite3.connect(f"./data/word2vec_{letter_range}.db") as con:
+            cur = con.execute("SELECT * FROM word2vec")
+            for word, vec in cur:
+                vec = np.frombuffer(vec, dtype=np.float32)
+                word2vec[word] = vec / norm(vec)
+    return word2vec
 
 def similarity_function(target_list, guess_list):
     # Extract vectors for the first word and the guess list
@@ -155,8 +158,6 @@ def train_rl_policy(vocab, model, episodes, max_steps, batch_size, device: torch
         # Reset the model parameters for the next episode
         if isinstance(model, LSTMPolicyNetwork):
             model.reset_hidden(device)
-        else:
-            model.reset_parameters()
 
         # Print the cumulative reward and average loss for the episode
         logger.info(f"Episode {episode + 1}: Cumulative reward: {sum(all_rewards)}")
@@ -166,7 +167,11 @@ def train_rl_policy(vocab, model, episodes, max_steps, batch_size, device: torch
     logger.info("Training complete")
     logger.info("Episode losses: " + str(episode_losses))
 
-def main():
+def main(model_type: models.ModelType):
+    
+    # Load w2vec
+    load_w2vec()
+    
     # Example usage
     #vocab = ["apple", "banana", "orange", "grape", "mango", "pineapple", "strawberry", "blueberry", "raspberry", "watermelon", "kiwi", "pear", "peach", "plum", "cherry", "lemon", "lime", "papaya", "guava", "avocado", "cranberry", "grapefruit", "coconut", "lychee", "passionfruit", "fig", "date", "pomegranate", "cantaloupe", "nectarine", "apricot", "persimmon", "tangerine", "clementine", "dragonfruit", "starfruit", "blackberry", "elderberry", "jackfruit"]
     # vocab = ["apple", "banana", "orange", "grape", "mango"]
@@ -187,9 +192,12 @@ def main():
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
     # Create the LSTM policy network
-    # model = FeedForwardPolicyNetwork(vocab_size, embedding_dim, hidden_dim)
-    model = LSTMPolicyNetwork(vocab_size, embedding_dim, hidden_dim, batch_size, device).to(device)
-    
+    if model_type == models.ModelType.Feedforward:
+        model = FeedForwardPolicyNetwork(vocab_size, embedding_dim, hidden_dim).to(device)
+    elif model_type == models.ModelType.LSTM:
+        model = LSTMPolicyNetwork(vocab_size, embedding_dim, hidden_dim, batch_size, device).to(device)
+    else:
+        raise ValueError("Invalid model type")
 
     train_rl_policy(vocab, model, episodes, max_steps, batch_size, device)
 
@@ -200,10 +208,12 @@ if __name__ == "__main__":
     parser.add_argument('-d', '--debug', action='store_true',
                         help='Enable debug logging')
     parser.add_argument('-o', '--output', type=str, default='stdout', help='Output file')
+    parser.add_argument('-m', '--model', type=models.ModelType, choices=list(models.ModelType), help='Model type (feedforward or lstm)')
     
     args = parser.parse_args()
 
     log_level = logging.DEBUG if args.debug else logging.INFO
+    model_type = args.model
     
     output_file = args.output
     if output_file != 'stdout':
@@ -211,4 +221,4 @@ if __name__ == "__main__":
     else:
         logging.basicConfig(level=log_level)
     
-    main()
+    main(model_type)
