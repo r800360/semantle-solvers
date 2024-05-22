@@ -9,8 +9,8 @@ import torch.optim as optim
 from torch.optim.lr_scheduler import StepLR  # Import the learning rate scheduler
 from torchinfo import summary
 
-from models.feedfoward import FeedForwardPolicyNetwork
-from models.lstm import LSTMPolicyNetwork
+from src.models.feedfoward import FeedForwardPolicyNetwork
+from src.models.lstm import LSTMPolicyNetwork
 
 import argparse
 
