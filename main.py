@@ -197,7 +197,7 @@ def main():
 if __name__ == "__main__":
     
     parser = argparse.ArgumentParser(description='Process some integers.')
-    parser.add_argument('--debug', action='store_true',
+    parser.add_argument('-d', '--debug', action='store_true',
                         help='Enable debug logging')
     parser.add_argument('-o', '--output', type=str, default='stdout', help='Output file')
     
