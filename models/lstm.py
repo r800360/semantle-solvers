@@ -33,6 +33,10 @@ class LSTMPolicyNetwork(nn.Module):
         embedded = self.embedding(input_indices)
         hidden = (self.hidden_state, self.cell_state)
         output, hidden = self.lstm(embedded, hidden)
+
+        self.hidden_state = hidden[0]
+        self.cell_state = hidden[1]
+
         logits = self.fc(output)
         # Use only the last time step's output for decision making
         return self.softmax(logits)

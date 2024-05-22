@@ -7,6 +7,7 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 from torch.optim.lr_scheduler import StepLR  # Import the learning rate scheduler
+from torchinfo import summary
 
 from models.feedfoward import FeedForwardPolicyNetwork
 from models.lstm import LSTMPolicyNetwork
@@ -50,7 +51,7 @@ def update_policy(rewards, log_probs, optimizer):
 
 # Reinforcement learning training loop
 def train_rl_policy(vocab, model, episodes, max_steps, batch_size):
-    optimizer = optim.AdamW(model.parameters(), maximize=False, lr=0.01)
+    optimizer = optim.AdamW(model.parameters(), maximize=True, lr=0.005)
     
     # Define the learning rate scheduler
     # scheduler = StepLR(optimizer, step_size=100, gamma=0.1)  # Adjust step_size and gamma as needed
@@ -82,7 +83,8 @@ def train_rl_policy(vocab, model, episodes, max_steps, batch_size):
             input_tensor = input_tensor.unsqueeze(1)
             # print(input_word_indices)
             # print(input_tensor)
-            
+            # summary(model, input_data=input_tensor)
+            # exit()
             # Predict the probabilities for the next word
             action_probs = model(input_tensor).squeeze()
             # Select an action (word) based on the probabilities
@@ -152,8 +154,11 @@ def train_rl_policy(vocab, model, episodes, max_steps, batch_size):
 
 def main():
     # Example usage
-    vocab = ["apple", "banana", "orange", "grape", "mango", "pineapple", "strawberry", "blueberry", "raspberry", "watermelon", "kiwi", "pear", "peach", "plum", "cherry", "lemon", "lime", "papaya", "guava", "avocado", "cranberry", "grapefruit", "coconut", "lychee", "passionfruit", "fig", "date", "pomegranate", "cantaloupe", "nectarine", "apricot", "persimmon", "tangerine", "clementine", "dragonfruit", "starfruit", "blackberry", "elderberry", "jackfruit"]
+    #vocab = ["apple", "banana", "orange", "grape", "mango", "pineapple", "strawberry", "blueberry", "raspberry", "watermelon", "kiwi", "pear", "peach", "plum", "cherry", "lemon", "lime", "papaya", "guava", "avocado", "cranberry", "grapefruit", "coconut", "lychee", "passionfruit", "fig", "date", "pomegranate", "cantaloupe", "nectarine", "apricot", "persimmon", "tangerine", "clementine", "dragonfruit", "starfruit", "blackberry", "elderberry", "jackfruit"]
     # vocab = ["apple", "banana", "orange", "grape", "mango"]
+    vocab = ["apple", "car"]
+    # print(similarity_function(["apple"],["car"]))
+    # exit(0)
     # vocab = list(word2vec.keys())
     # vocab = vocab[:100]
 
