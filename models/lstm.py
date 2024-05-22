@@ -2,7 +2,7 @@ import torch.nn as nn
 import torch
 # Define the LSTM policy network
 class LSTMPolicyNetwork(nn.Module):
-    def __init__(self, vocab_size, embedding_dim, hidden_dim, batch_size):
+    def __init__(self, vocab_size, embedding_dim, hidden_dim, batch_size, device):
         super(LSTMPolicyNetwork, self).__init__()
         self.num_layers = 10
         self.vocab_size = vocab_size
@@ -14,7 +14,7 @@ class LSTMPolicyNetwork(nn.Module):
         self.lstm = nn.LSTM(input_size=self.embedding_dim, hidden_size=hidden_dim, num_layers=self.num_layers, batch_first=True)
         
         # Initialize the hidden state
-        self.reset_hidden()
+        self.reset_hidden(device)
 
         # Dummy input #input_tensor = torch.randn(5, 3, embedding_dim)  # (sequence_length, batch_size, input_size)
 
@@ -24,9 +24,9 @@ class LSTMPolicyNetwork(nn.Module):
         self.fc = nn.Linear(hidden_dim, vocab_size)
         self.softmax = nn.Softmax(dim=-1)
     
-    def reset_hidden(self):
-        self.hidden_state = torch.zeros(self.num_layers, self.batch_size, self.hidden_dim)
-        self.cell_state = torch.zeros(self.num_layers, self.batch_size, self.hidden_dim)
+    def reset_hidden(self, device):
+        self.hidden_state = torch.zeros(self.num_layers, self.batch_size, self.hidden_dim).to(device)
+        self.cell_state = torch.zeros(self.num_layers, self.batch_size, self.hidden_dim).to(device)
 
     def forward(self, input_indices):
         # Forward pass through embedding layer, LSTM, and final linear layer
