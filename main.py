@@ -199,12 +199,16 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Process some integers.')
     parser.add_argument('--debug', action='store_true',
                         help='Enable debug logging')
-
+    parser.add_argument('-o', '--output', type=str, default='stdout', help='Output file')
+    
     args = parser.parse_args()
 
-    if args.debug:
-        logging.basicConfig(level=logging.DEBUG)
+    log_level = logging.DEBUG if args.debug else logging.INFO
+    
+    output_file = args.output
+    if output_file != 'stdout':
+        logging.basicConfig(filename=f"logs/{output_file}", filemode='w', level=log_level)
     else:
-        logging.basicConfig(level=logging.INFO)
+        logging.basicConfig(level=log_level)
     
     main()
