@@ -16,7 +16,7 @@ from src.data import load_w2vec
 logger = logging.getLogger(__name__)
 
 # Reinforcement learning training loop
-def main(model_type: models.ModelType):
+def main(args):
     
     # Load w2vec
     load_w2vec()
@@ -34,16 +34,16 @@ def main(model_type: models.ModelType):
     
     embedding_dim = 30  # Size of the word embedding
     hidden_dim = 100  # LSTM hidden state dimension
-    episodes = 100  # Number of episodes to train
+    episodes = args.episodes  # Number of episodes to train
     max_steps = 50 # Maximum steps per episode
-    batch_size = 10
+    batch_size = args.batch_size
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
     # Create the LSTM policy network
-    if model_type == models.ModelType.Feedforward:
+    if args.model == models.ModelType.Feedforward:
         model = FeedForwardPolicyNetwork(vocab_size, embedding_dim, hidden_dim).to(device)
-    elif model_type == models.ModelType.LSTM:
+    elif args.model == models.ModelType.LSTM:
         model = LSTMPolicyNetwork(vocab_size, embedding_dim, hidden_dim, batch_size, device).to(device)
     else:
         raise ValueError("Invalid model type")
@@ -57,12 +57,16 @@ if __name__ == "__main__":
     parser.add_argument('-d', '--debug', action='store_true',
                         help='Enable debug logging')
     parser.add_argument('-o', '--output', type=str, default='stdout', help='Output file')
-    parser.add_argument('-m', '--model', type=models.ModelType, choices=list(models.ModelType), help='Model type (feedforward or lstm)')
+    parser.add_argument('-m', '--model', type=models.ModelType, choices=list(models.ModelType), help='Model type (feedforward or lstm)', default=models.ModelType.LSTM)
+    
+    parser.add_argument('-e', '--episodes', type=int, default=100, help='Number of epochs')
+    parser.add_argument('-b', '--batch_size', type=int, default=10, help='Batch size')
+    parser.add_argument('-l', '--learning_rate', type=float, default=0.005, help='Learning rate')
+    
     
     args = parser.parse_args()
 
     log_level = logging.DEBUG if args.debug else logging.INFO
-    model_type = args.model
     
     output_file = args.output
     if output_file != 'stdout':
@@ -70,4 +74,4 @@ if __name__ == "__main__":
     else:
         logging.basicConfig(level=log_level)
     
-    main(model_type)
+    main(args)
