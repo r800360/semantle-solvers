@@ -50,7 +50,7 @@ def update_policy(rewards, log_probs, optimizer):
     return loss
 
 # Reinforcement learning training loop
-def train_rl_policy(vocab, model, episodes, max_steps, batch_size):
+def train_rl_policy(vocab, model, episodes, max_steps, batch_size, device: torch.device):
     optimizer = optim.AdamW(model.parameters(), maximize=True, lr=0.005)
     
     # Define the learning rate scheduler
@@ -77,7 +77,7 @@ def train_rl_policy(vocab, model, episodes, max_steps, batch_size):
             # Convert the input word to its index in the vocabulary
             
             input_word_indices = np.array([np.argmax(vocab == word) for word in input_words])
-            input_tensor = torch.tensor(input_word_indices, dtype=torch.long)
+            input_tensor = torch.tensor(input_word_indices, dtype=torch.long).to(device)
             
             # Unsqueeze to make batch of len 1 sequences
             input_tensor = input_tensor.unsqueeze(1)
@@ -85,10 +85,10 @@ def train_rl_policy(vocab, model, episodes, max_steps, batch_size):
             # print(input_tensor)
             # summary(model, input_data=input_tensor)
             # exit()
+            
             # Predict the probabilities for the next word
-            action_probs = model(input_tensor).squeeze()
-            # Select an action (word) based on the probabilities
-            # action_index = torch.multinomial(action_probs, 1).item()
+            # And back to cpu land
+            action_probs = model(input_tensor).squeeze().cpu()
 
             action_indices = torch.multinomial(action_probs, 1).squeeze()
             action_words = vocab[action_indices]
@@ -105,7 +105,6 @@ def train_rl_policy(vocab, model, episodes, max_steps, batch_size):
             # Compute loss using REINFORCE algorithm
             chosen_action_probs = action_probs.gather(1, action_indices.unsqueeze(1)).squeeze()
             log_prob = torch.log(chosen_action_probs)
-            # log_prob = torch.log(torch.tensor([probs[action_indices] for probs in action_probs]))
             
             log_probs.append(log_prob)
             
@@ -135,7 +134,7 @@ def train_rl_policy(vocab, model, episodes, max_steps, batch_size):
         
         # Reset the model parameters for the next episode
         if isinstance(model, LSTMPolicyNetwork):
-            model.reset_hidden()
+            model.reset_hidden(device)
         else:
             model.reset_parameters()
 
@@ -171,12 +170,14 @@ def main():
     max_steps = 50 # Maximum steps per episode
     batch_size = 10
 
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
     # Create the LSTM policy network
     # model = FeedForwardPolicyNetwork(vocab_size, embedding_dim, hidden_dim)
-    model = LSTMPolicyNetwork(vocab_size, embedding_dim, hidden_dim, batch_size)
+    model = LSTMPolicyNetwork(vocab_size, embedding_dim, hidden_dim, batch_size, device).to(device)
     
 
-    train_rl_policy(vocab, model, episodes, max_steps, batch_size)
+    train_rl_policy(vocab, model, episodes, max_steps, batch_size, device)
 
 
 if __name__ == "__main__":
