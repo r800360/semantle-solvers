@@ -60,7 +60,7 @@ def main(args):
         raise ValueError("Invalid model type")
 
     outcome = train_rl_policy(vocab, model, episodes, max_steps, batch_size, device)
-    plot_data(outcome)
+    plot_data(outcome, model)
 
 
 if __name__ == "__main__":
