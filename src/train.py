@@ -77,7 +77,7 @@ def train_rl_policy(vocab, model, episodes, max_steps, batch_size, device: torch
             # Calculate the reward (similarity score)
             if (step > 1): 
                 previous_rewards = rewards
-            reward_scaler = step/max_steps
+            reward_scaler = (step/max_steps)**2
             rewards = similarity_function(target_words, action_words) * reward_scaler
             rewards_difference = rewards - previous_rewards
             
