@@ -1,0 +1,2076 @@
+DEBUG:src.train:Episode 1: Input words: ['apple', 'apple', 'orange', 'orange', 'apple', 'orange', 'orange', 'apple', 'orange', 'apple']
+DEBUG:src.train:Episode 1: Target words: ['apple', 'orange', 'orange', 'apple', 'apple', 'orange', 'apple', 'apple', 'orange', 'apple']
+DEBUG:src.train:Input Word Indices: [0 0 1 1 0 1 1 0 1 0]
+DEBUG:src.train:Input Tensor: tensor([[0],
+        [0],
+        [1],
+        [1],
+        [0],
+        [1],
+        [1],
+        [0],
+        [1],
+        [0]])
+DEBUG:src.train:Action Probs: tensor([[0.5173, 0.4827],
+        [0.5173, 0.4827],
+        [0.5173, 0.4827],
+        [0.5173, 0.4827],
+        [0.5173, 0.4827],
+        [0.5173, 0.4827],
+        [0.5173, 0.4827],
+        [0.5173, 0.4827],
+        [0.5173, 0.4827],
+        [0.5173, 0.4827]], grad_fn=<SqueezeBackward0>)
+DEBUG:src.train:Action indices: tensor([0, 0, 0, 0, 1, 0, 0, 1, 0, 0])
+DEBUG:src.train:Action words: ['apple' 'apple' 'apple' 'apple' 'orange' 'apple' 'apple' 'orange' 'apple'
+ 'apple']
+DEBUG:src.train:Rewards: tensor([1.0000, 0.4967, 0.4967, 1.0000, 0.4967, 0.4967, 1.0000, 0.4967, 0.4967,
+        1.0000])
+DEBUG:src.train:Episode 1: Guess correctness - tensor([ True, False, False,  True, False, False,  True, False, False,  True])
+DEBUG:src.train:Input Word Indices: [0 0 0 0 1 0 0 1 0 0]
+DEBUG:src.train:Input Tensor: tensor([[0],
+        [0],
+        [0],
+        [0],
+        [1],
+        [0],
+        [0],
+        [1],
+        [0],
+        [0]])
+DEBUG:src.train:Action Probs: tensor([[0.5178, 0.4822],
+        [0.5178, 0.4822],
+        [0.5178, 0.4822],
+        [0.5178, 0.4822],
+        [0.5178, 0.4822],
+        [0.5178, 0.4822],
+        [0.5178, 0.4822],
+        [0.5178, 0.4822],
+        [0.5178, 0.4822],
+        [0.5178, 0.4822]], grad_fn=<SqueezeBackward0>)
+DEBUG:src.train:Action indices: tensor([0, 1, 1, 0, 1, 1, 0, 1, 1, 1])
+DEBUG:src.train:Action words: ['apple' 'orange' 'orange' 'apple' 'orange' 'orange' 'apple' 'orange'
+ 'orange' 'orange']
+DEBUG:src.train:Rewards: tensor([1.0000, 1.0000, 1.0000, 1.0000, 0.4967, 1.0000, 1.0000, 0.4967, 1.0000,
+        0.4967])
+DEBUG:src.train:Episode 1: Guess correctness - tensor([ True,  True,  True,  True, False,  True,  True, False,  True, False])
+DEBUG:src.train:Input Word Indices: [0 1 1 0 1 1 0 1 1 1]
+DEBUG:src.train:Input Tensor: tensor([[0],
+        [1],
+        [1],
+        [0],
+        [1],
+        [1],
+        [0],
+        [1],
+        [1],
+        [1]])
+DEBUG:src.train:Action Probs: tensor([[0.5177, 0.4823],
+        [0.5177, 0.4823],
+        [0.5177, 0.4823],
+        [0.5177, 0.4823],
+        [0.5177, 0.4823],
+        [0.5177, 0.4823],
+        [0.5177, 0.4823],
+        [0.5177, 0.4823],
+        [0.5177, 0.4823],
+        [0.5177, 0.4823]], grad_fn=<SqueezeBackward0>)
+DEBUG:src.train:Action indices: tensor([0, 0, 1, 1, 0, 1, 0, 1, 0, 0])
+DEBUG:src.train:Action words: ['apple' 'apple' 'orange' 'orange' 'apple' 'orange' 'apple' 'orange'
+ 'apple' 'apple']
+DEBUG:src.train:Rewards: tensor([1.0000, 0.4967, 1.0000, 0.4967, 1.0000, 1.0000, 1.0000, 0.4967, 0.4967,
+        1.0000])
+DEBUG:src.train:Episode 1: Guess correctness - tensor([ True, False,  True, False,  True,  True,  True, False, False,  True])
+DEBUG:src.train:Input Word Indices: [0 0 1 1 0 1 0 1 0 0]
+DEBUG:src.train:Input Tensor: tensor([[0],
+        [0],
+        [1],
+        [1],
+        [0],
+        [1],
+        [0],
+        [1],
+        [0],
+        [0]])
+DEBUG:src.train:Action Probs: tensor([[0.5174, 0.4826],
+        [0.5174, 0.4826],
+        [0.5174, 0.4826],
+        [0.5174, 0.4826],
+        [0.5174, 0.4826],
+        [0.5174, 0.4826],
+        [0.5174, 0.4826],
+        [0.5174, 0.4826],
+        [0.5174, 0.4826],
+        [0.5174, 0.4826]], grad_fn=<SqueezeBackward0>)
+DEBUG:src.train:Action indices: tensor([1, 1, 1, 1, 1, 0, 1, 1, 0, 0])
+DEBUG:src.train:Action words: ['orange' 'orange' 'orange' 'orange' 'orange' 'apple' 'orange' 'orange'
+ 'apple' 'apple']
+DEBUG:src.train:Rewards: tensor([0.4967, 1.0000, 1.0000, 0.4967, 0.4967, 0.4967, 0.4967, 0.4967, 0.4967,
+        1.0000])
+DEBUG:src.train:Episode 1: Guess correctness - tensor([False,  True,  True, False, False, False, False, False, False,  True])
+DEBUG:src.train:Input Word Indices: [1 1 1 1 1 0 1 1 0 0]
+DEBUG:src.train:Input Tensor: tensor([[1],
+        [1],
+        [1],
+        [1],
+        [1],
+        [0],
+        [1],
+        [1],
+        [0],
+        [0]])
+DEBUG:src.train:Action Probs: tensor([[0.5171, 0.4829],
+        [0.5171, 0.4829],
+        [0.5171, 0.4829],
+        [0.5171, 0.4829],
+        [0.5171, 0.4829],
+        [0.5171, 0.4829],
+        [0.5171, 0.4829],
+        [0.5171, 0.4829],
+        [0.5171, 0.4829],
+        [0.5171, 0.4829]], grad_fn=<SqueezeBackward0>)
+DEBUG:src.train:Action indices: tensor([0, 1, 1, 0, 1, 1, 1, 0, 1, 0])
+DEBUG:src.train:Action words: ['apple' 'orange' 'orange' 'apple' 'orange' 'orange' 'orange' 'apple'
+ 'orange' 'apple']
+DEBUG:src.train:Rewards: tensor([1.0000, 1.0000, 1.0000, 1.0000, 0.4967, 1.0000, 0.4967, 1.0000, 1.0000,
+        1.0000])
+DEBUG:src.train:Episode 1: Guess correctness - tensor([ True,  True,  True,  True, False,  True, False,  True,  True,  True])
+DEBUG:src.train:Input Word Indices: [0 1 1 0 1 1 1 0 1 0]
+DEBUG:src.train:Input Tensor: tensor([[0],
+        [1],
+        [1],
+        [0],
+        [1],
+        [1],
+        [1],
+        [0],
+        [1],
+        [0]])
+DEBUG:src.train:Action Probs: tensor([[0.5168, 0.4832],
+        [0.5168, 0.4832],
+        [0.5168, 0.4832],
+        [0.5168, 0.4832],
+        [0.5168, 0.4832],
+        [0.5168, 0.4832],
+        [0.5168, 0.4832],
+        [0.5168, 0.4832],
+        [0.5168, 0.4832],
+        [0.5168, 0.4832]], grad_fn=<SqueezeBackward0>)
+DEBUG:src.train:Action indices: tensor([1, 0, 0, 1, 1, 0, 0, 0, 0, 0])
+DEBUG:src.train:Action words: ['orange' 'apple' 'apple' 'orange' 'orange' 'apple' 'apple' 'apple'
+ 'apple' 'apple']
+DEBUG:src.train:Rewards: tensor([0.4967, 0.4967, 0.4967, 0.4967, 0.4967, 0.4967, 1.0000, 1.0000, 0.4967,
+        1.0000])
+DEBUG:src.train:Episode 1: Guess correctness - tensor([False, False, False, False, False, False,  True,  True, False,  True])
+DEBUG:src.train:Input Word Indices: [1 0 0 1 1 0 0 0 0 0]
+DEBUG:src.train:Input Tensor: tensor([[1],
+        [0],
+        [0],
+        [1],
+        [1],
+        [0],
+        [0],
+        [0],
+        [0],
+        [0]])
+DEBUG:src.train:Action Probs: tensor([[0.5166, 0.4834],
+        [0.5166, 0.4834],
+        [0.5166, 0.4834],
+        [0.5166, 0.4834],
+        [0.5166, 0.4834],
+        [0.5166, 0.4834],
+        [0.5166, 0.4834],
+        [0.5166, 0.4834],
+        [0.5166, 0.4834],
+        [0.5166, 0.4834]], grad_fn=<SqueezeBackward0>)
+DEBUG:src.train:Action indices: tensor([0, 1, 0, 0, 1, 0, 0, 1, 0, 0])
+DEBUG:src.train:Action words: ['apple' 'orange' 'apple' 'apple' 'orange' 'apple' 'apple' 'orange'
+ 'apple' 'apple']
+DEBUG:src.train:Rewards: tensor([1.0000, 1.0000, 0.4967, 1.0000, 0.4967, 0.4967, 1.0000, 0.4967, 0.4967,
+        1.0000])
+DEBUG:src.train:Episode 1: Guess correctness - tensor([ True,  True, False,  True, False, False,  True, False, False,  True])
+DEBUG:src.train:Input Word Indices: [0 1 0 0 1 0 0 1 0 0]
+DEBUG:src.train:Input Tensor: tensor([[0],
+        [1],
+        [0],
+        [0],
+        [1],
+        [0],
+        [0],
+        [1],
+        [0],
+        [0]])
+DEBUG:src.train:Action Probs: tensor([[0.5165, 0.4835],
+        [0.5165, 0.4835],
+        [0.5165, 0.4835],
+        [0.5165, 0.4835],
+        [0.5165, 0.4835],
+        [0.5165, 0.4835],
+        [0.5165, 0.4835],
+        [0.5165, 0.4835],
+        [0.5165, 0.4835],
+        [0.5165, 0.4835]], grad_fn=<SqueezeBackward0>)
+DEBUG:src.train:Action indices: tensor([1, 1, 1, 1, 0, 0, 1, 1, 1, 0])
+DEBUG:src.train:Action words: ['orange' 'orange' 'orange' 'orange' 'apple' 'apple' 'orange' 'orange'
+ 'orange' 'apple']
+DEBUG:src.train:Rewards: tensor([0.4967, 1.0000, 1.0000, 0.4967, 1.0000, 0.4967, 0.4967, 0.4967, 1.0000,
+        1.0000])
+DEBUG:src.train:Episode 1: Guess correctness - tensor([False,  True,  True, False,  True, False, False, False,  True,  True])
+DEBUG:src.train:Input Word Indices: [1 1 1 1 0 0 1 1 1 0]
+DEBUG:src.train:Input Tensor: tensor([[1],
+        [1],
+        [1],
+        [1],
+        [0],
+        [0],
+        [1],
+        [1],
+        [1],
+        [0]])
+DEBUG:src.train:Action Probs: tensor([[0.5164, 0.4836],
+        [0.5164, 0.4836],
+        [0.5164, 0.4836],
+        [0.5164, 0.4836],
+        [0.5164, 0.4836],
+        [0.5164, 0.4836],
+        [0.5164, 0.4836],
+        [0.5164, 0.4836],
+        [0.5164, 0.4836],
+        [0.5164, 0.4836]], grad_fn=<SqueezeBackward0>)
+DEBUG:src.train:Action indices: tensor([0, 0, 0, 1, 1, 0, 0, 0, 1, 1])
+DEBUG:src.train:Action words: ['apple' 'apple' 'apple' 'orange' 'orange' 'apple' 'apple' 'apple'
+ 'orange' 'orange']
+DEBUG:src.train:Rewards: tensor([1.0000, 0.4967, 0.4967, 0.4967, 0.4967, 0.4967, 1.0000, 1.0000, 1.0000,
+        0.4967])
+DEBUG:src.train:Episode 1: Guess correctness - tensor([ True, False, False, False, False, False,  True,  True,  True, False])
+DEBUG:src.train:Input Word Indices: [0 0 0 1 1 0 0 0 1 1]
+DEBUG:src.train:Input Tensor: tensor([[0],
+        [0],
+        [0],
+        [1],
+        [1],
+        [0],
+        [0],
+        [0],
+        [1],
+        [1]])
+DEBUG:src.train:Action Probs: tensor([[0.5164, 0.4836],
+        [0.5164, 0.4836],
+        [0.5164, 0.4836],
+        [0.5164, 0.4836],
+        [0.5164, 0.4836],
+        [0.5164, 0.4836],
+        [0.5164, 0.4836],
+        [0.5164, 0.4836],
+        [0.5164, 0.4836],
+        [0.5164, 0.4836]], grad_fn=<SqueezeBackward0>)
+DEBUG:src.train:Action indices: tensor([0, 0, 1, 0, 0, 0, 1, 1, 1, 1])
+DEBUG:src.train:Action words: ['apple' 'apple' 'orange' 'apple' 'apple' 'apple' 'orange' 'orange'
+ 'orange' 'orange']
+DEBUG:src.train:Rewards: tensor([1.0000, 0.4967, 1.0000, 1.0000, 1.0000, 0.4967, 0.4967, 0.4967, 1.0000,
+        0.4967])
+DEBUG:src.train:Episode 1: Guess correctness - tensor([ True, False,  True,  True,  True, False, False, False,  True, False])
+DEBUG:src.train:Input Word Indices: [0 0 1 0 0 0 1 1 1 1]
+DEBUG:src.train:Input Tensor: tensor([[0],
+        [0],
+        [1],
+        [0],
+        [0],
+        [0],
+        [1],
+        [1],
+        [1],
+        [1]])
+DEBUG:src.train:Action Probs: tensor([[0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837]], grad_fn=<SqueezeBackward0>)
+DEBUG:src.train:Action indices: tensor([1, 1, 1, 0, 0, 0, 1, 0, 1, 0])
+DEBUG:src.train:Action words: ['orange' 'orange' 'orange' 'apple' 'apple' 'apple' 'orange' 'apple'
+ 'orange' 'apple']
+DEBUG:src.train:Rewards: tensor([0.4967, 1.0000, 1.0000, 1.0000, 1.0000, 0.4967, 0.4967, 1.0000, 1.0000,
+        1.0000])
+DEBUG:src.train:Episode 1: Guess correctness - tensor([False,  True,  True,  True,  True, False, False,  True,  True,  True])
+DEBUG:src.train:Input Word Indices: [1 1 1 0 0 0 1 0 1 0]
+DEBUG:src.train:Input Tensor: tensor([[1],
+        [1],
+        [1],
+        [0],
+        [0],
+        [0],
+        [1],
+        [0],
+        [1],
+        [0]])
+DEBUG:src.train:Action Probs: tensor([[0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837]], grad_fn=<SqueezeBackward0>)
+DEBUG:src.train:Action indices: tensor([1, 1, 1, 0, 1, 1, 0, 1, 1, 1])
+DEBUG:src.train:Action words: ['orange' 'orange' 'orange' 'apple' 'orange' 'orange' 'apple' 'orange'
+ 'orange' 'orange']
+DEBUG:src.train:Rewards: tensor([0.4967, 1.0000, 1.0000, 1.0000, 0.4967, 1.0000, 1.0000, 0.4967, 1.0000,
+        0.4967])
+DEBUG:src.train:Episode 1: Guess correctness - tensor([False,  True,  True,  True, False,  True,  True, False,  True, False])
+DEBUG:src.train:Input Word Indices: [1 1 1 0 1 1 0 1 1 1]
+DEBUG:src.train:Input Tensor: tensor([[1],
+        [1],
+        [1],
+        [0],
+        [1],
+        [1],
+        [0],
+        [1],
+        [1],
+        [1]])
+DEBUG:src.train:Action Probs: tensor([[0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837]], grad_fn=<SqueezeBackward0>)
+DEBUG:src.train:Action indices: tensor([1, 1, 0, 1, 1, 1, 0, 0, 0, 1])
+DEBUG:src.train:Action words: ['orange' 'orange' 'apple' 'orange' 'orange' 'orange' 'apple' 'apple'
+ 'apple' 'orange']
+DEBUG:src.train:Rewards: tensor([0.4967, 1.0000, 0.4967, 0.4967, 0.4967, 1.0000, 1.0000, 1.0000, 0.4967,
+        0.4967])
+DEBUG:src.train:Episode 1: Guess correctness - tensor([False,  True, False, False, False,  True,  True,  True, False, False])
+DEBUG:src.train:Input Word Indices: [1 1 0 1 1 1 0 0 0 1]
+DEBUG:src.train:Input Tensor: tensor([[1],
+        [1],
+        [0],
+        [1],
+        [1],
+        [1],
+        [0],
+        [0],
+        [0],
+        [1]])
+DEBUG:src.train:Action Probs: tensor([[0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837]], grad_fn=<SqueezeBackward0>)
+DEBUG:src.train:Action indices: tensor([0, 1, 0, 0, 1, 1, 0, 0, 0, 0])
+DEBUG:src.train:Action words: ['apple' 'orange' 'apple' 'apple' 'orange' 'orange' 'apple' 'apple'
+ 'apple' 'apple']
+DEBUG:src.train:Rewards: tensor([1.0000, 1.0000, 0.4967, 1.0000, 0.4967, 1.0000, 1.0000, 1.0000, 0.4967,
+        1.0000])
+DEBUG:src.train:Episode 1: Guess correctness - tensor([ True,  True, False,  True, False,  True,  True,  True, False,  True])
+DEBUG:src.train:Input Word Indices: [0 1 0 0 1 1 0 0 0 0]
+DEBUG:src.train:Input Tensor: tensor([[0],
+        [1],
+        [0],
+        [0],
+        [1],
+        [1],
+        [0],
+        [0],
+        [0],
+        [0]])
+DEBUG:src.train:Action Probs: tensor([[0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837]], grad_fn=<SqueezeBackward0>)
+DEBUG:src.train:Action indices: tensor([1, 1, 1, 1, 0, 0, 1, 1, 1, 0])
+DEBUG:src.train:Action words: ['orange' 'orange' 'orange' 'orange' 'apple' 'apple' 'orange' 'orange'
+ 'orange' 'apple']
+DEBUG:src.train:Rewards: tensor([0.4967, 1.0000, 1.0000, 0.4967, 1.0000, 0.4967, 0.4967, 0.4967, 1.0000,
+        1.0000])
+DEBUG:src.train:Episode 1: Guess correctness - tensor([False,  True,  True, False,  True, False, False, False,  True,  True])
+DEBUG:src.train:Input Word Indices: [1 1 1 1 0 0 1 1 1 0]
+DEBUG:src.train:Input Tensor: tensor([[1],
+        [1],
+        [1],
+        [1],
+        [0],
+        [0],
+        [1],
+        [1],
+        [1],
+        [0]])
+DEBUG:src.train:Action Probs: tensor([[0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837]], grad_fn=<SqueezeBackward0>)
+DEBUG:src.train:Action indices: tensor([0, 0, 0, 1, 0, 0, 0, 1, 1, 1])
+DEBUG:src.train:Action words: ['apple' 'apple' 'apple' 'orange' 'apple' 'apple' 'apple' 'orange'
+ 'orange' 'orange']
+DEBUG:src.train:Rewards: tensor([1.0000, 0.4967, 0.4967, 0.4967, 1.0000, 0.4967, 1.0000, 0.4967, 1.0000,
+        0.4967])
+DEBUG:src.train:Episode 1: Guess correctness - tensor([ True, False, False, False,  True, False,  True, False,  True, False])
+DEBUG:src.train:Input Word Indices: [0 0 0 1 0 0 0 1 1 1]
+DEBUG:src.train:Input Tensor: tensor([[0],
+        [0],
+        [0],
+        [1],
+        [0],
+        [0],
+        [0],
+        [1],
+        [1],
+        [1]])
+DEBUG:src.train:Action Probs: tensor([[0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837]], grad_fn=<SqueezeBackward0>)
+DEBUG:src.train:Action indices: tensor([1, 1, 0, 1, 1, 0, 1, 1, 1, 1])
+DEBUG:src.train:Action words: ['orange' 'orange' 'apple' 'orange' 'orange' 'apple' 'orange' 'orange'
+ 'orange' 'orange']
+DEBUG:src.train:Rewards: tensor([0.4967, 1.0000, 0.4967, 0.4967, 0.4967, 0.4967, 0.4967, 0.4967, 1.0000,
+        0.4967])
+DEBUG:src.train:Episode 1: Guess correctness - tensor([False,  True, False, False, False, False, False, False,  True, False])
+DEBUG:src.train:Input Word Indices: [1 1 0 1 1 0 1 1 1 1]
+DEBUG:src.train:Input Tensor: tensor([[1],
+        [1],
+        [0],
+        [1],
+        [1],
+        [0],
+        [1],
+        [1],
+        [1],
+        [1]])
+DEBUG:src.train:Action Probs: tensor([[0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837]], grad_fn=<SqueezeBackward0>)
+DEBUG:src.train:Action indices: tensor([0, 0, 1, 0, 1, 1, 1, 1, 1, 0])
+DEBUG:src.train:Action words: ['apple' 'apple' 'orange' 'apple' 'orange' 'orange' 'orange' 'orange'
+ 'orange' 'apple']
+DEBUG:src.train:Rewards: tensor([1.0000, 0.4967, 1.0000, 1.0000, 0.4967, 1.0000, 0.4967, 0.4967, 1.0000,
+        1.0000])
+DEBUG:src.train:Episode 1: Guess correctness - tensor([ True, False,  True,  True, False,  True, False, False,  True,  True])
+DEBUG:src.train:Input Word Indices: [0 0 1 0 1 1 1 1 1 0]
+DEBUG:src.train:Input Tensor: tensor([[0],
+        [0],
+        [1],
+        [0],
+        [1],
+        [1],
+        [1],
+        [1],
+        [1],
+        [0]])
+DEBUG:src.train:Action Probs: tensor([[0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837]], grad_fn=<SqueezeBackward0>)
+DEBUG:src.train:Action indices: tensor([1, 0, 1, 0, 1, 0, 0, 0, 0, 0])
+DEBUG:src.train:Action words: ['orange' 'apple' 'orange' 'apple' 'orange' 'apple' 'apple' 'apple'
+ 'apple' 'apple']
+DEBUG:src.train:Rewards: tensor([0.4967, 0.4967, 1.0000, 1.0000, 0.4967, 0.4967, 1.0000, 1.0000, 0.4967,
+        1.0000])
+DEBUG:src.train:Episode 1: Guess correctness - tensor([False, False,  True,  True, False, False,  True,  True, False,  True])
+DEBUG:src.train:Input Word Indices: [1 0 1 0 1 0 0 0 0 0]
+DEBUG:src.train:Input Tensor: tensor([[1],
+        [0],
+        [1],
+        [0],
+        [1],
+        [0],
+        [0],
+        [0],
+        [0],
+        [0]])
+DEBUG:src.train:Action Probs: tensor([[0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837]], grad_fn=<SqueezeBackward0>)
+DEBUG:src.train:Action indices: tensor([1, 0, 1, 1, 0, 1, 0, 0, 1, 0])
+DEBUG:src.train:Action words: ['orange' 'apple' 'orange' 'orange' 'apple' 'orange' 'apple' 'apple'
+ 'orange' 'apple']
+DEBUG:src.train:Rewards: tensor([0.4967, 0.4967, 1.0000, 0.4967, 1.0000, 1.0000, 1.0000, 1.0000, 1.0000,
+        1.0000])
+DEBUG:src.train:Episode 1: Guess correctness - tensor([False, False,  True, False,  True,  True,  True,  True,  True,  True])
+DEBUG:src.train:Input Word Indices: [1 0 1 1 0 1 0 0 1 0]
+DEBUG:src.train:Input Tensor: tensor([[1],
+        [0],
+        [1],
+        [1],
+        [0],
+        [1],
+        [0],
+        [0],
+        [1],
+        [0]])
+DEBUG:src.train:Action Probs: tensor([[0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837]], grad_fn=<SqueezeBackward0>)
+DEBUG:src.train:Action indices: tensor([0, 1, 0, 0, 0, 0, 0, 1, 1, 1])
+DEBUG:src.train:Action words: ['apple' 'orange' 'apple' 'apple' 'apple' 'apple' 'apple' 'orange'
+ 'orange' 'orange']
+DEBUG:src.train:Rewards: tensor([1.0000, 1.0000, 0.4967, 1.0000, 1.0000, 0.4967, 1.0000, 0.4967, 1.0000,
+        0.4967])
+DEBUG:src.train:Episode 1: Guess correctness - tensor([ True,  True, False,  True,  True, False,  True, False,  True, False])
+DEBUG:src.train:Input Word Indices: [0 1 0 0 0 0 0 1 1 1]
+DEBUG:src.train:Input Tensor: tensor([[0],
+        [1],
+        [0],
+        [0],
+        [0],
+        [0],
+        [0],
+        [1],
+        [1],
+        [1]])
+DEBUG:src.train:Action Probs: tensor([[0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837]], grad_fn=<SqueezeBackward0>)
+DEBUG:src.train:Action indices: tensor([0, 1, 1, 1, 0, 1, 0, 0, 0, 1])
+DEBUG:src.train:Action words: ['apple' 'orange' 'orange' 'orange' 'apple' 'orange' 'apple' 'apple'
+ 'apple' 'orange']
+DEBUG:src.train:Rewards: tensor([1.0000, 1.0000, 1.0000, 0.4967, 1.0000, 1.0000, 1.0000, 1.0000, 0.4967,
+        0.4967])
+DEBUG:src.train:Episode 1: Guess correctness - tensor([ True,  True,  True, False,  True,  True,  True,  True, False, False])
+DEBUG:src.train:Input Word Indices: [0 1 1 1 0 1 0 0 0 1]
+DEBUG:src.train:Input Tensor: tensor([[0],
+        [1],
+        [1],
+        [1],
+        [0],
+        [1],
+        [0],
+        [0],
+        [0],
+        [1]])
+DEBUG:src.train:Action Probs: tensor([[0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837]], grad_fn=<SqueezeBackward0>)
+DEBUG:src.train:Action indices: tensor([1, 1, 0, 0, 0, 0, 1, 0, 0, 0])
+DEBUG:src.train:Action words: ['orange' 'orange' 'apple' 'apple' 'apple' 'apple' 'orange' 'apple'
+ 'apple' 'apple']
+DEBUG:src.train:Rewards: tensor([0.4967, 1.0000, 0.4967, 1.0000, 1.0000, 0.4967, 0.4967, 1.0000, 0.4967,
+        1.0000])
+DEBUG:src.train:Episode 1: Guess correctness - tensor([False,  True, False,  True,  True, False, False,  True, False,  True])
+DEBUG:src.train:Input Word Indices: [1 1 0 0 0 0 1 0 0 0]
+DEBUG:src.train:Input Tensor: tensor([[1],
+        [1],
+        [0],
+        [0],
+        [0],
+        [0],
+        [1],
+        [0],
+        [0],
+        [0]])
+DEBUG:src.train:Action Probs: tensor([[0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837]], grad_fn=<SqueezeBackward0>)
+DEBUG:src.train:Action indices: tensor([1, 0, 1, 1, 0, 0, 0, 0, 0, 1])
+DEBUG:src.train:Action words: ['orange' 'apple' 'orange' 'orange' 'apple' 'apple' 'apple' 'apple'
+ 'apple' 'orange']
+DEBUG:src.train:Rewards: tensor([0.4967, 0.4967, 1.0000, 0.4967, 1.0000, 0.4967, 1.0000, 1.0000, 0.4967,
+        0.4967])
+DEBUG:src.train:Episode 1: Guess correctness - tensor([False, False,  True, False,  True, False,  True,  True, False, False])
+DEBUG:src.train:Input Word Indices: [1 0 1 1 0 0 0 0 0 1]
+DEBUG:src.train:Input Tensor: tensor([[1],
+        [0],
+        [1],
+        [1],
+        [0],
+        [0],
+        [0],
+        [0],
+        [0],
+        [1]])
+DEBUG:src.train:Action Probs: tensor([[0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837]], grad_fn=<SqueezeBackward0>)
+DEBUG:src.train:Action indices: tensor([0, 0, 0, 1, 1, 1, 0, 0, 1, 0])
+DEBUG:src.train:Action words: ['apple' 'apple' 'apple' 'orange' 'orange' 'orange' 'apple' 'apple'
+ 'orange' 'apple']
+DEBUG:src.train:Rewards: tensor([1.0000, 0.4967, 0.4967, 0.4967, 0.4967, 1.0000, 1.0000, 1.0000, 1.0000,
+        1.0000])
+DEBUG:src.train:Episode 1: Guess correctness - tensor([ True, False, False, False, False,  True,  True,  True,  True,  True])
+DEBUG:src.train:Input Word Indices: [0 0 0 1 1 1 0 0 1 0]
+DEBUG:src.train:Input Tensor: tensor([[0],
+        [0],
+        [0],
+        [1],
+        [1],
+        [1],
+        [0],
+        [0],
+        [1],
+        [0]])
+DEBUG:src.train:Action Probs: tensor([[0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837]], grad_fn=<SqueezeBackward0>)
+DEBUG:src.train:Action indices: tensor([0, 0, 0, 0, 1, 1, 0, 0, 1, 0])
+DEBUG:src.train:Action words: ['apple' 'apple' 'apple' 'apple' 'orange' 'orange' 'apple' 'apple'
+ 'orange' 'apple']
+DEBUG:src.train:Rewards: tensor([1.0000, 0.4967, 0.4967, 1.0000, 0.4967, 1.0000, 1.0000, 1.0000, 1.0000,
+        1.0000])
+DEBUG:src.train:Episode 1: Guess correctness - tensor([ True, False, False,  True, False,  True,  True,  True,  True,  True])
+DEBUG:src.train:Input Word Indices: [0 0 0 0 1 1 0 0 1 0]
+DEBUG:src.train:Input Tensor: tensor([[0],
+        [0],
+        [0],
+        [0],
+        [1],
+        [1],
+        [0],
+        [0],
+        [1],
+        [0]])
+DEBUG:src.train:Action Probs: tensor([[0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837]], grad_fn=<SqueezeBackward0>)
+DEBUG:src.train:Action indices: tensor([0, 1, 1, 0, 1, 0, 1, 0, 1, 1])
+DEBUG:src.train:Action words: ['apple' 'orange' 'orange' 'apple' 'orange' 'apple' 'orange' 'apple'
+ 'orange' 'orange']
+DEBUG:src.train:Rewards: tensor([1.0000, 1.0000, 1.0000, 1.0000, 0.4967, 0.4967, 0.4967, 1.0000, 1.0000,
+        0.4967])
+DEBUG:src.train:Episode 1: Guess correctness - tensor([ True,  True,  True,  True, False, False, False,  True,  True, False])
+DEBUG:src.train:Input Word Indices: [0 1 1 0 1 0 1 0 1 1]
+DEBUG:src.train:Input Tensor: tensor([[0],
+        [1],
+        [1],
+        [0],
+        [1],
+        [0],
+        [1],
+        [0],
+        [1],
+        [1]])
+DEBUG:src.train:Action Probs: tensor([[0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837]], grad_fn=<SqueezeBackward0>)
+DEBUG:src.train:Action indices: tensor([0, 0, 1, 0, 0, 1, 1, 1, 0, 1])
+DEBUG:src.train:Action words: ['apple' 'apple' 'orange' 'apple' 'apple' 'orange' 'orange' 'orange'
+ 'apple' 'orange']
+DEBUG:src.train:Rewards: tensor([1.0000, 0.4967, 1.0000, 1.0000, 1.0000, 1.0000, 0.4967, 0.4967, 0.4967,
+        0.4967])
+DEBUG:src.train:Episode 1: Guess correctness - tensor([ True, False,  True,  True,  True,  True, False, False, False, False])
+DEBUG:src.train:Input Word Indices: [0 0 1 0 0 1 1 1 0 1]
+DEBUG:src.train:Input Tensor: tensor([[0],
+        [0],
+        [1],
+        [0],
+        [0],
+        [1],
+        [1],
+        [1],
+        [0],
+        [1]])
+DEBUG:src.train:Action Probs: tensor([[0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837]], grad_fn=<SqueezeBackward0>)
+DEBUG:src.train:Action indices: tensor([0, 1, 1, 0, 1, 0, 1, 1, 0, 0])
+DEBUG:src.train:Action words: ['apple' 'orange' 'orange' 'apple' 'orange' 'apple' 'orange' 'orange'
+ 'apple' 'apple']
+DEBUG:src.train:Rewards: tensor([1.0000, 1.0000, 1.0000, 1.0000, 0.4967, 0.4967, 0.4967, 0.4967, 0.4967,
+        1.0000])
+DEBUG:src.train:Episode 1: Guess correctness - tensor([ True,  True,  True,  True, False, False, False, False, False,  True])
+DEBUG:src.train:Input Word Indices: [0 1 1 0 1 0 1 1 0 0]
+DEBUG:src.train:Input Tensor: tensor([[0],
+        [1],
+        [1],
+        [0],
+        [1],
+        [0],
+        [1],
+        [1],
+        [0],
+        [0]])
+DEBUG:src.train:Action Probs: tensor([[0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837]], grad_fn=<SqueezeBackward0>)
+DEBUG:src.train:Action indices: tensor([1, 1, 0, 0, 0, 0, 0, 0, 0, 0])
+DEBUG:src.train:Action words: ['orange' 'orange' 'apple' 'apple' 'apple' 'apple' 'apple' 'apple' 'apple'
+ 'apple']
+DEBUG:src.train:Rewards: tensor([0.4967, 1.0000, 0.4967, 1.0000, 1.0000, 0.4967, 1.0000, 1.0000, 0.4967,
+        1.0000])
+DEBUG:src.train:Episode 1: Guess correctness - tensor([False,  True, False,  True,  True, False,  True,  True, False,  True])
+DEBUG:src.train:Input Word Indices: [1 1 0 0 0 0 0 0 0 0]
+DEBUG:src.train:Input Tensor: tensor([[1],
+        [1],
+        [0],
+        [0],
+        [0],
+        [0],
+        [0],
+        [0],
+        [0],
+        [0]])
+DEBUG:src.train:Action Probs: tensor([[0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837]], grad_fn=<SqueezeBackward0>)
+DEBUG:src.train:Action indices: tensor([0, 0, 0, 0, 0, 0, 1, 0, 0, 1])
+DEBUG:src.train:Action words: ['apple' 'apple' 'apple' 'apple' 'apple' 'apple' 'orange' 'apple' 'apple'
+ 'orange']
+DEBUG:src.train:Rewards: tensor([1.0000, 0.4967, 0.4967, 1.0000, 1.0000, 0.4967, 0.4967, 1.0000, 0.4967,
+        0.4967])
+DEBUG:src.train:Episode 1: Guess correctness - tensor([ True, False, False,  True,  True, False, False,  True, False, False])
+DEBUG:src.train:Input Word Indices: [0 0 0 0 0 0 1 0 0 1]
+DEBUG:src.train:Input Tensor: tensor([[0],
+        [0],
+        [0],
+        [0],
+        [0],
+        [0],
+        [1],
+        [0],
+        [0],
+        [1]])
+DEBUG:src.train:Action Probs: tensor([[0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837]], grad_fn=<SqueezeBackward0>)
+DEBUG:src.train:Action indices: tensor([1, 1, 1, 0, 1, 0, 0, 0, 1, 1])
+DEBUG:src.train:Action words: ['orange' 'orange' 'orange' 'apple' 'orange' 'apple' 'apple' 'apple'
+ 'orange' 'orange']
+DEBUG:src.train:Rewards: tensor([0.4967, 1.0000, 1.0000, 1.0000, 0.4967, 0.4967, 1.0000, 1.0000, 1.0000,
+        0.4967])
+DEBUG:src.train:Episode 1: Guess correctness - tensor([False,  True,  True,  True, False, False,  True,  True,  True, False])
+DEBUG:src.train:Input Word Indices: [1 1 1 0 1 0 0 0 1 1]
+DEBUG:src.train:Input Tensor: tensor([[1],
+        [1],
+        [1],
+        [0],
+        [1],
+        [0],
+        [0],
+        [0],
+        [1],
+        [1]])
+DEBUG:src.train:Action Probs: tensor([[0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837]], grad_fn=<SqueezeBackward0>)
+DEBUG:src.train:Action indices: tensor([1, 0, 1, 1, 0, 0, 0, 0, 1, 1])
+DEBUG:src.train:Action words: ['orange' 'apple' 'orange' 'orange' 'apple' 'apple' 'apple' 'apple'
+ 'orange' 'orange']
+DEBUG:src.train:Rewards: tensor([0.4967, 0.4967, 1.0000, 0.4967, 1.0000, 0.4967, 1.0000, 1.0000, 1.0000,
+        0.4967])
+DEBUG:src.train:Episode 1: Guess correctness - tensor([False, False,  True, False,  True, False,  True,  True,  True, False])
+DEBUG:src.train:Input Word Indices: [1 0 1 1 0 0 0 0 1 1]
+DEBUG:src.train:Input Tensor: tensor([[1],
+        [0],
+        [1],
+        [1],
+        [0],
+        [0],
+        [0],
+        [0],
+        [1],
+        [1]])
+DEBUG:src.train:Action Probs: tensor([[0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837]], grad_fn=<SqueezeBackward0>)
+DEBUG:src.train:Action indices: tensor([1, 1, 0, 0, 1, 0, 1, 0, 0, 0])
+DEBUG:src.train:Action words: ['orange' 'orange' 'apple' 'apple' 'orange' 'apple' 'orange' 'apple'
+ 'apple' 'apple']
+DEBUG:src.train:Rewards: tensor([0.4967, 1.0000, 0.4967, 1.0000, 0.4967, 0.4967, 0.4967, 1.0000, 0.4967,
+        1.0000])
+DEBUG:src.train:Episode 1: Guess correctness - tensor([False,  True, False,  True, False, False, False,  True, False,  True])
+DEBUG:src.train:Input Word Indices: [1 1 0 0 1 0 1 0 0 0]
+DEBUG:src.train:Input Tensor: tensor([[1],
+        [1],
+        [0],
+        [0],
+        [1],
+        [0],
+        [1],
+        [0],
+        [0],
+        [0]])
+DEBUG:src.train:Action Probs: tensor([[0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837]], grad_fn=<SqueezeBackward0>)
+DEBUG:src.train:Action indices: tensor([0, 1, 1, 1, 0, 1, 1, 1, 1, 1])
+DEBUG:src.train:Action words: ['apple' 'orange' 'orange' 'orange' 'apple' 'orange' 'orange' 'orange'
+ 'orange' 'orange']
+DEBUG:src.train:Rewards: tensor([1.0000, 1.0000, 1.0000, 0.4967, 1.0000, 1.0000, 0.4967, 0.4967, 1.0000,
+        0.4967])
+DEBUG:src.train:Episode 1: Guess correctness - tensor([ True,  True,  True, False,  True,  True, False, False,  True, False])
+DEBUG:src.train:Input Word Indices: [0 1 1 1 0 1 1 1 1 1]
+DEBUG:src.train:Input Tensor: tensor([[0],
+        [1],
+        [1],
+        [1],
+        [0],
+        [1],
+        [1],
+        [1],
+        [1],
+        [1]])
+DEBUG:src.train:Action Probs: tensor([[0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837]], grad_fn=<SqueezeBackward0>)
+DEBUG:src.train:Action indices: tensor([1, 1, 1, 0, 1, 0, 1, 0, 1, 1])
+DEBUG:src.train:Action words: ['orange' 'orange' 'orange' 'apple' 'orange' 'apple' 'orange' 'apple'
+ 'orange' 'orange']
+DEBUG:src.train:Rewards: tensor([0.4967, 1.0000, 1.0000, 1.0000, 0.4967, 0.4967, 0.4967, 1.0000, 1.0000,
+        0.4967])
+DEBUG:src.train:Episode 1: Guess correctness - tensor([False,  True,  True,  True, False, False, False,  True,  True, False])
+DEBUG:src.train:Input Word Indices: [1 1 1 0 1 0 1 0 1 1]
+DEBUG:src.train:Input Tensor: tensor([[1],
+        [1],
+        [1],
+        [0],
+        [1],
+        [0],
+        [1],
+        [0],
+        [1],
+        [1]])
+DEBUG:src.train:Action Probs: tensor([[0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837]], grad_fn=<SqueezeBackward0>)
+DEBUG:src.train:Action indices: tensor([0, 1, 1, 0, 1, 0, 1, 1, 0, 1])
+DEBUG:src.train:Action words: ['apple' 'orange' 'orange' 'apple' 'orange' 'apple' 'orange' 'orange'
+ 'apple' 'orange']
+DEBUG:src.train:Rewards: tensor([1.0000, 1.0000, 1.0000, 1.0000, 0.4967, 0.4967, 0.4967, 0.4967, 0.4967,
+        0.4967])
+DEBUG:src.train:Episode 1: Guess correctness - tensor([ True,  True,  True,  True, False, False, False, False, False, False])
+DEBUG:src.train:Input Word Indices: [0 1 1 0 1 0 1 1 0 1]
+DEBUG:src.train:Input Tensor: tensor([[0],
+        [1],
+        [1],
+        [0],
+        [1],
+        [0],
+        [1],
+        [1],
+        [0],
+        [1]])
+DEBUG:src.train:Action Probs: tensor([[0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837]], grad_fn=<SqueezeBackward0>)
+DEBUG:src.train:Action indices: tensor([0, 0, 1, 0, 1, 1, 1, 1, 0, 1])
+DEBUG:src.train:Action words: ['apple' 'apple' 'orange' 'apple' 'orange' 'orange' 'orange' 'orange'
+ 'apple' 'orange']
+DEBUG:src.train:Rewards: tensor([1.0000, 0.4967, 1.0000, 1.0000, 0.4967, 1.0000, 0.4967, 0.4967, 0.4967,
+        0.4967])
+DEBUG:src.train:Episode 1: Guess correctness - tensor([ True, False,  True,  True, False,  True, False, False, False, False])
+DEBUG:src.train:Input Word Indices: [0 0 1 0 1 1 1 1 0 1]
+DEBUG:src.train:Input Tensor: tensor([[0],
+        [0],
+        [1],
+        [0],
+        [1],
+        [1],
+        [1],
+        [1],
+        [0],
+        [1]])
+DEBUG:src.train:Action Probs: tensor([[0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837]], grad_fn=<SqueezeBackward0>)
+DEBUG:src.train:Action indices: tensor([1, 0, 1, 0, 1, 1, 0, 0, 1, 0])
+DEBUG:src.train:Action words: ['orange' 'apple' 'orange' 'apple' 'orange' 'orange' 'apple' 'apple'
+ 'orange' 'apple']
+DEBUG:src.train:Rewards: tensor([0.4967, 0.4967, 1.0000, 1.0000, 0.4967, 1.0000, 1.0000, 1.0000, 1.0000,
+        1.0000])
+DEBUG:src.train:Episode 1: Guess correctness - tensor([False, False,  True,  True, False,  True,  True,  True,  True,  True])
+DEBUG:src.train:Input Word Indices: [1 0 1 0 1 1 0 0 1 0]
+DEBUG:src.train:Input Tensor: tensor([[1],
+        [0],
+        [1],
+        [0],
+        [1],
+        [1],
+        [0],
+        [0],
+        [1],
+        [0]])
+DEBUG:src.train:Action Probs: tensor([[0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837]], grad_fn=<SqueezeBackward0>)
+DEBUG:src.train:Action indices: tensor([1, 0, 0, 0, 1, 0, 1, 0, 0, 0])
+DEBUG:src.train:Action words: ['orange' 'apple' 'apple' 'apple' 'orange' 'apple' 'orange' 'apple'
+ 'apple' 'apple']
+DEBUG:src.train:Rewards: tensor([0.4967, 0.4967, 0.4967, 1.0000, 0.4967, 0.4967, 0.4967, 1.0000, 0.4967,
+        1.0000])
+DEBUG:src.train:Episode 1: Guess correctness - tensor([False, False, False,  True, False, False, False,  True, False,  True])
+DEBUG:src.train:Input Word Indices: [1 0 0 0 1 0 1 0 0 0]
+DEBUG:src.train:Input Tensor: tensor([[1],
+        [0],
+        [0],
+        [0],
+        [1],
+        [0],
+        [1],
+        [0],
+        [0],
+        [0]])
+DEBUG:src.train:Action Probs: tensor([[0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837]], grad_fn=<SqueezeBackward0>)
+DEBUG:src.train:Action indices: tensor([1, 0, 0, 0, 0, 1, 0, 0, 1, 0])
+DEBUG:src.train:Action words: ['orange' 'apple' 'apple' 'apple' 'apple' 'orange' 'apple' 'apple'
+ 'orange' 'apple']
+DEBUG:src.train:Rewards: tensor([0.4967, 0.4967, 0.4967, 1.0000, 1.0000, 1.0000, 1.0000, 1.0000, 1.0000,
+        1.0000])
+DEBUG:src.train:Episode 1: Guess correctness - tensor([False, False, False,  True,  True,  True,  True,  True,  True,  True])
+DEBUG:src.train:Input Word Indices: [1 0 0 0 0 1 0 0 1 0]
+DEBUG:src.train:Input Tensor: tensor([[1],
+        [0],
+        [0],
+        [0],
+        [0],
+        [1],
+        [0],
+        [0],
+        [1],
+        [0]])
+DEBUG:src.train:Action Probs: tensor([[0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837]], grad_fn=<SqueezeBackward0>)
+DEBUG:src.train:Action indices: tensor([1, 1, 0, 1, 1, 0, 1, 1, 1, 0])
+DEBUG:src.train:Action words: ['orange' 'orange' 'apple' 'orange' 'orange' 'apple' 'orange' 'orange'
+ 'orange' 'apple']
+DEBUG:src.train:Rewards: tensor([0.4967, 1.0000, 0.4967, 0.4967, 0.4967, 0.4967, 0.4967, 0.4967, 1.0000,
+        1.0000])
+DEBUG:src.train:Episode 1: Guess correctness - tensor([False,  True, False, False, False, False, False, False,  True,  True])
+DEBUG:src.train:Input Word Indices: [1 1 0 1 1 0 1 1 1 0]
+DEBUG:src.train:Input Tensor: tensor([[1],
+        [1],
+        [0],
+        [1],
+        [1],
+        [0],
+        [1],
+        [1],
+        [1],
+        [0]])
+DEBUG:src.train:Action Probs: tensor([[0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837]], grad_fn=<SqueezeBackward0>)
+DEBUG:src.train:Action indices: tensor([0, 0, 1, 0, 1, 1, 1, 0, 1, 0])
+DEBUG:src.train:Action words: ['apple' 'apple' 'orange' 'apple' 'orange' 'orange' 'orange' 'apple'
+ 'orange' 'apple']
+DEBUG:src.train:Rewards: tensor([1.0000, 0.4967, 1.0000, 1.0000, 0.4967, 1.0000, 0.4967, 1.0000, 1.0000,
+        1.0000])
+DEBUG:src.train:Episode 1: Guess correctness - tensor([ True, False,  True,  True, False,  True, False,  True,  True,  True])
+DEBUG:src.train:Input Word Indices: [0 0 1 0 1 1 1 0 1 0]
+DEBUG:src.train:Input Tensor: tensor([[0],
+        [0],
+        [1],
+        [0],
+        [1],
+        [1],
+        [1],
+        [0],
+        [1],
+        [0]])
+DEBUG:src.train:Action Probs: tensor([[0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837]], grad_fn=<SqueezeBackward0>)
+DEBUG:src.train:Action indices: tensor([0, 0, 0, 0, 1, 1, 0, 0, 1, 0])
+DEBUG:src.train:Action words: ['apple' 'apple' 'apple' 'apple' 'orange' 'orange' 'apple' 'apple'
+ 'orange' 'apple']
+DEBUG:src.train:Rewards: tensor([1.0000, 0.4967, 0.4967, 1.0000, 0.4967, 1.0000, 1.0000, 1.0000, 1.0000,
+        1.0000])
+DEBUG:src.train:Episode 1: Guess correctness - tensor([ True, False, False,  True, False,  True,  True,  True,  True,  True])
+DEBUG:src.train:Input Word Indices: [0 0 0 0 1 1 0 0 1 0]
+DEBUG:src.train:Input Tensor: tensor([[0],
+        [0],
+        [0],
+        [0],
+        [1],
+        [1],
+        [0],
+        [0],
+        [1],
+        [0]])
+DEBUG:src.train:Action Probs: tensor([[0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837]], grad_fn=<SqueezeBackward0>)
+DEBUG:src.train:Action indices: tensor([1, 1, 1, 0, 0, 0, 0, 0, 0, 1])
+DEBUG:src.train:Action words: ['orange' 'orange' 'orange' 'apple' 'apple' 'apple' 'apple' 'apple'
+ 'apple' 'orange']
+DEBUG:src.train:Rewards: tensor([0.4967, 1.0000, 1.0000, 1.0000, 1.0000, 0.4967, 1.0000, 1.0000, 0.4967,
+        0.4967])
+DEBUG:src.train:Episode 1: Guess correctness - tensor([False,  True,  True,  True,  True, False,  True,  True, False, False])
+DEBUG:src.train:Input Word Indices: [1 1 1 0 0 0 0 0 0 1]
+DEBUG:src.train:Input Tensor: tensor([[1],
+        [1],
+        [1],
+        [0],
+        [0],
+        [0],
+        [0],
+        [0],
+        [0],
+        [1]])
+DEBUG:src.train:Action Probs: tensor([[0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837]], grad_fn=<SqueezeBackward0>)
+DEBUG:src.train:Action indices: tensor([1, 0, 0, 1, 1, 0, 1, 0, 0, 1])
+DEBUG:src.train:Action words: ['orange' 'apple' 'apple' 'orange' 'orange' 'apple' 'orange' 'apple'
+ 'apple' 'orange']
+DEBUG:src.train:Rewards: tensor([0.4967, 0.4967, 0.4967, 0.4967, 0.4967, 0.4967, 0.4967, 1.0000, 0.4967,
+        0.4967])
+DEBUG:src.train:Episode 1: Guess correctness - tensor([False, False, False, False, False, False, False,  True, False, False])
+DEBUG:src.train:Input Word Indices: [1 0 0 1 1 0 1 0 0 1]
+DEBUG:src.train:Input Tensor: tensor([[1],
+        [0],
+        [0],
+        [1],
+        [1],
+        [0],
+        [1],
+        [0],
+        [0],
+        [1]])
+DEBUG:src.train:Action Probs: tensor([[0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837]], grad_fn=<SqueezeBackward0>)
+DEBUG:src.train:Action indices: tensor([1, 1, 0, 0, 1, 0, 1, 0, 1, 0])
+DEBUG:src.train:Action words: ['orange' 'orange' 'apple' 'apple' 'orange' 'apple' 'orange' 'apple'
+ 'orange' 'apple']
+DEBUG:src.train:Rewards: tensor([0.4967, 1.0000, 0.4967, 1.0000, 0.4967, 0.4967, 0.4967, 1.0000, 1.0000,
+        1.0000])
+DEBUG:src.train:Episode 1: Guess correctness - tensor([False,  True, False,  True, False, False, False,  True,  True,  True])
+DEBUG:src.train:Input Word Indices: [1 1 0 0 1 0 1 0 1 0]
+DEBUG:src.train:Input Tensor: tensor([[1],
+        [1],
+        [0],
+        [0],
+        [1],
+        [0],
+        [1],
+        [0],
+        [1],
+        [0]])
+DEBUG:src.train:Action Probs: tensor([[0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837]], grad_fn=<SqueezeBackward0>)
+DEBUG:src.train:Action indices: tensor([1, 1, 1, 1, 1, 1, 1, 0, 1, 1])
+DEBUG:src.train:Action words: ['orange' 'orange' 'orange' 'orange' 'orange' 'orange' 'orange' 'apple'
+ 'orange' 'orange']
+DEBUG:src.train:Rewards: tensor([0.4967, 1.0000, 1.0000, 0.4967, 0.4967, 1.0000, 0.4967, 1.0000, 1.0000,
+        0.4967])
+DEBUG:src.train:Episode 1: Guess correctness - tensor([False,  True,  True, False, False,  True, False,  True,  True, False])
+DEBUG:src.train:Input Word Indices: [1 1 1 1 1 1 1 0 1 1]
+DEBUG:src.train:Input Tensor: tensor([[1],
+        [1],
+        [1],
+        [1],
+        [1],
+        [1],
+        [1],
+        [0],
+        [1],
+        [1]])
+DEBUG:src.train:Action Probs: tensor([[0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837]], grad_fn=<SqueezeBackward0>)
+DEBUG:src.train:Action indices: tensor([0, 0, 0, 1, 0, 1, 0, 0, 0, 1])
+DEBUG:src.train:Action words: ['apple' 'apple' 'apple' 'orange' 'apple' 'orange' 'apple' 'apple' 'apple'
+ 'orange']
+DEBUG:src.train:Rewards: tensor([1.0000, 0.4967, 0.4967, 0.4967, 1.0000, 1.0000, 1.0000, 1.0000, 0.4967,
+        0.4967])
+DEBUG:src.train:Episode 1: Guess correctness - tensor([ True, False, False, False,  True,  True,  True,  True, False, False])
+DEBUG:src.train:Input Word Indices: [0 0 0 1 0 1 0 0 0 1]
+DEBUG:src.train:Input Tensor: tensor([[0],
+        [0],
+        [0],
+        [1],
+        [0],
+        [1],
+        [0],
+        [0],
+        [0],
+        [1]])
+DEBUG:src.train:Action Probs: tensor([[0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837],
+        [0.5163, 0.4837]], grad_fn=<SqueezeBackward0>)
+DEBUG:src.train:Action indices: tensor([0, 1, 0, 1, 0, 1, 0, 1, 0, 0])
+DEBUG:src.train:Action words: ['apple' 'orange' 'apple' 'orange' 'apple' 'orange' 'apple' 'orange'
+ 'apple' 'apple']
+DEBUG:src.train:Rewards: tensor([1.0000, 1.0000, 0.4967, 0.4967, 1.0000, 1.0000, 1.0000, 0.4967, 0.4967,
+        1.0000])
+DEBUG:src.train:Episode 1: Guess correctness - tensor([ True,  True, False, False,  True,  True,  True, False, False,  True])
+DEBUG:src.train:Log Probs: tensor([[-0.6592, -0.6592, -0.6592, -0.6592, -0.7283, -0.6592, -0.6592, -0.7283,
+         -0.6592, -0.6592],
+        [-0.6582, -0.7293, -0.7293, -0.6582, -0.7293, -0.7293, -0.6582, -0.7293,
+         -0.7293, -0.7293],
+        [-0.6584, -0.6584, -0.7291, -0.7291, -0.6584, -0.7291, -0.6584, -0.7291,
+         -0.6584, -0.6584],
+        [-0.7285, -0.7285, -0.7285, -0.7285, -0.7285, -0.6590, -0.7285, -0.7285,
+         -0.6590, -0.6590],
+        [-0.6595, -0.7279, -0.7279, -0.6595, -0.7279, -0.7279, -0.7279, -0.6595,
+         -0.7279, -0.6595],
+        [-0.7274, -0.6600, -0.6600, -0.7274, -0.7274, -0.6600, -0.6600, -0.6600,
+         -0.6600, -0.6600],
+        [-0.6604, -0.7270, -0.6604, -0.6604, -0.7270, -0.6604, -0.6604, -0.7270,
+         -0.6604, -0.6604],
+        [-0.7267, -0.7267, -0.7267, -0.7267, -0.6607, -0.6607, -0.7267, -0.7267,
+         -0.7267, -0.6607],
+        [-0.6608, -0.6608, -0.6608, -0.7265, -0.7265, -0.6608, -0.6608, -0.6608,
+         -0.7265, -0.7265],
+        [-0.6610, -0.6610, -0.7264, -0.6610, -0.6610, -0.6610, -0.7264, -0.7264,
+         -0.7264, -0.7264],
+        [-0.7263, -0.7263, -0.7263, -0.6610, -0.6610, -0.6610, -0.7263, -0.6610,
+         -0.7263, -0.6610],
+        [-0.7263, -0.7263, -0.7263, -0.6611, -0.7263, -0.7263, -0.6611, -0.7263,
+         -0.7263, -0.7263],
+        [-0.7263, -0.7263, -0.6611, -0.7263, -0.7263, -0.7263, -0.6611, -0.6611,
+         -0.6611, -0.7263],
+        [-0.6611, -0.7262, -0.6611, -0.6611, -0.7262, -0.7262, -0.6611, -0.6611,
+         -0.6611, -0.6611],
+        [-0.7262, -0.7262, -0.7262, -0.7262, -0.6611, -0.6611, -0.7262, -0.7262,
+         -0.7262, -0.6611],
+        [-0.6611, -0.6611, -0.6611, -0.7262, -0.6611, -0.6611, -0.6611, -0.7262,
+         -0.7262, -0.7262],
+        [-0.7262, -0.7262, -0.6611, -0.7262, -0.7262, -0.6611, -0.7262, -0.7262,
+         -0.7262, -0.7262],
+        [-0.6611, -0.6611, -0.7262, -0.6611, -0.7262, -0.7262, -0.7262, -0.7262,
+         -0.7262, -0.6611],
+        [-0.7262, -0.6611, -0.7262, -0.6611, -0.7262, -0.6611, -0.6611, -0.6611,
+         -0.6611, -0.6611],
+        [-0.7262, -0.6611, -0.7262, -0.7262, -0.6611, -0.7262, -0.6611, -0.6611,
+         -0.7262, -0.6611],
+        [-0.6611, -0.7262, -0.6611, -0.6611, -0.6611, -0.6611, -0.6611, -0.7262,
+         -0.7262, -0.7262],
+        [-0.6611, -0.7262, -0.7262, -0.7262, -0.6611, -0.7262, -0.6611, -0.6611,
+         -0.6611, -0.7262],
+        [-0.7262, -0.7262, -0.6611, -0.6611, -0.6611, -0.6611, -0.7262, -0.6611,
+         -0.6611, -0.6611],
+        [-0.7262, -0.6611, -0.7262, -0.7262, -0.6611, -0.6611, -0.6611, -0.6611,
+         -0.6611, -0.7262],
+        [-0.6611, -0.6611, -0.6611, -0.7262, -0.7262, -0.7262, -0.6611, -0.6611,
+         -0.7262, -0.6611],
+        [-0.6611, -0.6611, -0.6611, -0.6611, -0.7262, -0.7262, -0.6611, -0.6611,
+         -0.7262, -0.6611],
+        [-0.6611, -0.7262, -0.7262, -0.6611, -0.7262, -0.6611, -0.7262, -0.6611,
+         -0.7262, -0.7262],
+        [-0.6611, -0.6611, -0.7262, -0.6611, -0.6611, -0.7262, -0.7262, -0.7262,
+         -0.6611, -0.7262],
+        [-0.6611, -0.7262, -0.7262, -0.6611, -0.7262, -0.6611, -0.7262, -0.7262,
+         -0.6611, -0.6611],
+        [-0.7262, -0.7262, -0.6611, -0.6611, -0.6611, -0.6611, -0.6611, -0.6611,
+         -0.6611, -0.6611],
+        [-0.6611, -0.6611, -0.6611, -0.6611, -0.6611, -0.6611, -0.7262, -0.6611,
+         -0.6611, -0.7262],
+        [-0.7262, -0.7262, -0.7262, -0.6611, -0.7262, -0.6611, -0.6611, -0.6611,
+         -0.7262, -0.7262],
+        [-0.7262, -0.6611, -0.7262, -0.7262, -0.6611, -0.6611, -0.6611, -0.6611,
+         -0.7262, -0.7262],
+        [-0.7262, -0.7262, -0.6611, -0.6611, -0.7262, -0.6611, -0.7262, -0.6611,
+         -0.6611, -0.6611],
+        [-0.6611, -0.7262, -0.7262, -0.7262, -0.6611, -0.7262, -0.7262, -0.7262,
+         -0.7262, -0.7262],
+        [-0.7262, -0.7262, -0.7262, -0.6611, -0.7262, -0.6611, -0.7262, -0.6611,
+         -0.7262, -0.7262],
+        [-0.6611, -0.7262, -0.7262, -0.6611, -0.7262, -0.6611, -0.7262, -0.7262,
+         -0.6611, -0.7262],
+        [-0.6611, -0.6611, -0.7262, -0.6611, -0.7262, -0.7262, -0.7262, -0.7262,
+         -0.6611, -0.7262],
+        [-0.7262, -0.6611, -0.7262, -0.6611, -0.7262, -0.7262, -0.6611, -0.6611,
+         -0.7262, -0.6611],
+        [-0.7262, -0.6611, -0.6611, -0.6611, -0.7262, -0.6611, -0.7262, -0.6611,
+         -0.6611, -0.6611],
+        [-0.7262, -0.6611, -0.6611, -0.6611, -0.6611, -0.7262, -0.6611, -0.6611,
+         -0.7262, -0.6611],
+        [-0.7262, -0.7262, -0.6611, -0.7262, -0.7262, -0.6611, -0.7262, -0.7262,
+         -0.7262, -0.6611],
+        [-0.6611, -0.6611, -0.7262, -0.6611, -0.7262, -0.7262, -0.7262, -0.6611,
+         -0.7262, -0.6611],
+        [-0.6611, -0.6611, -0.6611, -0.6611, -0.7262, -0.7262, -0.6611, -0.6611,
+         -0.7262, -0.6611],
+        [-0.7262, -0.7262, -0.7262, -0.6611, -0.6611, -0.6611, -0.6611, -0.6611,
+         -0.6611, -0.7262],
+        [-0.7262, -0.6611, -0.6611, -0.7262, -0.7262, -0.6611, -0.7262, -0.6611,
+         -0.6611, -0.7262],
+        [-0.7262, -0.7262, -0.6611, -0.6611, -0.7262, -0.6611, -0.7262, -0.6611,
+         -0.7262, -0.6611],
+        [-0.7262, -0.7262, -0.7262, -0.7262, -0.7262, -0.7262, -0.7262, -0.6611,
+         -0.7262, -0.7262],
+        [-0.6611, -0.6611, -0.6611, -0.7262, -0.6611, -0.7262, -0.6611, -0.6611,
+         -0.6611, -0.7262],
+        [-0.6611, -0.7262, -0.6611, -0.7262, -0.6611, -0.7262, -0.6611, -0.7262,
+         -0.6611, -0.6611]], grad_fn=<StackBackward0>)
+INFO:src.train:Episode 1: Cumulative reward: 379.20077323913574
+DEBUG:src.train:Episode 2: Input words: ['apple', 'apple', 'apple', 'orange', 'orange', 'orange', 'orange', 'apple', 'apple', 'orange']
+DEBUG:src.train:Episode 2: Target words: ['apple', 'apple', 'orange', 'apple', 'apple', 'orange', 'orange', 'apple', 'apple', 'orange']
+DEBUG:src.train:Input Word Indices: [0 0 0 1 1 1 1 0 0 1]
+DEBUG:src.train:Input Tensor: tensor([[0],
+        [0],
+        [0],
+        [1],
+        [1],
+        [1],
+        [1],
+        [0],
+        [0],
+        [1]])
+DEBUG:src.train:Action Probs: tensor([[0.5333, 0.4667],
+        [0.5333, 0.4667],
+        [0.5333, 0.4667],
+        [0.5333, 0.4667],
+        [0.5333, 0.4667],
+        [0.5333, 0.4667],
+        [0.5333, 0.4667],
+        [0.5333, 0.4667],
+        [0.5333, 0.4667],
+        [0.5333, 0.4667]], grad_fn=<SqueezeBackward0>)
+DEBUG:src.train:Action indices: tensor([0, 1, 0, 1, 0, 1, 1, 0, 1, 0])
+DEBUG:src.train:Action words: ['apple' 'orange' 'apple' 'orange' 'apple' 'orange' 'orange' 'apple'
+ 'orange' 'apple']
+DEBUG:src.train:Rewards: tensor([1.0000, 0.4967, 0.4967, 0.4967, 1.0000, 1.0000, 1.0000, 1.0000, 0.4967,
+        0.4967])
+DEBUG:src.train:Episode 2: Guess correctness - tensor([ True, False, False, False,  True,  True,  True,  True, False, False])
+DEBUG:src.train:Input Word Indices: [0 1 0 1 0 1 1 0 1 0]
+DEBUG:src.train:Input Tensor: tensor([[0],
+        [1],
+        [0],
+        [1],
+        [0],
+        [1],
+        [1],
+        [0],
+        [1],
+        [0]])
+DEBUG:src.train:Action Probs: tensor([[0.5492, 0.4508],
+        [0.5492, 0.4508],
+        [0.5492, 0.4508],
+        [0.5492, 0.4508],
+        [0.5492, 0.4508],
+        [0.5492, 0.4508],
+        [0.5492, 0.4508],
+        [0.5492, 0.4508],
+        [0.5492, 0.4508],
+        [0.5492, 0.4508]], grad_fn=<SqueezeBackward0>)
+DEBUG:src.train:Action indices: tensor([0, 1, 1, 0, 1, 1, 1, 0, 1, 0])
+DEBUG:src.train:Action words: ['apple' 'orange' 'orange' 'apple' 'orange' 'orange' 'orange' 'apple'
+ 'orange' 'apple']
+DEBUG:src.train:Rewards: tensor([1.0000, 0.4967, 1.0000, 1.0000, 0.4967, 1.0000, 1.0000, 1.0000, 0.4967,
+        0.4967])
+DEBUG:src.train:Episode 2: Guess correctness - tensor([ True, False,  True,  True, False,  True,  True,  True, False, False])
+DEBUG:src.train:Input Word Indices: [0 1 1 0 1 1 1 0 1 0]
+DEBUG:src.train:Input Tensor: tensor([[0],
+        [1],
+        [1],
+        [0],
+        [1],
+        [1],
+        [1],
+        [0],
+        [1],
+        [0]])
+DEBUG:src.train:Action Probs: tensor([[0.5624, 0.4376],
+        [0.5624, 0.4376],
+        [0.5624, 0.4376],
+        [0.5624, 0.4376],
+        [0.5624, 0.4376],
+        [0.5624, 0.4376],
+        [0.5624, 0.4376],
+        [0.5624, 0.4376],
+        [0.5624, 0.4376],
+        [0.5624, 0.4376]], grad_fn=<SqueezeBackward0>)
+DEBUG:src.train:Action indices: tensor([0, 0, 1, 0, 0, 0, 0, 1, 0, 1])
+DEBUG:src.train:Action words: ['apple' 'apple' 'orange' 'apple' 'apple' 'apple' 'apple' 'orange' 'apple'
+ 'orange']
+DEBUG:src.train:Rewards: tensor([1.0000, 1.0000, 1.0000, 1.0000, 1.0000, 0.4967, 0.4967, 0.4967, 1.0000,
+        1.0000])
+DEBUG:src.train:Episode 2: Guess correctness - tensor([ True,  True,  True,  True,  True, False, False, False,  True,  True])
+DEBUG:src.train:Input Word Indices: [0 0 1 0 0 0 0 1 0 1]
+DEBUG:src.train:Input Tensor: tensor([[0],
+        [0],
+        [1],
+        [0],
+        [0],
+        [0],
+        [0],
+        [1],
+        [0],
+        [1]])
+DEBUG:src.train:Action Probs: tensor([[0.5724, 0.4276],
+        [0.5724, 0.4276],
+        [0.5724, 0.4276],
+        [0.5724, 0.4276],
+        [0.5724, 0.4276],
+        [0.5724, 0.4276],
+        [0.5724, 0.4276],
+        [0.5724, 0.4276],
+        [0.5724, 0.4276],
+        [0.5724, 0.4276]], grad_fn=<SqueezeBackward0>)
+DEBUG:src.train:Action indices: tensor([0, 1, 1, 0, 1, 0, 0, 1, 0, 0])
+DEBUG:src.train:Action words: ['apple' 'orange' 'orange' 'apple' 'orange' 'apple' 'apple' 'orange'
+ 'apple' 'apple']
+DEBUG:src.train:Rewards: tensor([1.0000, 0.4967, 1.0000, 1.0000, 0.4967, 0.4967, 0.4967, 0.4967, 1.0000,
+        0.4967])
+DEBUG:src.train:Episode 2: Guess correctness - tensor([ True, False,  True,  True, False, False, False, False,  True, False])
+DEBUG:src.train:Input Word Indices: [0 1 1 0 1 0 0 1 0 0]
+DEBUG:src.train:Input Tensor: tensor([[0],
+        [1],
+        [1],
+        [0],
+        [1],
+        [0],
+        [0],
+        [1],
+        [0],
+        [0]])
+DEBUG:src.train:Action Probs: tensor([[0.5796, 0.4204],
+        [0.5796, 0.4204],
+        [0.5796, 0.4204],
+        [0.5796, 0.4204],
+        [0.5796, 0.4204],
+        [0.5796, 0.4204],
+        [0.5796, 0.4204],
+        [0.5796, 0.4204],
+        [0.5796, 0.4204],
+        [0.5796, 0.4204]], grad_fn=<SqueezeBackward0>)
+DEBUG:src.train:Action indices: tensor([0, 0, 0, 1, 0, 0, 0, 0, 0, 0])
+DEBUG:src.train:Action words: ['apple' 'apple' 'apple' 'orange' 'apple' 'apple' 'apple' 'apple' 'apple'
+ 'apple']
+DEBUG:src.train:Rewards: tensor([1.0000, 1.0000, 0.4967, 0.4967, 1.0000, 0.4967, 0.4967, 1.0000, 1.0000,
+        0.4967])
+DEBUG:src.train:Episode 2: Guess correctness - tensor([ True,  True, False, False,  True, False, False,  True,  True, False])
+DEBUG:src.train:Input Word Indices: [0 0 0 1 0 0 0 0 0 0]
+DEBUG:src.train:Input Tensor: tensor([[0],
+        [0],
+        [0],
+        [1],
+        [0],
+        [0],
+        [0],
+        [0],
+        [0],
+        [0]])
+DEBUG:src.train:Action Probs: tensor([[0.5847, 0.4153],
+        [0.5847, 0.4153],
+        [0.5847, 0.4153],
+        [0.5847, 0.4153],
+        [0.5847, 0.4153],
+        [0.5847, 0.4153],
+        [0.5847, 0.4153],
+        [0.5847, 0.4153],
+        [0.5847, 0.4153],
+        [0.5847, 0.4153]], grad_fn=<SqueezeBackward0>)
+DEBUG:src.train:Action indices: tensor([0, 1, 0, 0, 0, 1, 1, 1, 0, 0])
+DEBUG:src.train:Action words: ['apple' 'orange' 'apple' 'apple' 'apple' 'orange' 'orange' 'orange'
+ 'apple' 'apple']
+DEBUG:src.train:Rewards: tensor([1.0000, 0.4967, 0.4967, 1.0000, 1.0000, 1.0000, 1.0000, 0.4967, 1.0000,
+        0.4967])
+DEBUG:src.train:Episode 2: Guess correctness - tensor([ True, False, False,  True,  True,  True,  True, False,  True, False])
+DEBUG:src.train:Input Word Indices: [0 1 0 0 0 1 1 1 0 0]
+DEBUG:src.train:Input Tensor: tensor([[0],
+        [1],
+        [0],
+        [0],
+        [0],
+        [1],
+        [1],
+        [1],
+        [0],
+        [0]])
+DEBUG:src.train:Action Probs: tensor([[0.5883, 0.4117],
+        [0.5883, 0.4117],
+        [0.5883, 0.4117],
+        [0.5883, 0.4117],
+        [0.5883, 0.4117],
+        [0.5883, 0.4117],
+        [0.5883, 0.4117],
+        [0.5883, 0.4117],
+        [0.5883, 0.4117],
+        [0.5883, 0.4117]], grad_fn=<SqueezeBackward0>)
+DEBUG:src.train:Action indices: tensor([1, 1, 1, 1, 0, 1, 1, 1, 1, 0])
+DEBUG:src.train:Action words: ['orange' 'orange' 'orange' 'orange' 'apple' 'orange' 'orange' 'orange'
+ 'orange' 'apple']
+DEBUG:src.train:Rewards: tensor([0.4967, 0.4967, 1.0000, 0.4967, 1.0000, 1.0000, 1.0000, 0.4967, 0.4967,
+        0.4967])
+DEBUG:src.train:Episode 2: Guess correctness - tensor([False, False,  True, False,  True,  True,  True, False, False, False])
+DEBUG:src.train:Input Word Indices: [1 1 1 1 0 1 1 1 1 0]
+DEBUG:src.train:Input Tensor: tensor([[1],
+        [1],
+        [1],
+        [1],
+        [0],
+        [1],
+        [1],
+        [1],
+        [1],
+        [0]])
+DEBUG:src.train:Action Probs: tensor([[0.5907, 0.4093],
+        [0.5907, 0.4093],
+        [0.5907, 0.4093],
+        [0.5907, 0.4093],
+        [0.5907, 0.4093],
+        [0.5907, 0.4093],
+        [0.5907, 0.4093],
+        [0.5907, 0.4093],
+        [0.5907, 0.4093],
+        [0.5907, 0.4093]], grad_fn=<SqueezeBackward0>)
+DEBUG:src.train:Action indices: tensor([1, 1, 1, 0, 0, 0, 0, 0, 1, 0])
+DEBUG:src.train:Action words: ['orange' 'orange' 'orange' 'apple' 'apple' 'apple' 'apple' 'apple'
+ 'orange' 'apple']
+DEBUG:src.train:Rewards: tensor([0.4967, 0.4967, 1.0000, 1.0000, 1.0000, 0.4967, 0.4967, 1.0000, 0.4967,
+        0.4967])
+DEBUG:src.train:Episode 2: Guess correctness - tensor([False, False,  True,  True,  True, False, False,  True, False, False])
+DEBUG:src.train:Input Word Indices: [1 1 1 0 0 0 0 0 1 0]
+DEBUG:src.train:Input Tensor: tensor([[1],
+        [1],
+        [1],
+        [0],
+        [0],
+        [0],
+        [0],
+        [0],
+        [1],
+        [0]])
+DEBUG:src.train:Action Probs: tensor([[0.5923, 0.4077],
+        [0.5923, 0.4077],
+        [0.5923, 0.4077],
+        [0.5923, 0.4077],
+        [0.5923, 0.4077],
+        [0.5923, 0.4077],
+        [0.5923, 0.4077],
+        [0.5923, 0.4077],
+        [0.5923, 0.4077],
+        [0.5923, 0.4077]], grad_fn=<SqueezeBackward0>)
+DEBUG:src.train:Action indices: tensor([1, 0, 1, 0, 0, 1, 0, 1, 1, 0])
+DEBUG:src.train:Action words: ['orange' 'apple' 'orange' 'apple' 'apple' 'orange' 'apple' 'orange'
+ 'orange' 'apple']
+DEBUG:src.train:Rewards: tensor([0.4967, 1.0000, 1.0000, 1.0000, 1.0000, 1.0000, 0.4967, 0.4967, 0.4967,
+        0.4967])
+DEBUG:src.train:Episode 2: Guess correctness - tensor([False,  True,  True,  True,  True,  True, False, False, False, False])
+DEBUG:src.train:Input Word Indices: [1 0 1 0 0 1 0 1 1 0]
+DEBUG:src.train:Input Tensor: tensor([[1],
+        [0],
+        [1],
+        [0],
+        [0],
+        [1],
+        [0],
+        [1],
+        [1],
+        [0]])
+DEBUG:src.train:Action Probs: tensor([[0.5934, 0.4066],
+        [0.5934, 0.4066],
+        [0.5934, 0.4066],
+        [0.5934, 0.4066],
+        [0.5934, 0.4066],
+        [0.5934, 0.4066],
+        [0.5934, 0.4066],
+        [0.5934, 0.4066],
+        [0.5934, 0.4066],
+        [0.5934, 0.4066]], grad_fn=<SqueezeBackward0>)
+DEBUG:src.train:Action indices: tensor([0, 0, 0, 0, 0, 0, 0, 1, 1, 0])
+DEBUG:src.train:Action words: ['apple' 'apple' 'apple' 'apple' 'apple' 'apple' 'apple' 'orange' 'orange'
+ 'apple']
+DEBUG:src.train:Rewards: tensor([1.0000, 1.0000, 0.4967, 1.0000, 1.0000, 0.4967, 0.4967, 0.4967, 0.4967,
+        0.4967])
+DEBUG:src.train:Episode 2: Guess correctness - tensor([ True,  True, False,  True,  True, False, False, False, False, False])
+DEBUG:src.train:Input Word Indices: [0 0 0 0 0 0 0 1 1 0]
+DEBUG:src.train:Input Tensor: tensor([[0],
+        [0],
+        [0],
+        [0],
+        [0],
+        [0],
+        [0],
+        [1],
+        [1],
+        [0]])
+DEBUG:src.train:Action Probs: tensor([[0.5942, 0.4058],
+        [0.5942, 0.4058],
+        [0.5942, 0.4058],
+        [0.5942, 0.4058],
+        [0.5942, 0.4058],
+        [0.5942, 0.4058],
+        [0.5942, 0.4058],
+        [0.5942, 0.4058],
+        [0.5942, 0.4058],
+        [0.5942, 0.4058]], grad_fn=<SqueezeBackward0>)
+DEBUG:src.train:Action indices: tensor([1, 1, 0, 1, 1, 1, 0, 0, 0, 1])
+DEBUG:src.train:Action words: ['orange' 'orange' 'apple' 'orange' 'orange' 'orange' 'apple' 'apple'
+ 'apple' 'orange']
+DEBUG:src.train:Rewards: tensor([0.4967, 0.4967, 0.4967, 0.4967, 0.4967, 1.0000, 0.4967, 1.0000, 1.0000,
+        1.0000])
+DEBUG:src.train:Episode 2: Guess correctness - tensor([False, False, False, False, False,  True, False,  True,  True,  True])
+DEBUG:src.train:Input Word Indices: [1 1 0 1 1 1 0 0 0 1]
+DEBUG:src.train:Input Tensor: tensor([[1],
+        [1],
+        [0],
+        [1],
+        [1],
+        [1],
+        [0],
+        [0],
+        [0],
+        [1]])
+DEBUG:src.train:Action Probs: tensor([[0.5946, 0.4054],
+        [0.5946, 0.4054],
+        [0.5946, 0.4054],
+        [0.5946, 0.4054],
+        [0.5946, 0.4054],
+        [0.5946, 0.4054],
+        [0.5946, 0.4054],
+        [0.5946, 0.4054],
+        [0.5946, 0.4054],
+        [0.5946, 0.4054]], grad_fn=<SqueezeBackward0>)
+DEBUG:src.train:Action indices: tensor([0, 1, 1, 1, 0, 1, 0, 0, 0, 1])
+DEBUG:src.train:Action words: ['apple' 'orange' 'orange' 'orange' 'apple' 'orange' 'apple' 'apple'
+ 'apple' 'orange']
+DEBUG:src.train:Rewards: tensor([1.0000, 0.4967, 1.0000, 0.4967, 1.0000, 1.0000, 0.4967, 1.0000, 1.0000,
+        1.0000])
+DEBUG:src.train:Episode 2: Guess correctness - tensor([ True, False,  True, False,  True,  True, False,  True,  True,  True])
+DEBUG:src.train:Input Word Indices: [0 1 1 1 0 1 0 0 0 1]
+DEBUG:src.train:Input Tensor: tensor([[0],
+        [1],
+        [1],
+        [1],
+        [0],
+        [1],
+        [0],
+        [0],
+        [0],
+        [1]])
+DEBUG:src.train:Action Probs: tensor([[0.5950, 0.4050],
+        [0.5950, 0.4050],
+        [0.5950, 0.4050],
+        [0.5950, 0.4050],
+        [0.5950, 0.4050],
+        [0.5950, 0.4050],
+        [0.5950, 0.4050],
+        [0.5950, 0.4050],
+        [0.5950, 0.4050],
+        [0.5950, 0.4050]], grad_fn=<SqueezeBackward0>)
+DEBUG:src.train:Action indices: tensor([1, 1, 1, 0, 1, 1, 1, 1, 1, 0])
+DEBUG:src.train:Action words: ['orange' 'orange' 'orange' 'apple' 'orange' 'orange' 'orange' 'orange'
+ 'orange' 'apple']
+DEBUG:src.train:Rewards: tensor([0.4967, 0.4967, 1.0000, 1.0000, 0.4967, 1.0000, 1.0000, 0.4967, 0.4967,
+        0.4967])
+DEBUG:src.train:Episode 2: Guess correctness - tensor([False, False,  True,  True, False,  True,  True, False, False, False])
+DEBUG:src.train:Input Word Indices: [1 1 1 0 1 1 1 1 1 0]
+DEBUG:src.train:Input Tensor: tensor([[1],
+        [1],
+        [1],
+        [0],
+        [1],
+        [1],
+        [1],
+        [1],
+        [1],
+        [0]])
+DEBUG:src.train:Action Probs: tensor([[0.5952, 0.4048],
+        [0.5952, 0.4048],
+        [0.5952, 0.4048],
+        [0.5952, 0.4048],
+        [0.5952, 0.4048],
+        [0.5952, 0.4048],
+        [0.5952, 0.4048],
+        [0.5952, 0.4048],
+        [0.5952, 0.4048],
+        [0.5952, 0.4048]], grad_fn=<SqueezeBackward0>)
+DEBUG:src.train:Action indices: tensor([1, 0, 1, 0, 0, 0, 0, 1, 0, 0])
+DEBUG:src.train:Action words: ['orange' 'apple' 'orange' 'apple' 'apple' 'apple' 'apple' 'orange'
+ 'apple' 'apple']
+DEBUG:src.train:Rewards: tensor([0.4967, 1.0000, 1.0000, 1.0000, 1.0000, 0.4967, 0.4967, 0.4967, 1.0000,
+        0.4967])
+DEBUG:src.train:Episode 2: Guess correctness - tensor([False,  True,  True,  True,  True, False, False, False,  True, False])
+DEBUG:src.train:Input Word Indices: [1 0 1 0 0 0 0 1 0 0]
+DEBUG:src.train:Input Tensor: tensor([[1],
+        [0],
+        [1],
+        [0],
+        [0],
+        [0],
+        [0],
+        [1],
+        [0],
+        [0]])
+DEBUG:src.train:Action Probs: tensor([[0.5953, 0.4047],
+        [0.5953, 0.4047],
+        [0.5953, 0.4047],
+        [0.5953, 0.4047],
+        [0.5953, 0.4047],
+        [0.5953, 0.4047],
+        [0.5953, 0.4047],
+        [0.5953, 0.4047],
+        [0.5953, 0.4047],
+        [0.5953, 0.4047]], grad_fn=<SqueezeBackward0>)
+DEBUG:src.train:Action indices: tensor([0, 1, 0, 1, 1, 0, 1, 0, 1, 0])
+DEBUG:src.train:Action words: ['apple' 'orange' 'apple' 'orange' 'orange' 'apple' 'orange' 'apple'
+ 'orange' 'apple']
+DEBUG:src.train:Rewards: tensor([1.0000, 0.4967, 0.4967, 0.4967, 0.4967, 0.4967, 1.0000, 1.0000, 0.4967,
+        0.4967])
+DEBUG:src.train:Episode 2: Guess correctness - tensor([ True, False, False, False, False, False,  True,  True, False, False])
+DEBUG:src.train:Input Word Indices: [0 1 0 1 1 0 1 0 1 0]
+DEBUG:src.train:Input Tensor: tensor([[0],
+        [1],
+        [0],
+        [1],
+        [1],
+        [0],
+        [1],
+        [0],
+        [1],
+        [0]])
+DEBUG:src.train:Action Probs: tensor([[0.5954, 0.4046],
+        [0.5954, 0.4046],
+        [0.5954, 0.4046],
+        [0.5954, 0.4046],
+        [0.5954, 0.4046],
+        [0.5954, 0.4046],
+        [0.5954, 0.4046],
+        [0.5954, 0.4046],
+        [0.5954, 0.4046],
+        [0.5954, 0.4046]], grad_fn=<SqueezeBackward0>)
+DEBUG:src.train:Action indices: tensor([1, 1, 0, 1, 0, 1, 1, 0, 1, 0])
+DEBUG:src.train:Action words: ['orange' 'orange' 'apple' 'orange' 'apple' 'orange' 'orange' 'apple'
+ 'orange' 'apple']
+DEBUG:src.train:Rewards: tensor([0.4967, 0.4967, 0.4967, 0.4967, 1.0000, 1.0000, 1.0000, 1.0000, 0.4967,
+        0.4967])
+DEBUG:src.train:Episode 2: Guess correctness - tensor([False, False, False, False,  True,  True,  True,  True, False, False])
+DEBUG:src.train:Input Word Indices: [1 1 0 1 0 1 1 0 1 0]
+DEBUG:src.train:Input Tensor: tensor([[1],
+        [1],
+        [0],
+        [1],
+        [0],
+        [1],
+        [1],
+        [0],
+        [1],
+        [0]])
+DEBUG:src.train:Action Probs: tensor([[0.5955, 0.4045],
+        [0.5955, 0.4045],
+        [0.5955, 0.4045],
+        [0.5955, 0.4045],
+        [0.5955, 0.4045],
+        [0.5955, 0.4045],
+        [0.5955, 0.4045],
+        [0.5955, 0.4045],
+        [0.5955, 0.4045],
+        [0.5955, 0.4045]], grad_fn=<SqueezeBackward0>)
+DEBUG:src.train:Action indices: tensor([0, 1, 0, 0, 0, 0, 0, 0, 0, 1])
+DEBUG:src.train:Action words: ['apple' 'orange' 'apple' 'apple' 'apple' 'apple' 'apple' 'apple' 'apple'
+ 'orange']
+DEBUG:src.train:Rewards: tensor([1.0000, 0.4967, 0.4967, 1.0000, 1.0000, 0.4967, 0.4967, 1.0000, 1.0000,
+        1.0000])
+DEBUG:src.train:Episode 2: Guess correctness - tensor([ True, False, False,  True,  True, False, False,  True,  True,  True])
+DEBUG:src.train:Input Word Indices: [0 1 0 0 0 0 0 0 0 1]
+DEBUG:src.train:Input Tensor: tensor([[0],
+        [1],
+        [0],
+        [0],
+        [0],
+        [0],
+        [0],
+        [0],
+        [0],
+        [1]])
+DEBUG:src.train:Action Probs: tensor([[0.5955, 0.4045],
+        [0.5955, 0.4045],
+        [0.5955, 0.4045],
+        [0.5955, 0.4045],
+        [0.5955, 0.4045],
+        [0.5955, 0.4045],
+        [0.5955, 0.4045],
+        [0.5955, 0.4045],
+        [0.5955, 0.4045],
+        [0.5955, 0.4045]], grad_fn=<SqueezeBackward0>)
+DEBUG:src.train:Action indices: tensor([1, 0, 1, 1, 0, 0, 0, 0, 0, 0])
+DEBUG:src.train:Action words: ['orange' 'apple' 'orange' 'orange' 'apple' 'apple' 'apple' 'apple'
+ 'apple' 'apple']
+DEBUG:src.train:Rewards: tensor([0.4967, 1.0000, 1.0000, 0.4967, 1.0000, 0.4967, 0.4967, 1.0000, 1.0000,
+        0.4967])
+DEBUG:src.train:Episode 2: Guess correctness - tensor([False,  True,  True, False,  True, False, False,  True,  True, False])
+DEBUG:src.train:Input Word Indices: [1 0 1 1 0 0 0 0 0 0]
+DEBUG:src.train:Input Tensor: tensor([[1],
+        [0],
+        [1],
+        [1],
+        [0],
+        [0],
+        [0],
+        [0],
+        [0],
+        [0]])
+DEBUG:src.train:Action Probs: tensor([[0.5955, 0.4045],
+        [0.5955, 0.4045],
+        [0.5955, 0.4045],
+        [0.5955, 0.4045],
+        [0.5955, 0.4045],
+        [0.5955, 0.4045],
+        [0.5955, 0.4045],
+        [0.5955, 0.4045],
+        [0.5955, 0.4045],
+        [0.5955, 0.4045]], grad_fn=<SqueezeBackward0>)
+DEBUG:src.train:Action indices: tensor([0, 1, 1, 0, 0, 0, 0, 0, 0, 0])
+DEBUG:src.train:Action words: ['apple' 'orange' 'orange' 'apple' 'apple' 'apple' 'apple' 'apple' 'apple'
+ 'apple']
+DEBUG:src.train:Rewards: tensor([1.0000, 0.4967, 1.0000, 1.0000, 1.0000, 0.4967, 0.4967, 1.0000, 1.0000,
+        0.4967])
+DEBUG:src.train:Episode 2: Guess correctness - tensor([ True, False,  True,  True,  True, False, False,  True,  True, False])
+DEBUG:src.train:Input Word Indices: [0 1 1 0 0 0 0 0 0 0]
+DEBUG:src.train:Input Tensor: tensor([[0],
+        [1],
+        [1],
+        [0],
+        [0],
+        [0],
+        [0],
+        [0],
+        [0],
+        [0]])
+DEBUG:src.train:Action Probs: tensor([[0.5955, 0.4045],
+        [0.5955, 0.4045],
+        [0.5955, 0.4045],
+        [0.5955, 0.4045],
+        [0.5955, 0.4045],
+        [0.5955, 0.4045],
+        [0.5955, 0.4045],
+        [0.5955, 0.4045],
+        [0.5955, 0.4045],
+        [0.5955, 0.4045]], grad_fn=<SqueezeBackward0>)
+DEBUG:src.train:Action indices: tensor([0, 0, 1, 0, 0, 1, 0, 1, 0, 0])
+DEBUG:src.train:Action words: ['apple' 'apple' 'orange' 'apple' 'apple' 'orange' 'apple' 'orange'
+ 'apple' 'apple']
+DEBUG:src.train:Rewards: tensor([1.0000, 1.0000, 1.0000, 1.0000, 1.0000, 1.0000, 0.4967, 0.4967, 1.0000,
+        0.4967])
+DEBUG:src.train:Episode 2: Guess correctness - tensor([ True,  True,  True,  True,  True,  True, False, False,  True, False])
+DEBUG:src.train:Input Word Indices: [0 0 1 0 0 1 0 1 0 0]
+DEBUG:src.train:Input Tensor: tensor([[0],
+        [0],
+        [1],
+        [0],
+        [0],
+        [1],
+        [0],
+        [1],
+        [0],
+        [0]])
+DEBUG:src.train:Action Probs: tensor([[0.5956, 0.4044],
+        [0.5956, 0.4044],
+        [0.5956, 0.4044],
+        [0.5956, 0.4044],
+        [0.5956, 0.4044],
+        [0.5956, 0.4044],
+        [0.5956, 0.4044],
+        [0.5956, 0.4044],
+        [0.5956, 0.4044],
+        [0.5956, 0.4044]], grad_fn=<SqueezeBackward0>)
+DEBUG:src.train:Action indices: tensor([1, 0, 0, 0, 0, 1, 0, 0, 0, 1])
+DEBUG:src.train:Action words: ['orange' 'apple' 'apple' 'apple' 'apple' 'orange' 'apple' 'apple' 'apple'
+ 'orange']
+DEBUG:src.train:Rewards: tensor([0.4967, 1.0000, 0.4967, 1.0000, 1.0000, 1.0000, 0.4967, 1.0000, 1.0000,
+        1.0000])
+DEBUG:src.train:Episode 2: Guess correctness - tensor([False,  True, False,  True,  True,  True, False,  True,  True,  True])
+DEBUG:src.train:Input Word Indices: [1 0 0 0 0 1 0 0 0 1]
+DEBUG:src.train:Input Tensor: tensor([[1],
+        [0],
+        [0],
+        [0],
+        [0],
+        [1],
+        [0],
+        [0],
+        [0],
+        [1]])
+DEBUG:src.train:Action Probs: tensor([[0.5956, 0.4044],
+        [0.5956, 0.4044],
+        [0.5956, 0.4044],
+        [0.5956, 0.4044],
+        [0.5956, 0.4044],
+        [0.5956, 0.4044],
+        [0.5956, 0.4044],
+        [0.5956, 0.4044],
+        [0.5956, 0.4044],
+        [0.5956, 0.4044]], grad_fn=<SqueezeBackward0>)
+DEBUG:src.train:Action indices: tensor([1, 0, 0, 1, 1, 1, 0, 0, 0, 1])
+DEBUG:src.train:Action words: ['orange' 'apple' 'apple' 'orange' 'orange' 'orange' 'apple' 'apple'
+ 'apple' 'orange']
+DEBUG:src.train:Rewards: tensor([0.4967, 1.0000, 0.4967, 0.4967, 0.4967, 1.0000, 0.4967, 1.0000, 1.0000,
+        1.0000])
+DEBUG:src.train:Episode 2: Guess correctness - tensor([False,  True, False, False, False,  True, False,  True,  True,  True])
+DEBUG:src.train:Input Word Indices: [1 0 0 1 1 1 0 0 0 1]
+DEBUG:src.train:Input Tensor: tensor([[1],
+        [0],
+        [0],
+        [1],
+        [1],
+        [1],
+        [0],
+        [0],
+        [0],
+        [1]])
+DEBUG:src.train:Action Probs: tensor([[0.5956, 0.4044],
+        [0.5956, 0.4044],
+        [0.5956, 0.4044],
+        [0.5956, 0.4044],
+        [0.5956, 0.4044],
+        [0.5956, 0.4044],
+        [0.5956, 0.4044],
+        [0.5956, 0.4044],
+        [0.5956, 0.4044],
+        [0.5956, 0.4044]], grad_fn=<SqueezeBackward0>)
+DEBUG:src.train:Action indices: tensor([1, 0, 0, 1, 1, 0, 0, 1, 1, 1])
+DEBUG:src.train:Action words: ['orange' 'apple' 'apple' 'orange' 'orange' 'apple' 'apple' 'orange'
+ 'orange' 'orange']
+DEBUG:src.train:Rewards: tensor([0.4967, 1.0000, 0.4967, 0.4967, 0.4967, 0.4967, 0.4967, 0.4967, 0.4967,
+        1.0000])
+DEBUG:src.train:Episode 2: Guess correctness - tensor([False,  True, False, False, False, False, False, False, False,  True])

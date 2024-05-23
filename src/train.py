@@ -51,6 +51,7 @@ def train_rl_policy(vocab, model, episodes, max_steps, batch_size, device: torch
 
         log_probs = []
         all_rewards = []
+        all_reward_differences = []
 
         for step in range(max_steps):
             # Convert the input word to its index in the vocabulary
@@ -79,6 +80,9 @@ def train_rl_policy(vocab, model, episodes, max_steps, batch_size, device: torch
 
             # Calculate cumulative reward
             all_rewards = np.concatenate((all_rewards,rewards), axis = 0)
+            if (step > 1):
+                all_reward_differences = np.concatenate((all_reward_differences, rewards_difference), axis = 0)
+
 
             # Compute loss using REINFORCE algorithm
             chosen_action_probs = action_probs.gather(1, action_indices.unsqueeze(1)).squeeze()
@@ -113,7 +117,7 @@ def train_rl_policy(vocab, model, episodes, max_steps, batch_size, device: torch
 
         # Update the policy
         log_probs = torch.stack(log_probs)
-        loss = -torch.mean(log_probs * sum(all_rewards))
+        loss = -torch.mean(log_probs * sum(all_reward_differences))
         optimizer.zero_grad()
         loss.backward()
         #torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=0.5)
@@ -129,6 +133,7 @@ def train_rl_policy(vocab, model, episodes, max_steps, batch_size, device: torch
 
         # Print the cumulative reward and average loss for the episode
         logger.info(f"Episode {episode + 1}: Cumulative reward: {sum(all_rewards)}")
+        logger.info(f"Episode {episode + 1}: Reward Differences: {sum(all_reward_differences)}")
         if len(episode_losses) > 0:
             logger.info(f"Episode {episode + 1}: Average loss: {loss}")
 
