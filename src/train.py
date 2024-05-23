@@ -119,7 +119,7 @@ def train_rl_policy(vocab, model, episodes, max_steps, batch_size, device: torch
             logger.debug(f"Rewards: {rewards}")
 
             # End the episode if the reward is high enough (e.g., similarity close to 1)
-            correct_guesses = rewards >= 0.9
+            correct_guesses = action_words == target_words
             if correct_guesses.any():
                 logger.debug(f"Episode {episode + 1}: Guess correctness - {correct_guesses}")
             
@@ -152,7 +152,7 @@ def train_rl_policy(vocab, model, episodes, max_steps, batch_size, device: torch
         logger.info(f"Episode {episode + 1}: Cumulative reward: {sum(all_rewards)}")
         logger.info(f"Episode {episode + 1}: Reward Differences: {sum(all_reward_differences)}")
         logger.info(f"Episode {episode + 1}: Average loss: {loss}")
-        logger.info(f"Episode {episode + 1}: Last Episode Accuracy: {accuracy}")
+        logger.info(f"Episode {episode + 1}: Last Step Accuracy: {accuracy}")
         
         training_outcome.episode_losses.append(loss.detach().numpy())
         training_outcome.episode_rewards.append(sum(all_rewards))
