@@ -8,6 +8,7 @@ import numpy as np
 import torch
 import torch.nn as nn
 
+from src.plot import plot_data
 import src.models as models
 from src.data import load_data
 from src.models.feedfoward import FeedForwardPolicyNetwork
@@ -58,7 +59,8 @@ def main(args):
     else:
         raise ValueError("Invalid model type")
 
-    train_rl_policy(vocab, model, episodes, max_steps, batch_size, device)
+    outcome = train_rl_policy(vocab, model, episodes, max_steps, batch_size, device)
+    plot_data(outcome)
 
 
 if __name__ == "__main__":
@@ -87,5 +89,4 @@ if __name__ == "__main__":
     else:
         logging.basicConfig(level=log_level)
     
-    training_outcome = main(args)
-    plot(training_outcome)
+    main(args)

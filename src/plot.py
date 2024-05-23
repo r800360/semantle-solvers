@@ -1,16 +1,16 @@
 from src.train import TrainingOutcome
 
 
-def plot(training_outcome: TrainingOutcome):
+def plot_data(training_outcome: TrainingOutcome):
     import matplotlib.pyplot as plt
 
-    # Plot the training outcome
-    plt.figure(figsize=(12, 6))
-    plt.plot(training_outcome)
+    # Plot episode losses and rewards
+    plt.figure(figsize=(10, 8))
+    plt.plot(training_outcome.episode_losses, label='Loss')
+    plt.plot(training_outcome.episode_rewards, label='Reward')
     plt.xlabel('Episode')
-    plt.ylabel('Reward')
+    plt.ylabel('Value')
     plt.title('Training Outcome')
-    plt.grid()
-    
-    # Store to artifacts/plots
+    plt.legend()
+    plt.grid(True)
     plt.savefig('artifacts/plots/training_outcome.png')

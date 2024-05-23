@@ -137,4 +137,7 @@ def train_rl_policy(vocab, model, episodes, max_steps, batch_size, device: torch
     logger.info("Training complete")
     logger.info("Episode losses: " + str(training_outcome.episode_losses))
     
+    # Detach training outcome data
+    training_outcome.episode_losses = [l.detach().numpy() for l in training_outcome.episode_losses]
+    
     return training_outcome
