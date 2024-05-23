@@ -37,7 +37,7 @@ class TrainingOutcome:
 
 def train_rl_policy(vocab, model, episodes, max_steps, batch_size, device: torch.device):
     previous_rewards = 0
-    optimizer = optim.AdamW(model.parameters(), maximize=True, lr=0.005)
+    optimizer = optim.AdamW(model.parameters(), maximize=False, lr=0.005)
 
     # Define the learning rate scheduler
     scheduler = StepLR(optimizer, step_size=100, gamma=0.1)  # Adjust step_size and gamma as needed
@@ -79,7 +79,7 @@ def train_rl_policy(vocab, model, episodes, max_steps, batch_size, device: torch
             # Calculate the reward (similarity score)
             if (step > 1): 
                 previous_rewards = rewards
-            reward_scaler = (step/max_steps)**2
+            reward_scaler = (step/max_steps)**0.5
             rewards = similarity_function(target_words, action_words) * reward_scaler
             rewards_difference = rewards - previous_rewards
             
