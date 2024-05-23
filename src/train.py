@@ -23,7 +23,7 @@ def similarity_function(target_list, guess_list):
     
     # Squaring curve mapping from [-1, 1] to [-1, 1]
     similarities = (similarities + 1) / 2
-    similarities = similarities ** 0.8
+    similarities = similarities ** 0.5
     similarities = 2 * similarities - 1
     
     return similarities
@@ -37,7 +37,7 @@ class TrainingOutcome:
 
 def train_rl_policy(vocab, model, episodes, max_steps, batch_size, device: torch.device):
     previous_rewards = 0
-    optimizer = optim.AdamW(model.parameters(), maximize=False, lr=0.005)
+    optimizer = optim.AdamW(model.parameters(), maximize=False, lr=0.05)
 
     # Define the learning rate scheduler
     scheduler = StepLR(optimizer, step_size=100, gamma=0.1)  # Adjust step_size and gamma as needed
@@ -80,7 +80,7 @@ def train_rl_policy(vocab, model, episodes, max_steps, batch_size, device: torch
             # Calculate the reward (similarity score)
             if (step > 1): 
                 previous_rewards = rewards
-            reward_scaler = (step/max_steps)**0.5
+            reward_scaler = (step/max_steps)#**0.5
             rewards = similarity_function(target_words, action_words) * reward_scaler
             rewards_difference = rewards - previous_rewards
             
