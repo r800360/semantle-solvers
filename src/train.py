@@ -33,7 +33,7 @@ class TrainingOutcome:
         self.episode_losses = episode_losses
         self.episode_rewards = episode_rewards
         self.episode_reward_differences = episode_reward_differences
-        self.hidden_state_samples = []
+        self.hidden_state_samples = torch.tensor([])
 
 def train_rl_policy(vocab, model, episodes, max_steps, batch_size, device: torch.device):
     previous_rewards = 0
@@ -59,6 +59,7 @@ def train_rl_policy(vocab, model, episodes, max_steps, batch_size, device: torch
         log_probs = []
         all_rewards = []
         all_reward_differences = []
+        hidden_states = torch.tensor([])
 
         for step in range(max_steps):
             # Convert the input word to its index in the vocabulary
@@ -103,6 +104,10 @@ def train_rl_policy(vocab, model, episodes, max_steps, batch_size, device: torch
 
             # Update the input word for the next step
             input_words = action_words
+            
+            # Update hidden states
+            if isinstance(model, LSTMPolicyNetwork):
+                hidden_states = torch.cat((hidden_states, model.hidden_state.detach().cpu().unsqueeze(0)), dim=0)
 
             logger.debug(f"Input Word Indices: {input_word_indices}")
             logger.debug(f"Input Tensor: {input_tensor}")
@@ -129,9 +134,10 @@ def train_rl_policy(vocab, model, episodes, max_steps, batch_size, device: torch
         
         
         # Save the hidden state for the model
+        # Shaped: Episode x step x batch x layer x hidden_dim
+        if isinstance(model, LSTMPolicyNetwork):
+            training_outcome.hidden_state_samples = torch.cat((training_outcome.hidden_state_samples, hidden_states.unsqueeze(0)), dim=0)
         
-        # Shaped: Episode x batch x layer x hidden_dim
-        training_outcome.hidden_state_samples.append(model.hidden_state.detach().cpu().numpy())
         
 
         # Reset the model parameters for the next episode
