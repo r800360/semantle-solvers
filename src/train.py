@@ -34,6 +34,7 @@ class TrainingOutcome:
         self.episode_rewards = episode_rewards
         self.episode_reward_differences = episode_reward_differences
         self.hidden_state_samples = torch.tensor([])
+        self.episode_accuracy = torch.tensor([])
 
 def train_rl_policy(vocab, model, episodes, max_steps, batch_size, device: torch.device):
     previous_rewards = 0
@@ -60,6 +61,7 @@ def train_rl_policy(vocab, model, episodes, max_steps, batch_size, device: torch
         all_rewards = []
         all_reward_differences = []
         hidden_states = torch.tensor([])
+        accuracies = torch.tensor([])
 
         for step in range(max_steps):
             # Convert the input word to its index in the vocabulary
@@ -120,6 +122,10 @@ def train_rl_policy(vocab, model, episodes, max_steps, batch_size, device: torch
             correct_guesses = rewards >= 0.9
             if correct_guesses.any():
                 logger.debug(f"Episode {episode + 1}: Guess correctness - {correct_guesses}")
+            
+            # Compute accuracy
+            accuracy = torch.mean(torch.tensor(correct_guesses, dtype=torch.float))
+            accuracies = torch.cat((accuracies, accuracy.unsqueeze(0)), dim=0)
 
         # Update the policy
         log_probs = torch.stack(log_probs)
@@ -137,17 +143,16 @@ def train_rl_policy(vocab, model, episodes, max_steps, batch_size, device: torch
         # Shaped: Episode x step x batch x layer x hidden_dim
         if isinstance(model, LSTMPolicyNetwork):
             training_outcome.hidden_state_samples = torch.cat((training_outcome.hidden_state_samples, hidden_states.unsqueeze(0)), dim=0)
-        
-        
-
-        # Reset the model parameters for the next episode
-        if isinstance(model, LSTMPolicyNetwork):
             model.reset_hidden(device)
+        
+        # Save the accuracy for the episode
+        training_outcome.episode_accuracy = torch.cat((training_outcome.episode_accuracy, accuracies.unsqueeze(0)), dim=0)
 
         # Print the cumulative reward and average loss for the episode
         logger.info(f"Episode {episode + 1}: Cumulative reward: {sum(all_rewards)}")
         logger.info(f"Episode {episode + 1}: Reward Differences: {sum(all_reward_differences)}")
         logger.info(f"Episode {episode + 1}: Average loss: {loss}")
+        logger.info(f"Episode {episode + 1}: Last Episode Accuracy: {accuracy}")
         
         training_outcome.episode_losses.append(loss.detach().numpy())
         training_outcome.episode_rewards.append(sum(all_rewards))
