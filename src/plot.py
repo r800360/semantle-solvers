@@ -35,6 +35,14 @@ def plot_data(training_outcome: TrainingOutcome, model: nn.Module):
     plt.ylabel('Average Accuracy')
     plt.savefig('artifacts/plots/average_accuracy.png')
     
+    last_episode = training_outcome.episode_accuracy[-1, :]
+    plt.figure(figsize=(12, 6))
+    plt.plot(last_episode)
+    plt.title('Accuracy in the Last Episode')
+    plt.xlabel('Time Steps')
+    plt.ylabel('Accuracy')
+    plt.savefig('artifacts/plots/last_episode_accuracy.png')
+    
     # Sample usage:
     if isinstance(model, LSTMPolicyNetwork):
         hidden_states = training_outcome.hidden_state_samples
