@@ -83,8 +83,9 @@ if __name__ == "__main__":
     
     output_file = args.output
     if output_file != 'stdout':
-        logging.basicConfig(filename=f"logs/{output_file}", filemode='w', level=log_level)
+        logging.basicConfig(filename=f"artifacts/logs/{output_file}", filemode='w', level=log_level)
     else:
         logging.basicConfig(level=log_level)
     
-    main(args)
+    training_outcome = main(args)
+    plot(training_outcome)

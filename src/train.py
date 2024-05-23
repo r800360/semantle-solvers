@@ -28,6 +28,11 @@ def similarity_function(target_list, guess_list):
     
     return similarities
 
+class TrainingOutcome:
+    def __init__(self, episode_losses, episode_rewards):
+        self.episode_losses = episode_losses
+        self.episode_rewards = episode_rewards
+
 def train_rl_policy(vocab, model, episodes, max_steps, batch_size, device: torch.device):
     optimizer = optim.AdamW(model.parameters(), maximize=True, lr=0.005)
 
@@ -35,7 +40,7 @@ def train_rl_policy(vocab, model, episodes, max_steps, batch_size, device: torch
     scheduler = StepLR(optimizer, step_size=100, gamma=0.1)  # Adjust step_size and gamma as needed
 
     # Track the total loss for each episode
-    episode_losses = []
+    training_outcome = TrainingOutcome([], [])
 
     for episode in range(episodes):
         # scheduler.step()  # Update the learning rate at the beginning of each episode
@@ -85,15 +90,8 @@ def train_rl_policy(vocab, model, episodes, max_steps, batch_size, device: torch
 
             log_probs.append(log_prob)
 
-            # Update the model parameters using the policy gradient
-            # optimizer.zero_grad()  # Clear the gradients
-            # loss = -torch.mean(log_probs * sum(all_rewards))
-            # loss.backward()
-
             #Gradient Clipping
             #torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=0.5)
-
-            # optimizer.step()  # Update model parameters
 
             # Update the input word for the next step
             input_words = action_words
@@ -128,8 +126,14 @@ def train_rl_policy(vocab, model, episodes, max_steps, batch_size, device: torch
 
         # Print the cumulative reward and average loss for the episode
         logger.info(f"Episode {episode + 1}: Cumulative reward: {sum(all_rewards)}")
-        if len(episode_losses) > 0:
-            logger.info(f"Episode {episode + 1}: Average loss: {loss}")
+        logger.info(f"Episode {episode + 1}: Average loss: {loss}")
+            
+        
+        # Create plottable data
+        training_outcome.episode_losses.append(loss)
+        training_outcome.episode_rewards.append(sum(all_rewards))
 
     logger.info("Training complete")
-    logger.info("Episode losses: " + str(episode_losses))
+    logger.info("Episode losses: " + str(training_outcome.episode_losses))
+    
+    return training_outcome
