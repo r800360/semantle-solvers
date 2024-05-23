@@ -29,9 +29,11 @@ def similarity_function(target_list, guess_list):
     return similarities
 
 class TrainingOutcome:
-    def __init__(self, episode_losses, episode_rewards):
+    def __init__(self, episode_losses=[], episode_rewards=[], episode_reward_differences=[]):
         self.episode_losses = episode_losses
         self.episode_rewards = episode_rewards
+        self.episode_reward_differences = episode_reward_differences
+        self.hidden_state_samples = []
 
 def train_rl_policy(vocab, model, episodes, max_steps, batch_size, device: torch.device):
     previous_rewards = 0
@@ -41,7 +43,7 @@ def train_rl_policy(vocab, model, episodes, max_steps, batch_size, device: torch
     scheduler = StepLR(optimizer, step_size=100, gamma=0.1)  # Adjust step_size and gamma as needed
 
     # Track the total loss for each episode
-    training_outcome = TrainingOutcome([], [])
+    training_outcome = TrainingOutcome()
 
     for episode in range(episodes):
         # scheduler.step()  # Update the learning rate at the beginning of each episode
@@ -125,6 +127,12 @@ def train_rl_policy(vocab, model, episodes, max_steps, batch_size, device: torch
         
         logger.debug(f"Log Probs: {log_probs}")
         
+        
+        # Save the hidden state for the model
+        
+        # Shaped: Episode x batch x layer x hidden_dim
+        training_outcome.hidden_state_samples.append(model.hidden_state.detach().cpu().numpy())
+        
 
         # Reset the model parameters for the next episode
         if isinstance(model, LSTMPolicyNetwork):
@@ -135,13 +143,11 @@ def train_rl_policy(vocab, model, episodes, max_steps, batch_size, device: torch
         logger.info(f"Episode {episode + 1}: Reward Differences: {sum(all_reward_differences)}")
         logger.info(f"Episode {episode + 1}: Average loss: {loss}")
         
-        training_outcome.episode_losses.append(loss)
+        training_outcome.episode_losses.append(loss.detach().numpy())
         training_outcome.episode_rewards.append(sum(all_rewards))
+        training_outcome.episode_reward_differences.append(sum(all_reward_differences))
 
     logger.info("Training complete")
     logger.info("Episode losses: " + str(training_outcome.episode_losses))
-    
-    # Detach training outcome data
-    training_outcome.episode_losses = [l.detach().numpy() for l in training_outcome.episode_losses]
     
     return training_outcome
