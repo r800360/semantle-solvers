@@ -21,12 +21,15 @@ def similarity_function(target_list, guess_list):
     
     similarities = cos_sim(x,y)
     
+    return similarities
+
+def similarity_to_reward(similarities):
     # Squaring curve mapping from [-1, 1] to [-1, 1]
     similarities = (similarities + 1) / 2
     similarities = similarities ** 0.5
     similarities = 2 * similarities - 1
-    
     return similarities
+    
 
 class TrainingOutcome:
     def __init__(self, episode_losses=[], episode_rewards=[], episode_reward_differences=[]):
@@ -34,6 +37,7 @@ class TrainingOutcome:
         self.episode_rewards = episode_rewards
         self.episode_reward_differences = episode_reward_differences
         self.hidden_state_samples = torch.tensor([])
+        self.episode_accuracy = torch.tensor([])
 
 def train_rl_policy(vocab, model, episodes, max_steps, batch_size, device: torch.device):
     previous_rewards = 0
@@ -56,10 +60,12 @@ def train_rl_policy(vocab, model, episodes, max_steps, batch_size, device: torch
         logger.debug(f"Episode {episode + 1}: Input words: {input_words}")
         logger.debug(f"Episode {episode + 1}: Target words: {target_words}")
 
-        log_probs = []
+        log_probs = torch.tensor([])
         all_rewards = []
         all_reward_differences = []
         hidden_states = torch.tensor([])
+        accuracies = torch.tensor([])
+        similarity = torch.zeros(batch_size)
 
         for step in range(max_steps):
             # Convert the input word to its index in the vocabulary
@@ -68,11 +74,11 @@ def train_rl_policy(vocab, model, episodes, max_steps, batch_size, device: torch
             input_tensor = torch.tensor(input_word_indices, dtype=torch.long).to(device)
 
             # Unsqueeze to make batch of len 1 sequences
-            input_tensor = input_tensor.unsqueeze(1)
+            # input_tensor = input_tensor.unsqueeze(1)
 
             # Predict the probabilities for the next word
             # And back to cpu land
-            action_probs = model(input_tensor).squeeze().cpu()
+            action_probs = model(input_tensor, similarity).squeeze().cpu()
 
             action_indices = torch.multinomial(action_probs, 1).squeeze()
             action_words = vocab[action_indices]
@@ -81,7 +87,8 @@ def train_rl_policy(vocab, model, episodes, max_steps, batch_size, device: torch
             if (step > 1): 
                 previous_rewards = rewards
             reward_scaler = (step/max_steps)#**0.5
-            rewards = similarity_function(target_words, action_words) * reward_scaler
+            similarity = similarity_function(target_words, action_words)
+            rewards = similarity_to_reward(similarity) * reward_scaler
             rewards_difference = rewards - previous_rewards
             
             # Update the state with the chosen action and reward
@@ -96,8 +103,7 @@ def train_rl_policy(vocab, model, episodes, max_steps, batch_size, device: torch
             # Compute loss using REINFORCE algorithm
             chosen_action_probs = action_probs.gather(1, action_indices.unsqueeze(1)).squeeze()
             log_prob = torch.log(chosen_action_probs)
-
-            log_probs.append(log_prob)
+            log_probs = torch.cat((log_probs, log_prob.unsqueeze(0)))
 
             #Gradient Clipping
             #torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=0.5)
@@ -115,15 +121,32 @@ def train_rl_policy(vocab, model, episodes, max_steps, batch_size, device: torch
             logger.debug(f"Action indices: {action_indices}")
             logger.debug(f"Action words: {action_words}")
             logger.debug(f"Rewards: {rewards}")
+            logger.debug(f"Log Probabilities: {log_prob}")
 
             # End the episode if the reward is high enough (e.g., similarity close to 1)
-            correct_guesses = rewards >= 0.9
+            correct_guesses = action_words == target_words
             if correct_guesses.any():
                 logger.debug(f"Episode {episode + 1}: Guess correctness - {correct_guesses}")
+            
+            # Compute accuracy
+            accuracy = torch.mean(torch.tensor(correct_guesses, dtype=torch.float))
+            accuracies = torch.cat((accuracies, accuracy.unsqueeze(0)), dim=0)
 
         # Update the policy
-        log_probs = torch.stack(log_probs)
-        loss = -torch.mean(log_probs * sum(all_reward_differences))
+        # log_probs = torch.stack(log_probs)
+        # log_probs = torch.tensor(np.array(log_probs))
+        # loss = -torch.mean(log_probs * sum(all_reward_differences))
+
+        # Use more stupid reward function
+        rewards = correct_guesses * 2 - 1
+        print(correct_guesses)
+        print(rewards)
+        print("log probs: ", log_probs)
+        print(log_probs.shape)
+
+        loss = -torch.mean(log_probs * sum(rewards))
+
+
         optimizer.zero_grad()
         loss.backward()
         #torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=0.5)
@@ -137,17 +160,16 @@ def train_rl_policy(vocab, model, episodes, max_steps, batch_size, device: torch
         # Shaped: Episode x step x batch x layer x hidden_dim
         if isinstance(model, LSTMPolicyNetwork):
             training_outcome.hidden_state_samples = torch.cat((training_outcome.hidden_state_samples, hidden_states.unsqueeze(0)), dim=0)
-        
-        
-
-        # Reset the model parameters for the next episode
-        if isinstance(model, LSTMPolicyNetwork):
             model.reset_hidden(device)
+        
+        # Save the accuracy for the episode
+        training_outcome.episode_accuracy = torch.cat((training_outcome.episode_accuracy, accuracies.unsqueeze(0)), dim=0)
 
         # Print the cumulative reward and average loss for the episode
         logger.info(f"Episode {episode + 1}: Cumulative reward: {sum(all_rewards)}")
         logger.info(f"Episode {episode + 1}: Reward Differences: {sum(all_reward_differences)}")
         logger.info(f"Episode {episode + 1}: Average loss: {loss}")
+        logger.info(f"Episode {episode + 1}: Last Step Accuracy: {accuracy}")
         
         training_outcome.episode_losses.append(loss.detach().numpy())
         training_outcome.episode_rewards.append(sum(all_rewards))

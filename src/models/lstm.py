@@ -11,7 +11,7 @@ class LSTMPolicyNetwork(nn.Module):
         self.batch_size = batch_size
         
         self.embedding = nn.Embedding(num_embeddings=self.vocab_size, embedding_dim=self.embedding_dim)
-        self.lstm = nn.LSTM(input_size=self.embedding_dim, hidden_size=hidden_dim, num_layers=self.num_layers, batch_first=True)
+        self.lstm = nn.LSTM(input_size=self.embedding_dim+1, hidden_size=hidden_dim, num_layers=self.num_layers, batch_first=True)
         
         # Initialize the hidden state
         self.reset_hidden(device)
@@ -28,11 +28,21 @@ class LSTMPolicyNetwork(nn.Module):
         self.hidden_state = torch.zeros(self.num_layers, self.batch_size, self.hidden_dim).to(device)
         self.cell_state = torch.zeros(self.num_layers, self.batch_size, self.hidden_dim).to(device)
 
-    def forward(self, input_indices):
+    def forward(self, input_indices, similarities):
         # Forward pass through embedding layer, LSTM, and final linear layer
         embedded = self.embedding(input_indices)
+
         hidden = (self.hidden_state, self.cell_state)
-        output, hidden = self.lstm(embedded, hidden)
+        embedded_indices_with_similarities = torch.cat((embedded, similarities.unsqueeze(1)), 1)
+
+        # Fix dimensionality
+        embedded_indices_with_similarities = embedded_indices_with_similarities.unsqueeze(1)
+
+        # print(embedded.shape)
+        # print(similarities.shape)
+        # print(embedded_indices_with_similarities.shape)
+
+        output, hidden = self.lstm(embedded_indices_with_similarities, hidden)
 
         self.hidden_state = hidden[0]
         self.cell_state = hidden[1]
