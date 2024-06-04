@@ -44,6 +44,16 @@ def plot_data(training_outcome: TrainingOutcome, model: nn.Module):
         plt.ylabel('Hidden Dimensions')
         plt.savefig('artifacts/plots/edge_weights.png')
 
+        # Use torchviz to generate a visualization of the model
+        from torchviz import make_dot
+        e1 = torch.randint(0, 2, (10,)).float()
+        e2 = torch.rand(10)
+
+        print(e1, e2)
+
+        dot = make_dot(model(e1, e2), params=dict(model.named_parameters()))
+        dot.render('artifacts/plots/binary_ff_model', format='png')
+
 
 def plot_loss_reward(training_outcome):
     # Split into multiple plots
