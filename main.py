@@ -46,7 +46,8 @@ def main(args):
     embedding_dim = 30  # Size of the word embedding
     hidden_dim = 100  # LSTM hidden state dimension
     episodes = args.episodes  # Number of episodes to train
-    max_steps = 50 # Maximum steps per episode
+    # max_steps = 50 # Maximum steps per episode
+    max_steps = 5
     batch_size = args.batch_size
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")

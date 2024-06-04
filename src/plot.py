@@ -55,8 +55,8 @@ def plot_data(training_outcome: TrainingOutcome, model: nn.Module):
         plot_hidden_state_correlation(hidden_states[0, :, 0, -1, :], output_file='hidden_state_correlation_first_episode.png')
         plot_hidden_state_correlation(hidden_states[-1, :, 0, -1, :], output_file='hidden_state_correlation_last_episode.png')
         
-        plot_hidden_state_pca(hidden_state)
-        plot_hidden_state_tsne(hidden_state)
+        #plot_hidden_state_pca(hidden_state)
+        #plot_hidden_state_tsne(hidden_state)
 
 def plot_hidden_state_evolution(hidden_states):
     # hidden_states shape: (episode, timestep, batch, layer, hidden_dim)

@@ -133,18 +133,18 @@ def train_rl_policy(vocab, model, episodes, max_steps, batch_size, device: torch
             accuracies = torch.cat((accuracies, accuracy.unsqueeze(0)), dim=0)
 
         # Update the policy
-        # log_probs = torch.stack(log_probs)
-        # log_probs = torch.tensor(np.array(log_probs))
-        # loss = -torch.mean(log_probs * sum(all_reward_differences))
-
+        #log_probs = torch.stack(log_probs)
+        #log_probs = torch.tensor(np.array(log_probs))
+        loss = -torch.mean(log_probs * sum(all_reward_differences))
+        
         # Use more stupid reward function
-        rewards = correct_guesses * 2 - 1
-        print(correct_guesses)
-        print(rewards)
-        print("log probs: ", log_probs)
-        print(log_probs.shape)
+        # rewards = correct_guesses * 2 - 1
+        # print(correct_guesses)
+        # print(rewards)
+        # print("log probs: ", log_probs)
+        # print(log_probs.shape)
 
-        loss = -torch.mean(log_probs * sum(rewards))
+        # loss = -torch.mean(log_probs * sum(rewards))
 
 
         optimizer.zero_grad()
