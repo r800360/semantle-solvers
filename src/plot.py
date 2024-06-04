@@ -10,6 +10,8 @@ import seaborn as sns
 from sklearn.decomposition import PCA
 from sklearn.manifold import TSNE
 
+import networkx as nx
+
 def plot_data(training_outcome: TrainingOutcome, model: nn.Module):
     import matplotlib.pyplot as plt
     
@@ -53,6 +55,12 @@ def plot_data(training_outcome: TrainingOutcome, model: nn.Module):
 
         dot = make_dot(model(e1, e2), params=dict(model.named_parameters()))
         dot.render('artifacts/plots/binary_ff_model', format='png')
+
+        # Export model to onnx
+        dummy_input = (torch.randint(0, 2, (10,)).float(), torch.rand(10))
+        torch.onnx.export(model, dummy_input, 'artifacts/models/binary_ff_model.onnx', verbose=True)
+
+        model.graph()
 
 
 def plot_loss_reward(training_outcome):
