@@ -74,7 +74,10 @@ class BinaryFeedForwardPolicyNetwork(nn.Module):
 
         # Draw edge labels
         edge_labels = {(u, v): f'{d["weight"]:.2f}' for u, v, d in G.edges(data=True)}
-        nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels, font_color="red")
+        nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels, font_color="red", label_pos=0.7)
 
         plt.title("MLP Structure with Weights")
         plt.savefig("artifacts/plots/binary_ff_mlp.png")
+
+        # Print weights
+        print(self.state_dict())
