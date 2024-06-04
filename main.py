@@ -8,6 +8,7 @@ import numpy as np
 import torch
 import torch.nn as nn
 
+from src.models.binary_ff import BinaryFeedForwardPolicyNetwork
 from src.plot import plot_data
 import src.models as models
 from src.data import load_data
@@ -57,6 +58,8 @@ def main(args):
         model = FeedForwardPolicyNetwork(vocab_size, embedding_dim, hidden_dim).to(device)
     elif args.model == models.ModelType.LSTM:
         model = LSTMPolicyNetwork(vocab_size, embedding_dim, hidden_dim, batch_size, device).to(device)
+    elif args.model == models.ModelType.Binary:
+        model = BinaryFeedForwardPolicyNetwork().to(device)
     else:
         raise ValueError("Invalid model type")
 
