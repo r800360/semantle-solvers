@@ -1,4 +1,5 @@
 import torch
+from src.models.binary_ff import BinaryFeedForwardPolicyNetwork
 from src.models.lstm import LSTMPolicyNetwork
 from src.train import TrainingOutcome
 from torch import nn
@@ -12,51 +13,63 @@ from sklearn.manifold import TSNE
 def plot_data(training_outcome: TrainingOutcome, model: nn.Module):
     import matplotlib.pyplot as plt
     
+    plot_loss_reward(training_outcome)
+    
+    ave_accuracies = training_outcome.episode_accuracy.mean(dim=1)
+    plot_ave_accuracies(ave_accuracies)
+
+    last_episode = training_outcome.episode_accuracy[-1]
+    plot_last_episode_accuracy(last_episode)
+    
+    if isinstance(model, LSTMPolicyNetwork):
+        hidden_states = training_outcome.hidden_state_samples
+        
+        # Enhanced Plots
+        plot_hidden_state_evolution(hidden_states)
+        plot_hidden_state_correlation(hidden_states[0, :, 0, -1, :], output_file='hidden_state_correlation_first_episode.png')
+        plot_hidden_state_correlation(hidden_states[-1, :, 0, -1, :], output_file='hidden_state_correlation_last_episode.png')
+
+        hidden_state = hidden_states[0, -1, 0, -1, :]  # First episode, last time step, first batch, last layer
+        #plot_hidden_state_pca(hidden_state)
+        #plot_hidden_state_tsne(hidden_state)
+    
+    if isinstance(model, BinaryFeedForwardPolicyNetwork):
+        
+        # Generate plot showing edge weights
+        edge_weights = model.layers[0].weight.detach().numpy()
+        plt.figure(figsize=(8, 6))
+        sns.heatmap(edge_weights, cmap='viridis', cbar=True)
+        plt.title('Edge Weights of the First Layer')
+        plt.xlabel('Input Dimensions')
+        plt.ylabel('Hidden Dimensions')
+        plt.savefig('artifacts/plots/edge_weights.png')
+
+
+def plot_loss_reward(training_outcome):
     # Split into multiple plots
-    fig, axs = plt.subplots(3)
+    fig, axs = plt.subplots(2)
     fig.suptitle('Training Outcome')
     axs[0].plot(training_outcome.episode_losses, label='Loss')
     axs[0].set(ylabel='Loss')
     axs[1].plot(training_outcome.episode_rewards, label='Reward')
     axs[1].set(xlabel='Episode', ylabel='Reward')
-    axs[2].plot(training_outcome.episode_reward_differences, label='Reward Difference')
-    axs[2].set(xlabel='Episode', ylabel='Reward Difference')
     plt.savefig('artifacts/plots/training_outcome.png')
-    
-    # Plot average accuracies [Episode x Step]
-    # 1. Calculate the average accuracy for each episode
-    # 2. Plot the accuracy progression over the first and final episode
-    
-    ave_accuracies = torch.mean(training_outcome.episode_accuracy, dim=1)
+
+def plot_ave_accuracies(ave_accuracies):
     plt.figure(figsize=(12, 6))
     plt.plot(ave_accuracies)
     plt.title('Average Accuracy Over Episodes')
     plt.xlabel('Episode')
     plt.ylabel('Average Accuracy')
     plt.savefig('artifacts/plots/average_accuracy.png')
-    
-    last_episode = training_outcome.episode_accuracy[-1, :]
+
+def plot_last_episode_accuracy(last_episode):
     plt.figure(figsize=(12, 6))
     plt.plot(last_episode)
     plt.title('Accuracy in the Last Episode')
     plt.xlabel('Time Steps')
     plt.ylabel('Accuracy')
     plt.savefig('artifacts/plots/last_episode_accuracy.png')
-    
-    # Sample usage:
-    if isinstance(model, LSTMPolicyNetwork):
-        hidden_states = training_outcome.hidden_state_samples
-        
-        hidden_state = hidden_states[0, -1, 0, -1, :]  # First episode, last time step, first batch, last layer
-        
-        # Enhanced Plots
-        plot_hidden_state_evolution(hidden_states)
-
-        plot_hidden_state_correlation(hidden_states[0, :, 0, -1, :], output_file='hidden_state_correlation_first_episode.png')
-        plot_hidden_state_correlation(hidden_states[-1, :, 0, -1, :], output_file='hidden_state_correlation_last_episode.png')
-        
-        #plot_hidden_state_pca(hidden_state)
-        #plot_hidden_state_tsne(hidden_state)
 
 def plot_hidden_state_evolution(hidden_states):
     # hidden_states shape: (episode, timestep, batch, layer, hidden_dim)
