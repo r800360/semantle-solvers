@@ -171,7 +171,7 @@ def train_rl_policy(vocab, model, episodes, max_steps, batch_size, device: torch
         logger.info(f"Episode {episode + 1}: Average loss: {loss}")
         logger.info(f"Episode {episode + 1}: Last Step Accuracy: {accuracy}")
         
-        training_outcome.episode_losses.append(loss.detach().numpy())
+        training_outcome.episode_losses.append(loss.detach().numpy().item())
         training_outcome.episode_rewards.append(sum(all_rewards))
         training_outcome.episode_reward_differences.append(sum(all_reward_differences))
 
