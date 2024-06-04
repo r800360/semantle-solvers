@@ -11,7 +11,7 @@ vec_list = []   # To store the vectors for dimensionality reduction
 
 
 for letter_range in ("a-c", "d-h", "i-o", "p-r", "s-z"):
-    with sqlite3.connect(f"./data/word2vec_{letter_range}.db") as con:
+    with sqlite3.connect(f"../data/word2vec_{letter_range}.db") as con:
         cur = con.execute("SELECT * FROM word2vec")
         for word, vec in cur:
             vec = np.frombuffer(vec, dtype=np.float32)

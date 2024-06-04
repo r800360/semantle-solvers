@@ -11,22 +11,24 @@ class LSTMPolicyNetwork(nn.Module):
         self.batch_size = batch_size
         
         self.embedding = nn.Embedding(num_embeddings=self.vocab_size, embedding_dim=self.embedding_dim)
-        self.lstm = nn.LSTM(input_size=self.embedding_dim+1, hidden_size=hidden_dim, num_layers=self.num_layers, batch_first=True)
+        self.lstm = nn.LSTM(input_size=self.embedding_dim+1, hidden_size=hidden_dim,
+                            num_layers=self.num_layers, batch_first=True)
         
         # Initialize the hidden state
         self.reset_hidden(device)
 
-        # Dummy input #input_tensor = torch.randn(5, 3, embedding_dim)  # (sequence_length, batch_size, input_size)
-
-        # Forward pass #output, hidden = self.lstm(input_tensor, hidden)
-
 
         self.fc = nn.Linear(hidden_dim, vocab_size)
         self.softmax = nn.Softmax(dim=-1)
+
+        # Sample forward pass instr: output, hidden = self.lstm(input_tensor, hidden)
     
     def reset_hidden(self, device):
         self.hidden_state = torch.zeros(self.num_layers, self.batch_size, self.hidden_dim).to(device)
         self.cell_state = torch.zeros(self.num_layers, self.batch_size, self.hidden_dim).to(device)
+
+
+
 
     def forward(self, input_indices, similarities):
         # Forward pass through embedding layer, LSTM, and final linear layer
