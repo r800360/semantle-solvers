@@ -1,0 +1,23 @@
+INFO:__main__:Episode 1: Input words: ['apple', 'car', 'car', 'apple', 'car', 'apple', 'apple', 'car', 'car', 'car']
+INFO:__main__:Episode 1: Target words: ['apple', 'car', 'apple', 'apple', 'car', 'car', 'apple', 'apple', 'apple', 'car']
+INFO:__main__:Episode 1: Cumulative reward: 373.55958914756775
+INFO:__main__:Episode 2: Input words: ['apple', 'apple', 'apple', 'apple', 'apple', 'apple', 'apple', 'apple', 'car', 'car']
+INFO:__main__:Episode 2: Target words: ['apple', 'car', 'apple', 'apple', 'car', 'car', 'apple', 'apple', 'apple', 'apple']
+INFO:__main__:Episode 2: Cumulative reward: 365.59483885765076
+INFO:__main__:Episode 3: Input words: ['apple', 'car', 'apple', 'apple', 'car', 'car', 'apple', 'apple', 'apple', 'car']
+INFO:__main__:Episode 3: Target words: ['car', 'apple', 'car', 'apple', 'apple', 'apple', 'apple', 'apple', 'car', 'car']
+INFO:__main__:Episode 3: Cumulative reward: 381.52433943748474
+INFO:__main__:Episode 4: Input words: ['apple', 'car', 'car', 'car', 'apple', 'car', 'apple', 'car', 'apple', 'apple']
+INFO:__main__:Episode 4: Target words: ['car', 'car', 'apple', 'car', 'apple', 'car', 'car', 'car', 'apple', 'apple']
+INFO:__main__:Episode 4: Cumulative reward: 358.1278854608536
+INFO:__main__:Episode 5: Input words: ['apple', 'apple', 'car', 'apple', 'apple', 'apple', 'apple', 'car', 'car', 'apple']
+INFO:__main__:Episode 5: Target words: ['car', 'car', 'apple', 'apple', 'apple', 'car', 'apple', 'car', 'car', 'car']
+INFO:__main__:Episode 5: Cumulative reward: 352.65211963653564
+INFO:__main__:Episode 6: Input words: ['apple', 'apple', 'car', 'apple', 'apple', 'apple', 'car', 'car', 'car', 'apple']
+INFO:__main__:Episode 6: Target words: ['apple', 'apple', 'apple', 'car', 'car', 'apple', 'apple', 'apple', 'car', 'car']
+INFO:__main__:Episode 6: Cumulative reward: 398.94723069667816
+INFO:__main__:Episode 7: Input words: ['apple', 'apple', 'apple', 'car', 'car', 'car', 'apple', 'car', 'car', 'apple']
+INFO:__main__:Episode 7: Target words: ['apple', 'apple', 'apple', 'car', 'car', 'apple', 'car', 'car', 'car', 'apple']
+INFO:__main__:Episode 7: Cumulative reward: 376.5463705062866
+INFO:__main__:Episode 8: Input words: ['car', 'car', 'apple', 'apple', 'apple', 'car', 'apple', 'car', 'apple', 'apple']
+INFO:__main__:Episode 8: Target words: ['car', 'car', 'car', 'car', 'apple', 'car', 'apple', 'apple', 'car', 'apple']
