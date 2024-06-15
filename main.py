@@ -1,12 +1,9 @@
 import argparse
-import csv
 import logging
 import os
-import sqlite3
 
 import numpy as np
 import torch
-import torch.nn as nn
 
 from src.models.binary_ff import BinaryFeedForwardPolicyNetwork
 from src.plot import plot_data
@@ -14,6 +11,7 @@ import src.models as models
 from src.data import load_data
 from src.models.feedfoward import FeedForwardPolicyNetwork
 from src.models.lstm import LSTMPolicyNetwork
+from src.similarity import SimilarityClass
 from src.train import train_rl_policy
 
 logger = logging.getLogger(__name__)
@@ -63,7 +61,7 @@ def main(args):
     else:
         raise ValueError("Invalid model type")
 
-    outcome = train_rl_policy(vocab, model, episodes, max_steps, batch_size, device)
+    outcome = train_rl_policy(vocab, model, episodes, max_steps, batch_size, device, args)
     plot_data(outcome, model)
 
 
@@ -81,6 +79,9 @@ if __name__ == "__main__":
     
     parser.add_argument('--dataset', type=str, default='data/word2vec.db', help='Path to the dataset to use for training')
     parser.add_argument('--vocab', type=str, default='data/vocab.txt', help='Path to the vocabulary file')
+
+    parser.add_argument('--target-zero', action='store_true', help='Target words will always be index zero')
+    parser.add_argument('-s', '--similarity', type=SimilarityClass, choices=list(SimilarityClass), help='Similarity function to use', default=SimilarityClass.SQRT)
     
     
     args = parser.parse_args()

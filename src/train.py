@@ -3,32 +3,13 @@ import random
 
 import numpy as np
 import torch
-import torch.nn as nn
 import torch.optim as optim
 from torch.optim.lr_scheduler import StepLR
 
 from src.models.lstm import LSTMPolicyNetwork
-from src.data import word2vec
+from src.similarity import similarity_function, similarity_to_reward
 
 logger = logging.getLogger(__name__)
-
-cos_sim = nn.CosineSimilarity(dim=1)
-
-def similarity_function(target_list, guess_list):
-    # Extract vectors for the first word and the guess list
-    x = torch.tensor(np.array([word2vec[g] for g in target_list]))
-    y = torch.tensor(np.array([word2vec[g] for g in guess_list]))
-    
-    similarities = cos_sim(x,y)
-    
-    return similarities
-
-def similarity_to_reward(similarities):
-    # Squaring curve mapping from [-1, 1] to [-1, 1]
-    similarities = (similarities + 1) / 2
-    similarities = similarities ** 0.5
-    similarities = 2 * similarities - 1
-    return similarities
     
 
 class TrainingOutcome:
@@ -39,7 +20,7 @@ class TrainingOutcome:
         self.hidden_state_samples = torch.tensor([])
         self.episode_accuracy = torch.tensor([])
 
-def train_rl_policy(vocab, model, episodes, max_steps, batch_size, device: torch.device):
+def train_rl_policy(vocab, model, episodes, max_steps, batch_size, device: torch.device, args):
     previous_rewards = 0
     optimizer = optim.AdamW(model.parameters(), maximize=False, lr=0.05)
 
@@ -56,6 +37,9 @@ def train_rl_policy(vocab, model, episodes, max_steps, batch_size, device: torch
         state = []  # List to keep track of history
         input_words = random.choices(vocab, k=batch_size)
         target_words = random.choices(vocab, k=batch_size)
+
+        if args.target_zero:
+            target_words = [vocab[0]] * batch_size
 
         logger.debug(f"Episode {episode + 1}: Input words: {input_words}")
         logger.debug(f"Episode {episode + 1}: Target words: {target_words}")
@@ -88,7 +72,7 @@ def train_rl_policy(vocab, model, episodes, max_steps, batch_size, device: torch
                 previous_rewards = rewards
             reward_scaler = (step/max_steps)#**0.5
             similarity = similarity_function(target_words, action_words)
-            rewards = similarity_to_reward(similarity) * reward_scaler
+            rewards = similarity_to_reward(similarity, args) * reward_scaler
             rewards_difference = rewards - previous_rewards
             
             # Update the state with the chosen action and reward
