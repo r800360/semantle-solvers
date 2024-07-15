@@ -20,6 +20,13 @@ class TrainingOutcome:
         self.hidden_state_samples = torch.tensor([])
         self.episode_accuracy = torch.tensor([])
 
+def match(target_words, action_words):
+    for i in range(len(target_words)):
+        if (target_words[i] != action_words[i]):
+            return -1
+    return 1
+
+
 def train_rl_policy(vocab, model, episodes, max_steps, batch_size, device: torch.device, args):
     previous_rewards = 0
     optimizer = optim.AdamW(model.parameters(), maximize=False, lr=0.05)
@@ -70,18 +77,19 @@ def train_rl_policy(vocab, model, episodes, max_steps, batch_size, device: torch
             # Calculate the reward (similarity score)
             if (step > 1): 
                 previous_rewards = rewards
-            reward_scaler = (step/max_steps)#**0.5
+            # reward_scaler = (step/max_steps)#**0.5
             similarity = similarity_function(target_words, action_words)
-            rewards = similarity_to_reward(similarity, args) * reward_scaler
+            rewards = match(target_words, action_words) #similarity_to_reward(similarity, args) #* reward_scaler
             rewards_difference = rewards - previous_rewards
             
             # Update the state with the chosen action and reward
             state.append((action_words, rewards))
 
             # Calculate cumulative reward
-            all_rewards = np.concatenate((all_rewards,rewards), axis = 0)
-            if (step > 1):
-                all_reward_differences = np.concatenate((all_reward_differences, rewards_difference), axis = 0)
+            all_rewards.append(rewards)
+            # all_rewards = np.concatenate((all_rewards,rewards), axis = 0)
+            # if (step > 1):
+            #     all_reward_differences = np.concatenate((all_reward_differences, rewards_difference), axis = 0)
 
 
             # Compute loss using REINFORCE algorithm
@@ -119,7 +127,8 @@ def train_rl_policy(vocab, model, episodes, max_steps, batch_size, device: torch
         # Update the policy
         #log_probs = torch.stack(log_probs)
         #log_probs = torch.tensor(np.array(log_probs))
-        loss = -torch.mean(log_probs * sum(all_reward_differences))
+        print(log_probs)
+        loss = -torch.mean(log_probs * sum(all_rewards))
         
         # Use more stupid reward function
         # rewards = correct_guesses * 2 - 1
