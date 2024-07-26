@@ -46,7 +46,7 @@ def main(args):
     hidden_dim = 100  # LSTM hidden state dimension
     episodes = args.episodes  # Number of episodes to train
     # max_steps = 50 # Maximum steps per episode
-    max_steps = 5
+    max_steps = 10
     batch_size = args.batch_size
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -73,7 +73,7 @@ if __name__ == "__main__":
     parser.add_argument('-o', '--output', type=str, default='stdout', help='Output file')
     parser.add_argument('-m', '--model', type=models.ModelType, choices=list(models.ModelType), help='Model type (feedforward or lstm)', default=models.ModelType.LSTM)
     
-    parser.add_argument('-e', '--episodes', type=int, default=100, help='Number of episodes')
+    parser.add_argument('-e', '--episodes', type=int, default=1000, help='Number of episodes')
     parser.add_argument('-b', '--batch_size', type=int, default=10, help='Batch size')
     parser.add_argument('-l', '--learning_rate', type=float, default=0.005, help='Learning rate')
     

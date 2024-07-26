@@ -17,11 +17,11 @@ def plot_data(training_outcome: TrainingOutcome, model: nn.Module):
     
     plot_loss_reward(training_outcome)
     
-    ave_accuracies = training_outcome.episode_accuracy.mean(dim=1)
-    plot_ave_accuracies(ave_accuracies)
+    # ave_accuracies = training_outcome.episode_accuracy.mean(dim=1)
+    # plot_ave_accuracies(ave_accuracies)
 
-    last_episode = training_outcome.episode_accuracy[-1]
-    plot_last_episode_accuracy(last_episode)
+    # last_episode = training_outcome.episode_accuracy[-1]
+    # plot_last_episode_accuracy(last_episode)
     
     if isinstance(model, LSTMPolicyNetwork):
         hidden_states = training_outcome.hidden_state_samples
@@ -35,32 +35,32 @@ def plot_data(training_outcome: TrainingOutcome, model: nn.Module):
         #plot_hidden_state_pca(hidden_state)
         #plot_hidden_state_tsne(hidden_state)
     
-    if isinstance(model, BinaryFeedForwardPolicyNetwork):
+    # if isinstance(model, BinaryFeedForwardPolicyNetwork):
         
-        # Generate plot showing edge weights
-        edge_weights = model.layers[0].weight.detach().numpy()
-        plt.figure(figsize=(8, 6))
-        sns.heatmap(edge_weights, cmap='viridis', cbar=True)
-        plt.title('Edge Weights of the First Layer')
-        plt.xlabel('Input Dimensions')
-        plt.ylabel('Hidden Dimensions')
-        plt.savefig('artifacts/plots/edge_weights.png')
+    #     # Generate plot showing edge weights
+    #     edge_weights = model.layers[0].weight.detach().numpy()
+    #     plt.figure(figsize=(8, 6))
+    #     sns.heatmap(edge_weights, cmap='viridis', cbar=True)
+    #     plt.title('Edge Weights of the First Layer')
+    #     plt.xlabel('Input Dimensions')
+    #     plt.ylabel('Hidden Dimensions')
+    #     plt.savefig('artifacts/plots/edge_weights.png')
 
-        # Use torchviz to generate a visualization of the model
-        from torchviz import make_dot
-        e1 = torch.randint(0, 2, (10,)).float()
-        e2 = torch.rand(10)
+    #     # Use torchviz to generate a visualization of the model
+    #     from torchviz import make_dot
+    #     e1 = torch.randint(0, 2, (10,)).float()
+    #     e2 = torch.rand(10)
 
-        print(e1, e2)
+    #     print(e1, e2)
 
-        dot = make_dot(model(e1, e2), params=dict(model.named_parameters()))
-        dot.render('artifacts/plots/binary_ff_model', format='png')
+    #     dot = make_dot(model(e1, e2), params=dict(model.named_parameters()))
+    #     dot.render('artifacts/plots/binary_ff_model', format='png')
 
-        # Export model to onnx
-        dummy_input = (torch.randint(0, 2, (10,)).float(), torch.rand(10))
-        torch.onnx.export(model, dummy_input, 'artifacts/models/binary_ff_model.onnx', verbose=True)
+    #     # Export model to onnx
+    #     dummy_input = (torch.randint(0, 2, (10,)).float(), torch.rand(10))
+    #     torch.onnx.export(model, dummy_input, 'artifacts/models/binary_ff_model.onnx', verbose=True)
 
-        model.graph()
+    #     model.graph()
 
 
 def plot_loss_reward(training_outcome):

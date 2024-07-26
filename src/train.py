@@ -20,12 +20,35 @@ class TrainingOutcome:
         self.hidden_state_samples = torch.tensor([])
         self.episode_accuracy = torch.tensor([])
 
+def compute_returns(rewards, gamma=0.99):
+    R = 0
+    returns = []
+    for r in reversed(rewards):
+        R = r + gamma * R
+        returns.insert(0, R)
+    return returns
+
+def rewards_to_go(rewards, gamma=0.99):
+    n = len(rewards)
+    rtgs = np.zeros_like(rewards)
+    for i in reversed(range(n)):
+        rtgs[i] = rewards[i] + (rtgs[i+1] if i+1 < n else 0)
+    return rtgs
+
+
 def train_rl_policy(vocab, model, episodes, max_steps, batch_size, device: torch.device, args):
+    gamma = 0.99
     previous_rewards = 0
-    optimizer = optim.AdamW(model.parameters(), maximize=False, lr=0.05)
+    optimizer = optim.NAdam(model.parameters(), lr=0.01)
+    # optimizer = optim.AdamW(model.parameters(), lr = 0.2)
 
     # Define the learning rate scheduler
-    scheduler = StepLR(optimizer, step_size=100, gamma=0.1)  # Adjust step_size and gamma as needed
+    # scheduler = StepLR(optimizer, step_size=100, gamma=0.1)  # Adjust step_size and gamma as needed
+    
+    # Epsilon-greedy parameters
+    # epsilon = 1.0
+    # epsilon_decay = 0.995
+    # epsilon_min = 0.01
 
     # Track the total loss for each episode
     training_outcome = TrainingOutcome()
@@ -34,93 +57,163 @@ def train_rl_policy(vocab, model, episodes, max_steps, batch_size, device: torch
         # scheduler.step()  # Update the learning rate at the beginning of each episode
 
         # Initialize the state (history of words and similarity scores)
-        state = []  # List to keep track of history
-        input_words = random.choices(vocab, k=batch_size)
-        target_words = random.choices(vocab, k=batch_size)
+        states = []  # List to keep track of history
+        input_word = "apple" #* batch_size #random.choices(vocab, k=batch_size)
+        target_word = "orange" #* batch_size #random.choices(vocab, k=batch_size)
 
-        if args.target_zero:
-            target_words = [vocab[0]] * batch_size
+        # if args.target_zero:
+        #     target_words = [vocab[0]] #* batch_size
 
-        logger.debug(f"Episode {episode + 1}: Input words: {input_words}")
-        logger.debug(f"Episode {episode + 1}: Target words: {target_words}")
+        logger.debug(f"Episode {episode + 1}: Input words: {input_word}")
+        logger.debug(f"Episode {episode + 1}: Target words: {target_word}")
 
-        log_probs = torch.tensor([])
-        all_rewards = []
-        all_reward_differences = []
-        hidden_states = torch.tensor([])
-        accuracies = torch.tensor([])
-        similarity = torch.zeros(batch_size)
+        # log_probs = torch.tensor([])
+        # all_rewards = []
+        # all_reward_differences = []
+        # hidden_states = torch.tensor([])
+        # accuracies = torch.tensor([])
+        # similarity = torch.zeros(batch_size)
+        log_probs = []
+        rewards = []
+
+        success = False#torch.zeros(batch_size, dtype=torch.bool)
 
         for step in range(max_steps):
             # Convert the input word to its index in the vocabulary
 
-            input_word_indices = np.array([np.argmax(vocab == word) for word in input_words])
-            input_tensor = torch.tensor(input_word_indices, dtype=torch.long).to(device)
+            # input_word_indices = np.array([np.argmax(vocab == word) for word in input_words])
+            # input_tensor = torch.tensor(input_word_indices, dtype=torch.long).to(device)
+            input_word_index = np.argmax(vocab == input_word)
+            # input_tensor = torch.tensor([input_word_index], dtype=torch.long).to(device)
+            
+            similarity = similarity_function([target_word], [input_word])[0]
+            state = (input_word_index, similarity)
+            states.append(state)
+            state_tensor = torch.FloatTensor(state).to(device)
+            
+            logger.debug(f"Similarity: {similarity}")
+            # action, log_prob = model.get_action(state_tensor)
+            # # Epsilon-greedy action selection
+            # if random.uniform(0, 1) < epsilon:
+            #     # action = random.choice(range(len(vocab)))
+            #     # log_prob = torch.log(torch.tensor(1.0 / len(vocab)))
+            #     # action, log_prob = model.random_action()
+            #     action = random.choice(range(len(vocab)))
+            #     log_prob = torch.log(torch.tensor(1.0 / len(vocab), requires_grad=True))
+            # else:
+            #     action, log_prob = model.get_action(state_tensor)
+            action, log_prob = model.get_action(state_tensor)
+            log_probs.append(log_prob)
+            action_word = vocab[action]
+            # print(action_word)
+            
+            # reward = similarity_to_reward(similarity, args).item()#[0]
+            
+            if input_word == target_word:
+                reward = 1
+            else:
+                reward = -1
+            
+            # if action_word == target_word:
+            #     reward = 10
+            # else:
+            #     reward = -1
+            rewards.append(reward)
+
+            # if action_word == target_word:
+            #     break
+            
+            logger.debug(f"Input word: {input_word}")
+            logger.debug(f"Rewards: {reward}")
+            input_word = action_word
+            # state_tensor = torch.tensor(state, dtype=torch.float).to(device)
 
             # Unsqueeze to make batch of len 1 sequences
             # input_tensor = input_tensor.unsqueeze(1)
 
             # Predict the probabilities for the next word
             # And back to cpu land
-            action_probs = model(input_tensor, similarity).squeeze().cpu()
+            # similarity = similarity_function(target_words, input_words)
+            # action_probs = model(input_tensor, similarity).squeeze().cpu()
 
-            action_indices = torch.multinomial(action_probs, 1).squeeze()
-            action_words = vocab[action_indices]
+            # action_indices = torch.multinomial(action_probs, 1).squeeze()
+            # action_words = [vocab[idx] for idx in action_indices]#vocab[action_indices]
 
             # Calculate the reward (similarity score)
-            if (step > 1): 
-                previous_rewards = rewards
-            reward_scaler = (step/max_steps)#**0.5
-            similarity = similarity_function(target_words, action_words)
-            rewards = similarity_to_reward(similarity, args) * reward_scaler
-            rewards_difference = rewards - previous_rewards
+            # if (step > 1): 
+            #     previous_rewards = rewards
+            #reward_scaler = (step/max_steps)#**0.5
+            #similarity = similarity_function(target_words, action_words)
+            # rewards = similarity_to_reward(similarity, args) #* reward_scaler
+            # rewards_difference = rewards - previous_rewards
             
             # Update the state with the chosen action and reward
-            state.append((action_words, rewards))
+            # state.append((action_words, rewards))
 
             # Calculate cumulative reward
-            all_rewards = np.concatenate((all_rewards,rewards), axis = 0)
-            if (step > 1):
-                all_reward_differences = np.concatenate((all_reward_differences, rewards_difference), axis = 0)
+            # all_rewards = np.concatenate((all_rewards,rewards), axis = 0)
+            # if (step > 1):
+            #     all_reward_differences = np.concatenate((all_reward_differences, rewards_difference), axis = 0)
 
 
             # Compute loss using REINFORCE algorithm
-            chosen_action_probs = action_probs.gather(1, action_indices.unsqueeze(1)).squeeze()
-            log_prob = torch.log(chosen_action_probs)
-            log_probs = torch.cat((log_probs, log_prob.unsqueeze(0)))
+            # chosen_action_probs = action_probs.gather(1, action_indices.unsqueeze(1)).squeeze()
+            # logger.debug(chosen_action_probs)
+            # log_prob = torch.log(chosen_action_probs)
+            # log_probs = torch.cat((log_probs, log_prob.unsqueeze(0)))
 
             #Gradient Clipping
             #torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=0.5)
 
             # Update the input word for the next step
-            input_words = action_words
+            # input_words = action_words
             
             # Update hidden states
-            if isinstance(model, LSTMPolicyNetwork):
-                hidden_states = torch.cat((hidden_states, model.hidden_state.detach().cpu().unsqueeze(0)), dim=0)
+            # if isinstance(model, LSTMPolicyNetwork):
+            #     hidden_states = torch.cat((hidden_states, model.hidden_state.detach().cpu().unsqueeze(0)), dim=0)
 
-            logger.debug(f"Input Word Indices: {input_word_indices}")
-            logger.debug(f"Input Tensor: {input_tensor}")
-            logger.debug(f"Action Probs: {action_probs}")
-            logger.debug(f"Action indices: {action_indices}")
-            logger.debug(f"Action words: {action_words}")
-            logger.debug(f"Rewards: {rewards}")
-            logger.debug(f"Log Probabilities: {log_prob}")
+            # logger.debug(f"Input Word Indices: {input_word_indices}")
+            # logger.debug(f"Input Tensor: {input_tensor}")
+            # logger.debug(f"Action Probs: {action_probs}")
+            # logger.debug(f"Action indices: {action_indices}")
+            # logger.debug(f"Action word: {action_word}")
+            # logger.debug(f"Rewards: {reward}")
+            # logger.debug(f"Input word: {input_word}")
+            # logger.debug(f"Log Probabilities: {log_prob}")
 
             # End the episode if the reward is high enough (e.g., similarity close to 1)
-            correct_guesses = action_words == target_words
-            if correct_guesses.any():
-                logger.debug(f"Episode {episode + 1}: Guess correctness - {correct_guesses}")
+            # correct_guesses = [aw == tw for aw, tw in zip(action_words, target_words)]#action_words == target_words
+            # # if correct_guesses.any():
+            # logger.debug(f"Episode {episode + 1}: Guess correctness - {correct_guesses}")
             
+            # Success == success OR correct_guesses
+            # success = success | correct_guesses
+            # success = success | torch.tensor(correct_guesses, dtype=torch.bool)
             # Compute accuracy
-            accuracy = torch.mean(torch.tensor(correct_guesses, dtype=torch.float))
-            accuracies = torch.cat((accuracies, accuracy.unsqueeze(0)), dim=0)
+            # accuracy = torch.mean(torch.tensor(correct_guesses, dtype=torch.float))
+            # accuracies = torch.cat((accuracies, accuracy.unsqueeze(0)), dim=0)
 
-        # Update the policy
-        #log_probs = torch.stack(log_probs)
-        #log_probs = torch.tensor(np.array(log_probs))
-        loss = -torch.mean(log_probs * sum(all_reward_differences))
+        # If success, reward is 1. Otherwise, -1
+        # succ_rewards = torch.tensor([1 if s else -1 for s in success], dtype=torch.float)
+        #returns = rewards_to_go(rewards)#compute_returns(rewards)
+        returns = compute_returns(rewards)
+        # returns = torch.tensor(returns)
+        policy_gradient = []
+        for log_prob, R in zip(log_probs, returns):
+            policy_gradient.append(-log_prob * R  )
+        optimizer.zero_grad()
         
+        policy_gradient = torch.stack(policy_gradient).sum()
+        policy_gradient.backward()
+        # torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
+        optimizer.step()
+        # log_probs = torch.stack(log_probs)
+        # Update the policies
+        #print(log_probs)
+        # logger.debug("Binary Rewards: " + str(succ_rewards))
+        # # loss = -torch.mean(log_probs * sum(all_rewards))
+        #loss = -torch.mean(log_probs * succ_rewards)
+        # loss = -torch.sum(log_probs * returns)
         # Use more stupid reward function
         # rewards = correct_guesses * 2 - 1
         # print(correct_guesses)
@@ -129,35 +222,37 @@ def train_rl_policy(vocab, model, episodes, max_steps, batch_size, device: torch
         # print(log_probs.shape)
 
         # loss = -torch.mean(log_probs * sum(rewards))
-
-
-        optimizer.zero_grad()
-        loss.backward()
-        #torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=0.5)
-        optimizer.step()
-        scheduler.step()  # Update the learning rate at the end of each episode
         
-        logger.debug(f"Log Probs: {log_probs}")
+        # if epsilon > epsilon_min:
+        #     epsilon *= epsilon_decay
+
+        # optimizer.zero_grad()
+        # loss.backward()
+        #torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=0.5)
+        # optimizer.step()
+        # scheduler.step()  # Update the learning rate at the end of each episode
+        
+        # logger.debug(f"Log Probs: {log_probs}")
         
         
         # Save the hidden state for the model
         # Shaped: Episode x step x batch x layer x hidden_dim
-        if isinstance(model, LSTMPolicyNetwork):
-            training_outcome.hidden_state_samples = torch.cat((training_outcome.hidden_state_samples, hidden_states.unsqueeze(0)), dim=0)
-            model.reset_hidden(device)
+        # if isinstance(model, LSTMPolicyNetwork):
+        #     training_outcome.hidden_state_samples = torch.cat((training_outcome.hidden_state_samples, hidden_states.unsqueeze(0)), dim=0)
+        #     model.reset_hidden(device)
         
         # Save the accuracy for the episode
-        training_outcome.episode_accuracy = torch.cat((training_outcome.episode_accuracy, accuracies.unsqueeze(0)), dim=0)
+        # training_outcome.episode_accuracy = torch.cat((training_outcome.episode_accuracy, accuracies.unsqueeze(0)), dim=0)
 
         # Print the cumulative reward and average loss for the episode
-        logger.info(f"Episode {episode + 1}: Cumulative reward: {sum(all_rewards)}")
-        logger.info(f"Episode {episode + 1}: Reward Differences: {sum(all_reward_differences)}")
-        logger.info(f"Episode {episode + 1}: Average loss: {loss}")
-        logger.info(f"Episode {episode + 1}: Last Step Accuracy: {accuracy}")
+        logger.info(f"Episode {episode + 1}: Cumulative reward: {sum(rewards)}")
+        # logger.info(f"Episode {episode + 1}: Reward Differences: {sum(all_reward_differences)}")
+        # logger.info(f"Episode {episode + 1}: Average loss: {loss}")
+        # logger.info(f"Episode {episode + 1}: Last Step Accuracy: {accuracy}")
         
-        training_outcome.episode_losses.append(loss.detach().numpy().item())
-        training_outcome.episode_rewards.append(sum(all_rewards))
-        training_outcome.episode_reward_differences.append(sum(all_reward_differences))
+        # training_outcome.episode_losses.append(loss.detach().numpy().item())
+        training_outcome.episode_rewards.append(sum(rewards))
+        # training_outcome.episode_reward_differences.append(sum(all_reward_differences))
 
     logger.info("Training complete")
     logger.info("Episode losses: " + str(training_outcome.episode_losses))

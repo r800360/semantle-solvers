@@ -23,6 +23,7 @@ def similarity_function(target_list, guess_list):
 
 def similarity_to_reward(similarities, args):
     # Squaring curve mapping from [-1, 1] to [-1, 1]
+    return similarities
     if args.similarity == SimilarityClass.SQRT:
         similarities = (similarities + 1) / 2
         similarities = similarities ** 0.5
