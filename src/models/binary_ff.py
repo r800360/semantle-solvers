@@ -19,18 +19,11 @@ class BinaryFeedForwardPolicyNetwork(nn.Module):
         )
         # self.optimizer = optim.Adam(self.parameters(), lr=0.001)
 
-    # def forward(self, input_tensor, similarity):
-    #     combined = torch.stack((input_tensor, similarity), 1)
-
-    #     return self.layers(combined)
     def forward(self, state):
         return self.layers(state)
                            
     def get_action(self, state):
         state = torch.FloatTensor(state).unsqueeze(0)
-        # logger.debug(f"State: {state}")
-        # print("State: ")
-        # print(state)
         probs = self.forward(state)[0]
         logger.debug(f"Probs: {probs}")
         action = torch.multinomial(probs, 1).item()
