@@ -4,6 +4,7 @@ import logging
 import matplotlib.pyplot as plt
 import networkx as nx
 import torch.optim as optim
+import torch.nn.functional as F
 
 logger = logging.getLogger(__name__)
 # Generic Feedforward Policy Network
@@ -11,9 +12,11 @@ class BinaryFeedForwardPolicyNetwork(nn.Module):
     def __init__(self):
         super(BinaryFeedForwardPolicyNetwork, self).__init__()
         self.layers = nn.Sequential(
-            nn.Linear(2, 4),
+            nn.Linear(20, 40),
             nn.ReLU(),
-            nn.Linear(4, 2),
+            nn.Linear(40, 80),
+            nn.ReLU(),
+            nn.Linear(80, 3),
             nn.ReLU(),
             nn.Softmax(dim=-1)
         )
@@ -23,7 +26,24 @@ class BinaryFeedForwardPolicyNetwork(nn.Module):
         return self.layers(state)
                            
     def get_action(self, state):
+        #print(state)
+        # raise NotImplementedError
         state = torch.FloatTensor(state).unsqueeze(0)
+        #state = torch.reshape(state, (1, 10))
+        # Calculate the number of features in the state
+        num_features = state.numel()  # Flatten the state and get the total number of elements
+        
+        # Reshape the state to a 1x(num_features) tensor
+        state = state.view(1, num_features)
+        
+        # Calculate padding needed to make it a 1x10 tensor
+        padding = 20 - num_features
+        
+        if padding > 0:
+            # Pad the state tensor with zeros on the right
+            state = F.pad(state, (0, padding), "constant", 0)
+            
+        print(state)
         probs = self.forward(state)[0]
         logger.debug(f"Probs: {probs}")
         action = torch.multinomial(probs, 1).item()
