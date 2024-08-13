@@ -41,7 +41,7 @@ class BinaryFeedForwardPolicyNetwork(nn.Module):
         
         if padding > 0:
             # Pad the state tensor with zeros on the right
-            state = F.pad(state, (0, padding), "constant", 0)
+            state = F.pad(state, (0, padding), "constant", -100)
             
         print(state)
         probs = self.forward(state)[0]

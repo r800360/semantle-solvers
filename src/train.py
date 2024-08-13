@@ -66,7 +66,7 @@ def train_rl_policy_ppo(vocab, model, episodes, max_steps, batch_size, device: t
 def train_rl_policy(vocab, model, episodes, max_steps, batch_size, device: torch.device, args):
     gamma = 0.99
     previous_rewards = 0
-    optimizer = optim.NAdam(model.parameters(), lr=0.005)
+    optimizer = optim.NAdam(model.parameters(), lr=0.0001)
     # optimizer = optim.AdamW(model.parameters(), lr = 0.2)
 
     # Track the total loss for each episode
@@ -115,6 +115,18 @@ def train_rl_policy(vocab, model, episodes, max_steps, batch_size, device: torch
                 reward = 1
             else:
                 reward = -1
+                # Reward proportional to similarity
+                # reward = similarity - 0.5  # Encourage guesses closer to target
+
+                # # Penalize guesses far from target
+                # if similarity < 0.3:
+                #     reward -= 0.5
+
+                # # Time penalty
+                # reward -= step * 0.1
+
+                # Additional reward/penalty logic
+                # ...
             
             rewards.append(reward)
 
@@ -127,8 +139,14 @@ def train_rl_policy(vocab, model, episodes, max_steps, batch_size, device: torch
             
             
         #returns = rewards_to_go(rewards)#compute_returns(rewards)
-        returns = rewards_to_go(rewards)
-        # returns = torch.tensor(returns)
+        returns = compute_returns(rewards)#srewards_to_go(rewards)
+        
+        
+        # returns = torch.tensor(returns).to(device)
+
+        # # Normalize rewards
+        # returns = (returns - returns.mean()) / (returns.std() + 1e-8)
+        # # returns = torch.tensor(returns)
         policy_gradient = []
         for log_prob, R in zip(log_probs, returns):
             policy_gradient.append(-log_prob * R  )
