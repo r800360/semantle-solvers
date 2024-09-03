@@ -12,11 +12,11 @@ class BinaryFeedForwardPolicyNetwork(nn.Module):
     def __init__(self):
         super(BinaryFeedForwardPolicyNetwork, self).__init__()
         self.layers = nn.Sequential(
-            nn.Linear(20, 40),
+            nn.Linear(6, 12),
             nn.ReLU(),
-            nn.Linear(40, 80),
+            nn.Linear(12, 12),
             nn.ReLU(),
-            nn.Linear(80, 3),
+            nn.Linear(12, 3),
             nn.ReLU(),
             nn.Softmax(dim=-1)
         )
@@ -26,7 +26,7 @@ class BinaryFeedForwardPolicyNetwork(nn.Module):
         return self.layers(state)
                            
     def get_action(self, state):
-        #print(state)
+        # print(state)
         # raise NotImplementedError
         state = torch.FloatTensor(state).unsqueeze(0)
         #state = torch.reshape(state, (1, 10))
@@ -36,15 +36,16 @@ class BinaryFeedForwardPolicyNetwork(nn.Module):
         # Reshape the state to a 1x(num_features) tensor
         state = state.view(1, num_features)
         
-        # Calculate padding needed to make it a 1x10 tensor
-        padding = 20 - num_features
+        # Calculate padding needed to make it a 1x6 tensor
+        padding = 6 - num_features
         
         if padding > 0:
             # Pad the state tensor with zeros on the right
-            state = F.pad(state, (0, padding), "constant", -100)
+            state = F.pad(state, (0, padding), "constant", 0)
             
         print(state)
         probs = self.forward(state)[0]
+        print(probs)
         logger.debug(f"Probs: {probs}")
         action = torch.multinomial(probs, 1).item()
         log_prob = torch.log(probs.squeeze(0)[action])
