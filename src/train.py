@@ -83,7 +83,9 @@ def train_rl_policy(vocab, model, episodes, max_steps, batch_size, device: torch
 
     for episode in range(episodes):
         # scheduler.step()  # Update the learning rate at the beginning of each episode
-
+        
+        # model.reset_hidden(device)
+        model.reset_hidden(device)
         # Initialize the state (history of words and similarity scores)
         states = {1: 0, 2: 0, 3:0}  # List to keep track of history
         states_list = []
@@ -144,7 +146,7 @@ def train_rl_policy(vocab, model, episodes, max_steps, batch_size, device: torch
             if input_word == target_word:
                 reward = 1
             else:
-                reward = -1
+                reward = similarity-1
                 # Reward proportional to similarity
                 # reward = similarity - 0.5  # Encourage guesses closer to target
 

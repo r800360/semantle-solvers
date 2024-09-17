@@ -23,17 +23,17 @@ def plot_data(training_outcome: TrainingOutcome, model: nn.Module):
     # last_episode = training_outcome.episode_accuracy[-1]
     # plot_last_episode_accuracy(last_episode)
     
-    if isinstance(model, LSTMPolicyNetwork):
-        hidden_states = training_outcome.hidden_state_samples
+    # if isinstance(model, LSTMPolicyNetwork):
+    #     hidden_states = training_outcome.hidden_state_samples
         
-        # Enhanced Plots
-        plot_hidden_state_evolution(hidden_states)
-        plot_hidden_state_correlation(hidden_states[0, :, 0, -1, :], output_file='hidden_state_correlation_first_episode.png')
-        plot_hidden_state_correlation(hidden_states[-1, :, 0, -1, :], output_file='hidden_state_correlation_last_episode.png')
+    #     # Enhanced Plots
+    #     plot_hidden_state_evolution(hidden_states)
+    #     plot_hidden_state_correlation(hidden_states[0, :, 0, -1, :], output_file='hidden_state_correlation_first_episode.png')
+    #     plot_hidden_state_correlation(hidden_states[-1, :, 0, -1, :], output_file='hidden_state_correlation_last_episode.png')
 
-        hidden_state = hidden_states[0, -1, 0, -1, :]  # First episode, last time step, first batch, last layer
-        #plot_hidden_state_pca(hidden_state)
-        #plot_hidden_state_tsne(hidden_state)
+    #     hidden_state = hidden_states[0, -1, 0, -1, :]  # First episode, last time step, first batch, last layer
+    #     #plot_hidden_state_pca(hidden_state)
+    #     #plot_hidden_state_tsne(hidden_state)
     
     # if isinstance(model, BinaryFeedForwardPolicyNetwork):
         
